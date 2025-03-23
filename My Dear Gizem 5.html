@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Philip loves you in 100 Languages</title>
+
+    <!-- Inline CSS -->
+    <style>
+        body {
+            background-color: black; /* Fond noir */
+            color: white; /* Texte blanc */
+            font-family: Arial, sans-serif; /* Police de caractères */
+            display: flex; /* Flexbox pour centrer */
+            justify-content: center; /* Centrage horizontal */
+            align-items: center; /* Centrage vertical */
+            height: 100vh; /* Hauteur de la fenêtre */
+            font-size: 2em; /* Taille de police */
+        }
+    </style>
+</head>
+<body>
+
+    <div id="message">Loading...</div> <!-- Conteneur pour le message -->
+
+    <!-- Inline JavaScript -->
+    <script>
+        // Tableau des traductions
+        const translations = [
+            "Türkçe : seni seviyorum ❤️",
+            "Français : je t'aime ❤️",
+            "English : I love you ❤️",
+            "Español : te quiero ❤️",
+            "Deutsch : ich liebe dich ❤️",
+            "Italiano : ti amo ❤️",
+            "Português : eu te amo ❤️",
+            "Nederlands : ik hou van jou ❤️",
+            "Русский : я тебя люблю ❤️",
+            "中文 : 我爱你 ❤️",
+            "日本語 : 愛してる ❤️",
+            "한국어 : 사랑해 ❤️",
+            "العربية : أحبك ❤️",
+            "Hrvatski : volim te ❤️",
+            "Svenska : jag älskar dig ❤️",
+            "Dansk : jeg elsker dig ❤️",
+            "Suomi : rakastan sinua ❤️",
+            "Magyar : szeretlek ❤️",
+            "Čeština : miluji tě ❤️",
+            "Slovenčina : ľúbim ťa ❤️",
+            "Română : te iubesc ❤️",
+            "Ελληνικά : σε αγαπώ ❤️",
+            "עברית : אני אוהב אותך ❤️",
+            "Bahasa Indonesia : aku cinta kamu ❤️",
+            "Filipino : mahal kita ❤️",
+            "ภาษาไทย : ฉันรักคุณ ❤️",
+            "Tiếng Việt : anh yêu em ❤️",
+            "Basa Jawa : aku tresna sampeyan ❤️",
+            "Norsk : jeg elsker deg ❤️",
+            "Lietuvių : aš tave myliu ❤️",
+            "Latviešu : es tevi mīlu ❤️",
+            "Slovenščina : ljubim te ❤️",
+            "Български : обичам те ❤️",
+            "Català : t'estimo ❤️",
+            "Kiswahili : nakupenda ❤️",
+            "Sunda : abdi bogoh ka anjeun ❤️",
+            "Basa Bali : dadosang ajengan ❤️",
+            "Melayu : saya cinta padamu ❤️",
+            "Samoan : ou te alofa ia te oe ❤️",
+            "Hausa : ina son ku ❤️",
+            "Igbo : a hụrụ m gị n'anya ❤️",
+            "Yoruba : mo nifẹ rẹ ❤️",
+            "Zulu : ngiyakuthanda ❤️",
+            "Xhosa : ndiyakuthanda ❤️",
+            "Twi : me dɔ wo ❤️",
+            "Fijian : au domoni iko ❤️",
+            "Māori : aroha mai ❤️",
+            "Tahitian : ua here vau ia oe ❤️",
+            "Hmong : kuv hlub koj ❤️",
+            "Pashto : زه تا سره مینه لرم ❤️",
+            "Dari : من تو را دوست دارم ❤️",
+            "Urdu : میں تم سے محبت کرتا ہوں ❤️",
+            "Bengali : আমি তোমায় ভালোবাসি ❤️",
+            "Tamil : நான் உன்னை காதலிக்கிறேன் ❤️",
+            "Telugu : నేను నిన్ను ప్రేమిస్తున్నాను ❤️",
+            "Kannada : ನಾನು ನಿನ್ನನ್ನು ಪ್ರೀತಿಸುತ್ತೇನೆ ❤️",
+            "Malayalam : ഞാൻ നിന്നെ സ്നേഹിക്കുന്നു ❤️",
+            "Marathi : मी तुझ्यावर प्रेम करतो ❤️",
+            "Gujarati : હું તને પ્રેમ કરું છું ❤️",
+            "Punjabi : ਮੈਂ ਤੈਨੂੰ ਪਿਆਰ ਕਰਦਾ ਹਾਂ ❤️",
+            "Assamese : মই তোমাক ভাল পাওঁ ❤️",
+            "Nepali : म तिमीलाई माया गर्छु ❤️",
+            "Sinhala : මම ඔබට ආදරෙයි ❤️",
+            "Khmer : ខ្ញុំស្រលាញ់អ្នក ❤️",
+            "Lao : ຂໍໃຫ້ຮັກເຈົ້າ ❤️",
+            "Burmese : ငါသင်ကိုချစ်တယ် ❤️",
+            "Tibetan : ང་ཁྱེད་ལ་བརྗེ་བ་ཡོད་རེད། ❤️",
+            "Mongolian : Би чамд хайртай ❤️",
+            "Uighur : مەن سىزنى سۆيىمەن ❤️",
+            "Kurdish : ez hej te dikim ❤️",
+            "Armenian : ես քեզ սիրում եմ ❤️",
+            "Georgian : მე შენ მიყვარხარ ❤️",
+            "Azerbaijani : mən səni sevirəm ❤️",
+            "Albanian : të dua ❤️",
+            "Bosnian : volim te ❤️",
+            "Serbian : волим те ❤️",
+            "Montenegrin : волим те ❤️",
+            "Macedonian : те сакам ❤️",
+            "Croatian : volim te ❤️",
+            "Slovak : ľúbim ťa ❤️",
+            "Catalan : t'estimo ❤️",
+            "Sicilian : ti vogghiu beni ❤️",
+            "Neapolitan : te voglio bene ❤️",
+            "Calabrese : ti vogghiu beni ❤️",
+            "Romagnolo : t'amo ❤️",
+            "Piemontese : ti voglio bene ❤️",
+            "Ligurian : ti voggio bene ❤️",
+            "Emilian : t'amo ❤️",
+            "Sardinian : ti amo ❤️",
+            "Corsican : ti tengu caru ❤️",
+            "Friulian : ti amo ❤️",
+            "Ladino : te quiero ❤️",
+            "Asturian : yo te quieru ❤️",
+            "Aragonese : yo t'estimo ❤️",
+            "Occitan : te vòli ❤️",
+            "Walloon : dji t'aim ❤️",
+            "Flemish : ik hou van jou ❤️",
+            "Scottish Gaelic : tha gaol agam ort ❤️",
+            "Irish : Taim i' ngra leat ❤️",
+            "Welsh : 'rwy'n dy garu di ❤️",
+            "Cornish : my a'th kar ❤️",
+            "Breton : me az kar ❤️",
+            "Basque : maite zaitut ❤️",
+            "Sicilian : ti vogghiu beni ❤️",
+            "Sranan Tongo : mi lobi yu ❤️",
+            "Papiamento : mi ta stima bo ❤️",
+            "Haitian Creole : mwen renmen ou ❤️",
+            "Tok Pisin : mi laikim yu ❤️",
+            "Bislama : mi lavem yu ❤️",
+            "Samoan : ou te alofa ia te oe ❤️",
+            "Tahitian : ua here vau ia oe ❤️",
+            "Guarani : rohayhu nde ❤️",
+            "Quechua : kuyayki ❤️",
+            "Aymara : nayra qamañani ❤️",
+            "Hmong : kuv hlub koj ❤️",
+            "Twi : me dɔ wo ❤️",
+            "Fijian : au domoni iko ❤️"
+        ];
+
+        let index = 0; // Index pour le tableau
+        const messageElement = document.getElementById('message'); // Élément pour afficher le message
+
+        // Fonction pour afficher le message
+        function displayMessage() {
+            messageElement.textContent = translations[index]; // Mettre à jour le texte
+            index = (index + 1) % translations.length; // Passer au prochain message
+        }
+
+        // Afficher le premier message immédiatement
+        displayMessage();
+        // Changer le message toutes les secondes
+        setInterval(displayMessage, 1000);
+    </script>
+
+</body>
+</html>
