@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Animé</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-size: 2rem;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            flex-direction: column;
+        }
+        #message {
+            white-space: pre-wrap;
+            overflow: hidden;
+            border-right: 3px solid white;
+            padding-right: 5px;
+            animation: blink 0.8s infinite;
+        }
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+    </style>
+</head>
+<body>
+    <div id="message"></div>
+
+<audio controls loop> <source src="11111.mp3" type="audio/mpeg"> 
+Your browser does not support the audio element.</audio>
+
+
+
+    <script>
+        const texts = [
+            ["We have been together for a month ...", "Bir aydır birlikteyiz ..."],
+            ["Despite anger and joy ...", "Öfke ve neşeye rağmen ..."],
+            ["Despite rain or sunny days ...", "Yağmur veya güneşli günlere rağmen ..."],
+            ["We knew and saw what was important for us ...", "Bizim için neyin önemli olduğunu biliyorduk ve gördük ..."],
+            ["We focused on what made us ... Us", "Bizi neyin yaptığına odaklandık ... Us"],
+            ["The journey has just begun ...", "Yolculuk şimdi yeni başladı ..."],
+            ["Love is a long drive baby ...", "aşk uzun sürücü bir bebek ..."],
+            ["Imagine we are in a car, you and me ...", "Bir arabadaymış olduğumuzu düşünelim, sen ve ben ..."],
+            ["Our destination, you know it ...", "Hedefimiz bunu biliyorsunuz ..."],
+            ["Sometimes I can drive sleeping, ...", "Bazen sürüş yapabilirim, ..."],
+            ["Sometimes you can spill juice on the seat, ...", "Bazen sandalyeye meyve suyu düşürebilirsin, ..."],
+            ["Sometimes I can get mad because the GPS is not working and you are not helping me with the map ...", "Bazen kızabilirim çünkü GPS çalışmıyor ve haritada bana yardım etmiyorsunuz ..."],
+            ["And you can be mad at me because we forgot to book a motel room ...", "Ve bana kızabilirsin çünkü motelde bir oda rezervasyonu yapmayı unuttuk ..."],
+            ["Or maybe because I didn't put your favorite song while driving ...", "ya da belki sürüş sırasında en sevdiğiniz şarkıyı koymadığım için ..."],
+            ["Or maybe because I said hello to the fast-food cashier ...", "ya da belki fast-food'daki garsona merhaba dediğim için ..."],
+            ["But all of this is our journey ...", "Ama tüm bunlar bizim yolculuğumuz ..."],
+            ["This is what makes us ...", "Bizi yapan şey budur ..."],
+            ["There will be months like this ...", "Böyle aylar olacak ..."],
+            ["And our love will grow even more ...", "Ve aşkımız daha da büyüyecek ..."],
+            ["We won't stop ... or crash in this journey ...", "Durmayacağız ... ya da bu yolculukta kaza geçiriyoruz ..."],
+            ["No turning back ... no stopping ... only the destination ...", "Dönüş yok ... durma yok ... sadece hedef ..."],
+            ["you", "sen"],
+            ["and me", "ve ben"],
+            ["Against the world ...", "Dünyaya karşı ..."],
+            ["I loved you February 27, 2025 ...", "Seni sevdim 27 Şubat 2025 ..."],
+            ["I love you now, March 27, 2025 ...", "Seni şimdi seviyorum, 27 Mart 2025 ..."],
+            ["And I will keep loving you in the future ...", "Ve gelecekte seni sevmeye devam edeceğim ..."],
+            ["To my dear, my baby ...", "Karimime, bebeğim ..."],
+            ["My love, my darling ...", "Efendim Askim ..."],
+            ["I love you ...", "Seni seviyorum ..."]
+        ];
+        let index = 0;
+        function showText() {
+            if (index < texts.length) {
+                document.getElementById("message").innerHTML = `<p>${texts[index][0]}</p><p>${texts[index][1]}</p>`;
+                index++;
+                setTimeout(showText, 7000); 
+            }
+        }
+        showText();
+    </script>
+</body>
+</html>
