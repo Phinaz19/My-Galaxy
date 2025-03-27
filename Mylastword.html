@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-size: 2rem;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            flex-direction: column;
+        }
+        #message {
+            white-space: pre-wrap;
+            overflow: hidden;
+            border-right: 3px solid white;
+            padding-right: 5px;
+            animation: blink 0.8s infinite;
+        }
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+        audio {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="message"></div>
+    <audio controls>
+        <source src="Mylastword.m4a" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <script>
+        const texts = [
+            ["I heard what you said yesterday", "سمعت ما قلته بالأمس"],
+            ["I know you love me to death", "أعلم أنك تحبني حتى الموت"],
+            ["You know I love you to death", "أنت تعلم أنني أحبك حتى الموت"],
+            ["Even if family and custom complicate things", "حتى لو عقدت العائلة والعادات الأمور"],
+            ["We have been spending good days together", "لقد قضينا أيامًا جميلة معًا"],
+            ["Since the day I met you on Talkin", "منذ اليوم الذي التقيتك فيه على Talkin"],
+            ["I will never regret in my life to meet you", "لن أندم أبدًا في حياتي على لقائك"],
+            ["What I want now...", "ما أريده الآن..."],
+            ["Is to live the present moment", "هو أن أعيش اللحظة الحالية"],
+            ["No worry about the past...", "لا قلق بشأن الماضي..."],
+            ["No worry about the future...", "لا قلق بشأن المستقبل..."],
+            ["I will tell you a truth", "سأخبرك بحقيقة"],
+            ["Hide or avoid the fact that you need affection", "إخفاء أو تجنب حقيقة أنك بحاجة إلى الحنان"],
+            ["Make this come bigger and stronger", "يجعل هذا الشعور ينمو ويصبح أقوى"],
+            ["Tell me when you need", "أخبرني عندما تحتاج"],
+            ["Me too I will tell you", "وأنا أيضًا سأخبرك"],
+            ["This is my duty as your husband", "هذا واجبي كزوجك"],
+            ["This is your duty as my wife", "وهذا واجبك كزوجتي"],
+            ["I will fix you", "سأصلحك"],
+            ["And take care of you", "وسأعتني بك"],
+            ["Till the day you will get married or you will tell me to stop...", "حتى اليوم الذي ستتزوجين فيه أو تخبريني بأن أتوقف..."],
+            ["I know you more than you Fati...", "أنا أعرفك أكثر منك يا فاطي..."],
+            ["No, I know your envy and desires more than anyone...", "لا، أنا أعرف رغباتك وشهواتك أكثر من أي شخص..."],
+            ["I know my wife wants red marks everywhere...", "أعلم أن زوجتي تريد علامات حمراء في كل مكان..."],
+            ["And she's hard to get satisfied 🤭", "ومن الصعب إرضاؤها 🤭"],
+            ["Tell me don't hide okay", "أخبريني لا تخفي، حسنًا؟"],
+            ["I will never hurt you or make you cry", "لن أؤذيك أبدًا أو أجعلك تبكين"],
+            ["I had a lot of opportunities to hurt you or save your privacy", "كانت لدي العديد من الفرص لأؤذيك أو أنتهك خصوصيتك"],
+            ["I didn't hurt you", "لم أؤذك"],
+            ["It makes me sad when you said you are afraid of me", "يحزنني عندما تقولين أنك خائفة مني"],
+            ["Feel free to send pic or something to me", "لا تترددي في إرسال صورة أو أي شيء لي"],
+            ["I will never save or hurt you", "لن أحفظها أو أؤذيك"],
+            ["I swear to God I never did it", "أقسم بالله لم أفعل ذلك أبدًا"],
+            ["And I will never do it", "ولن أفعل ذلك أبدًا"],
+            ["I promised you to make you speak French", "وعدتك بأن أجعلك تتحدثين الفرنسية"],
+            ["I will do it", "سأفعلها"],
+            ["But I can't do it if we don't study together...", "لكن لا يمكنني فعلها إذا لم ندرس معًا..."],
+            ["You must focus on university too", "يجب أن تركزي على الجامعة أيضًا"],
+            ["Me too 😅", "وأنا أيضًا 😅"],
+            ["Mum and big brother know about us...", "أمي وأخي الأكبر يعرفون عنا..."],
+            ["I know that you are not more motivated at university", "أعلم أنك لم تعودي متحمسة للدراسة"],
+            ["But I won't give up on you", "لكنني لن أتخلى عنك"],
+            ["When you have free time call me...", "عندما يكون لديك وقت فراغ، اتصلي بي..."],
+            ["Whenever", "في أي وقت"],
+            ["We will study together like at the beginning", "سندرس معًا كما في البداية"],
+            ["When we study no affections, I will be rude", "عندما ندرس لا عواطف، سأكون صارمًا"],
+            ["Our future is making now", "مستقبلنا يُصنع الآن"],
+            ["No entertainment...", "لا تسلية..."],
+            ["If you must ask mum to give us 1h per day do it...", "إذا كان عليك أن تطلبي من أمك أن تعطينا ساعة يوميًا، فافعلي ذلك..."],
+            ["If it was written we will marry together", "إذا كان مكتوبًا سنتزوج معًا"],
+            ["It will be like this", "فسيكون كذلك"],
+            ["If not, no one can change this... except Allah", "وإن لم يكن، فلا أحد يستطيع تغيير هذا... إلا الله"],
+            ["I trust Allah", "أثق بالله"],
+            ["I let Allah decide about us...", "أترك لله القرار بشأننا..."],
+            ["Inshallah...", "إن شاء الله..."]
+            ["I love you so much", " Je t'aime beaucoup"]
+        ];
+        let index = 0;
+        function showText() {
+            if (index < texts.length) {
+                document.getElementById("message").innerHTML = `<p>${texts[index][0]}</p><p>${texts[index][1]}</p>`;
+                index++;
+                setTimeout(showText, 5000); 
+            }
+        }
+        showText();
+    </script>
+ <p>Only you can see this, don't worry 😌</p>
+</body>
+</html>
