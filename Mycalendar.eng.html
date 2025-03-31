@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Our Wishlist</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+            color: #e74c3c;
+            margin-bottom: 30px;
+        }
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .event {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-left: 4px solid #e74c3c;
+        }
+        .event-date {
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 5px;
+        }
+        .event-title {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        .event-desc {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        .emoji {
+            font-size: 1.2em;
+            margin-right: 5px;
+        }
+        .holiday {
+            background-color: #fff8e1;
+            border-left-color: #f39c12;
+        }
+        .holiday .event-date {
+            color: #f39c12;
+        }
+        .project-step {
+            font-style: italic;
+            font-size: 0.8em;
+            color: #3498db;
+            margin-top: 5px;
+        }
+        .save-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: white;
+            background-color: #e74c3c;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        /* Styles for the success message and heart */
+        .success-message {
+            display: none; /* Initially hidden */
+            text-align: center;
+            margin-top: 20px;
+            font-size: 2em;
+            color: #e74c3c;
+        }
+        .heart {
+            font-size: 5em; /* Size of the heart */
+            color: pink; /* Heart color */
+            animation: heartbeat 1s infinite; /* Animation for heartbeat effect */
+        }
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+        /* Styles for the secret text block */
+        .secret-text {
+            display: none; /* Initially hidden */
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e8f5e9; /* Light green background */
+            border: 1px solid #4caf50; /* Green border */
+            border-radius: 8px; /* Rounded corners */
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Our Wishlist</h1>
+    
+    <div class="calendar">
+        <!-- January -->
+        <div class="event">
+            <input type="checkbox" id="event1">
+            <div class="event-date">January 6</div>
+            <div class="event-title"><span class="emoji">⏳</span> Time Capsule</div>
+            <div class="event-desc">Philip & Gizem will bury a time capsule with meaningful objects and come back in a few years to dig it up.</div>
+            <div class="project-step">Project made in honor of Gizem's anniversary</div>
+        </div>
+        
+        <!-- February -->
+        <div class="event holiday">
+            <input type="checkbox" id="event2">
+            <div class="event-date">February 14 (Saint-Valentin)</div>
+            <div class="event-title"><span class="emoji">💌</span> The Lovely Letter</div>
+            <div class="event-desc">Philip & Gizem will write and send each other heartfelt love letters, expressing their feelings in a sincere and authentic way.</div>
+        </div>
+        
+        <!-- March -->
+        <div class="event">
+            <input type="checkbox" id="event3">
+            <div class="event-date">March 13</div>
+            <div class="event-title"><span class="emoji">🚂</span> A train ride together</div>
+            <div class="event-desc">Philip & Gizem will take a long train journey, enjoying the scenery and each other's company.</div>
+            <div class="project-step">First step of "Our First Trip!!!!"</div>
+        </div>
+        
+        <div class="event">
+            <input type="checkbox" id="event4">
+            <div class="event-date">March 15</div>
+            <div class="event-title"><span class="emoji">✈️</span> Our First Trip!!!!</div>
+            <div class="event-desc">Philip & Gizem are going on an adventure to a new country! A week filled with discoveries and unforgettable moments.</div>
+            <div class="project-step">Project made in honor of Philip's anniversary</div>
+        </div>
+        
+        <!-- April -->
+        <div class="event">
+            <input type="checkbox" id="event5">
+            <div class="event-date">April 2</div>
+            <div class="event-title"><span class="emoji">🧘</span> Take a yoga or meditation class</div>
+            <div class="event-desc">Philip & Gizem will experience serenity by attending a yoga or meditation class to relax and strengthen their inner connection.</div>
+        </div>
+        
+        <div class="event holiday">
+            <input type="checkbox" id="event6">
+            <div class="event-date">April 23 (National Sovereignty and Children's Day 🇹🇷)</div>
+            <div class="event-title"><span class="emoji">🎢</span> Going to an amusement park</div>
+            <div class="event-desc">Philip & Gizem will spend a fun-filled day at an amusement park, enjoying thrilling rides and creating new memories.</div>
+        </div>
+        
+        <div class="event">
+            <input type="checkbox" id="event7">
+            <div class="event-date">April 28</div>
+            <div class="event-title"><span class="emoji">🍲</span> Taking a cooking class together</div>
+            <div class="event-desc">Philip & Gizem will learn new recipes and improve their cooking skills.</div>
+            <div class="project-step">First step of "Cook a meal together" project</div>
+        </div>
+        
+        <div class="event">
+            <input type="checkbox" id="event8">
+            <div class="event-date">April 30</div>
+            <div class="event-title"><span class="emoji">🤝</span> Volunteering for a social project</div>
+            <div class="event-desc">Philip & Gizem will dedicate their time to a cause they care about, helping a charity or social initiative.</div>
+        </div>
+        
+        <!-- May -->
+        <div class="event holiday">
+            <input type="checkbox" id="event9">
+            <div class="event-date">May 1 (Labor Day)</div>
+            <div class="event-title"><span class="emoji">🍽</span> Cook a meal together</div>
+            <div class="event-desc">Philip & Gizem will use their newly acquired cooking skills to prepare and enjoy a homemade meal.</div>
+        </div>
+        
+        <div class="event holiday">
+            <input type="checkbox" id="event10">
+            <div class="event-date">May 1 (Labor Day)</div>
+            <div class="event-title"><span class="emoji">🏀</span> Playing a sport together</div>
+            <div class="event-desc">Whether it's basketball, tennis, or another sport, Philip & Gizem will share an active and fun moment.</div>
+        </div>
+        
+        <div class="event holiday">
+            <input type="checkbox" id="event11">
+            <div class="event-date">May 19 (Commemoration of Atatürk, Youth and Sports Day 🇹🇷)</div>
+            <div class="event-title"><span class="emoji">🌿</span> Taking a scenic nature walk</div>
+            <div class="event-desc">Philip & Gizem will go on a hike to enjoy fresh air, beautiful landscapes, and nature's tranquility.</div>
+            <div class="project-step">First step of "Go camping in the wild" project</div>
+        </div>
+        
+        <div class="event holiday">
+            <input type="checkbox" id="event12">
+            <div class="event-date">May 19 (Commemoration of Atatürk, Youth and Sports Day 🇹🇷)</div>
+            <div class="event-title"><span class="emoji">🏕</span> Go camping in the wild</div>
+            <div class="event-desc">Philip & Gizem will embark on an adventurous night under the stars, immersed in nature.</div>
+        </div>
+        
+        <!-- June -->
+        <div class="event">
+            <input type="checkbox" id="event13">
+            <div class="event-date">June 10</div>
+            <div class="event-title"><span class="emoji">💃</span> Learn a new type of dance</div>
+            <div class="event-desc">Philip & Gizem will try a new dance style, whether it's salsa, tango, or another exciting rhythm.</div>
+            <div class="project-step">First step of "Attend a live concert" project</div>
+        </div>
+        
+        <div class="event">
+            <input type="checkbox" id="event14">
+            <div class="event-date">June 10</div>
+            <div class="event-title"><span class="emoji">🎶</span> Attend a live concert</div>
+            <div class="event-desc">Philip & Gizem will enjoy the thrill of live music, sharing a unique experience together.</div>
+        </div>
+        
+        <div class="event">
+            <input type="checkbox" id="event15">
+            <div class="event-date">June 20</div>
+            <div class="event-title"><span class="emoji">✨</span> Watch the stars on a clear night</div>
+            <div class="event-desc">Philip & Gizem will spend a magical evening stargazing and dreaming together.</div>
+            <div class="project-step">First step of "Making Peggy" project</div>
+        </div>
+        
+        <div class="event">
+            <input type="checkbox" id="event16">
+            <div class="event-date">June 20</div>
+            <div class="event-title"><span class="emoji">🌌</span> Have a deep conversation under the stars</div>
+            <div class="event-desc">An intimate moment to talk about deep topics, grow closer, and strengthen their bond.</div>
+            <div class="project-step">Second step of "Making Peggy" project</div>
+        </div>
+        
+        <div class="event">
+            <input type="checkbox" id="event17">
+            <div class="event-date">June 20</div>
+            <div class="event-title"><span class="emoji">👶</span> Making Peggy</div>
+            <div class="event-desc">Philip & Gizem will begin a new life-changing adventure together... and try to have their perle...</div>
+        </div>
+        
+        <!-- July -->
+        <div class="event">
+            <input type="checkbox" id="event18">
+            <div class="event-date">July 20</div>
+            <div class="event-title"><span class="emoji">📖</span> Read the same book and discuss it</div>
+            <div class="event-desc">Philip & Gizem will choose a book, read it separately, and then share their thoughts together.</div>
+        </div>
+        
+        <!-- August -->
+        <div class="event">
+            <input type="checkbox" id="event19">
+            <div class="event-date">August 29</div>
+            <div class="event-title"><span class="emoji">🚗</span> Take a spontaneous road trip</div>
+            <div class="event-desc">Philip & Gizem will hit the road without a set plan, seeking adventure and unexpected surprises.</div>
+        </div>
+        
+        <!-- September -->
+        <div class="event">
+            <input type="checkbox" id="event20">
+            <div class="event-date">September 15</div>
+            <div class="event-title"><span class="emoji">🚲</span> Going on a bike ride around town</div>
+            <div class="event-desc">Philip & Gizem will explore the city on bicycles, discovering new places and enjoying the moment.</div>
+        </div>
+        
+        <!-- October -->
+        <div class="event">
+            <input type="checkbox" id="event21">
+            <div class="event-date">October 28</div>
+            <div class="event-title"><span class="emoji">🏊</span> Try something that scares us (swimming?)</div>
+            <div class="event-desc">Philip & Gizem will step out of their comfort zones by facing a personal challenge.</div>
+        </div>
+        
+        <div class="event holiday">
+            <input type="checkbox" id="event22">
+            <div class="event-date">October 29 (Turkey Republic Day)</div>
+            <div class="event-title"><span class="emoji">🍿</span> Watching childhood movies</div>
+            <div class="event-desc">Philip & Gizem will relive nostalgic memories by watching the movies that shaped their childhood.</div>
+        </div>
+        
+        <div class="event holiday">
+            <input type="checkbox" id="event23">
+            <div class="event-date">October 29 (Turkey Republic Day)</div>
+            <div class="event-title"><span class="emoji">🎨</span> Visit a museum or art gallery</div>
+            <div class="event-desc">Philip & Gizem will enrich their knowledge by exploring an art or history exhibition.</div>
+        </div>
+        
+        <!-- December -->
+        <div class="event">
+            <input type="checkbox" id="event24">
+            <div class="event-date">December 24</div>
+            <div class="event-title"><span class="emoji">🎨</span> Start a joint creative project</div>
+            <div class="event-desc">Philip & Gizem will work on an artistic or creative endeavor together, such as painting, writing, or music.</div>
+        </div>
+        
+        <div class="event">
+            <input type="checkbox" id="event25">
+            <div class="event-date">December 24</div>
+            <div class="event-title"><span class="emoji">🎬</span> Planning a movie night</div>
+            <div class="event-desc">Philip & Gizem will organize a cozy movie night with their favorite films and delicious snacks.</div>
+        </div>
+        
+        <div class="event holiday">
+            <input type="checkbox" id="event26">
+            <div class="event-date">December 25 (Christmas)</div>
+            <div class="event-title"><span class="emoji">📵</span> Spending a weekend away from technology</div>
+            <div class="event-desc">Philip & Gizem will disconnect from the digital world to focus on the present moment and each other.</div>
+        </div>
+    </div>
+    
+    <!-- Save Button -->
+    <button class="save-button" onclick="saveChanges()">Save Changes</button>
+
+    <!-- Success Message and Heart -->
+    <div class="success-message" id="successMessage">
+        <div class="heart">❤️</div> <!-- Heart emoji -->
+        <div>We did it Babe!!!</div> <!-- Success message -->
+        <div>Let's plan another journey together!</div> <!-- Additional message -->
+    </div>
+
+    <!-- Secret Text Block -->
+    <div class="secret-text" id="secretText">
+        <h2>Secret List of Activities</h2>
+        <p>1. Jouer aux jeux vidéos ou Société avec elle</p>
+        <p>2. Dormir en faisant un calin</p>
+        <p>3. Pas de code ou des mots de passe</p>
+        <p>4. Voir un film romantique/horreur/comédie/autre avec elle</p>
+        <p>5. L'embrasser dans l'ascenseur</p>
+        <p>6. Aller à un match de football dans un stade</p>
+        <p>7. Laisser ma femme conduire 5 fois</p>
+        <p>8. L'embrasser pendant 10 minutes</p>
+        <p>9. Faire un bonhomme de neige ensemble</p>
+        <p>10. Jouer un jeu de rôle ensemble</p>
+        <p>11. L'habiller à ma façon</p>
+        <p>12. L'apporter une surprise 3 jours d'affilés</p>
+        <p>13. L'embrasser devant ses parents et mes parents</p>
+        <p>14. Faire l'amour dans toutes les pièces de la maison</p>
+        <p>15. Petite sortie avec sa sœur ou frère</p>
+        <p>16. Dire "c'est ma femme" devant les gens</p>
+        <p>17. La croquer des yeux quand on est en lieu public</p>
+        <p>18. Un parapluie devant son job lors d'une pluie</p>
+        <p>19. L'embrasser dans un cinéma lors d'un film</p>
+        <p>20. Tenir sa main dans la rue pendant 10 minutes</p>
+        <p>21. Manger de la street-food avec elle</p>
+         <p>22. Aller dans une salle de jeu d'arcade ensemble</p>
+        <p>23. Recevoir un paquet de chocolat à la Saint-Valentin</p>
+        <p>24. Prendre une douche froide/chaude avec elle</p>
+        <p>25. La porter sur mon dos une fois</p>
+        <p>26. L'embrasser fortement près d'un cours d'eau avec le vent</p>
+        <p>27. Faire une nuit blanche avec elle</p>
+        <p>28. Nager ensemble</p>
+        <p>29. Poser une fleur sur sa tête</p>
+        <p>30. La laisser gagner un pari important</p>
+        <p>31. Chanter au karaoke avec elle</p>
+        <p>32. Faire une bataille d'oreillers</p>
+        <p>33. Lécher complètement tout son corps</p>
+        <p>34. La traiter comme une princesse durant ses règles pendant 5 mois d'affilés</p>
+        <p>35. Porter le même modèle de pyjama</p>
+        <p>36. Manger un plat dégoûtant et dire que c'est délicieux</p>
+        <p>37. Passer toute une journée sur le canapé avec elle</p>
+        <p>38. L'attendre en voiture devant un bâtiment</p>
+        <p>39. S'asseoir dans un lieu public et l'amouracher</p>
+        <p>40. Faire l'amour dehors avec ma femme</p>
+        <p>41. Lui faire un poème ou une chanson</p>
+        <p>42. ...</p>
+        <p>43. ...</p>
+        <p>44. ...</p>
+        <p>45. ...</p>
+        <p>46. ...</p>
+        <p>47. ...</p>
+        <p>48. ...</p>
+        <p>49. ...</p>
+        <p>50. ...</p>
+        <p>51. ...</p>
+        <p>52. ...</p>
+        <p>53. ...</p>
+        <p>54. ...</p>
+        <p>55. ...</p>
+        <p>56. ...</p>
+        <p>57. ...</p>
+        <p>58. ...</p>
+        <p>59. ...</p>
+        <p>60. ...</p>
+        <p>61. ...</p>
+        <p>62. ...</p>
+        <p>63. ...</p>
+        <p>64. ...</p>
+        <p>65. ...</p>
+        <p>66. ...</p>
+        <p>67. ...</p>
+        <p>68. ...</p>
+        <p>69. ...</p>
+        <p>70. ...</p>
+        <p>71. ...</p>
+        <p>72. ...</p>
+        <p>73. ...</p>
+        <p>74. ...</p>
+        <p>75. ...</p>
+        <p>76. ...</p>
+        <p>77. ...</p>
+        <p>78. ...</p>
+        <p>79. ...</p>
+        <p>80. ...</p>
+        <p>81. ...</p>
+        <p>82. ...</p>
+        <p>83. ...</p>
+        <p>84. ...</p>
+        <p>85. ...</p>
+        <p>86. ...</p>
+        <p>87. ...</p>
+        <p>88. ...</p>
+        <p>89. ...</p>
+        <p>90. ...</p>
+        <p>91. ...</p>
+        <p>92. ...</p>
+        <p>93. ...</p>
+        <p>94. ...</p>
+        <p>95. ...</p>
+        <p>96. ...</p>
+        <p>97. ...</p>
+        <p>98. ...</p>
+        <p>99. ...</p>
+        <p>100. ...</p>
+    </div>
+
+    <!-- Inline JavaScript -->
+    <script>
+        // Function to save the state of checkboxes
+        function saveChanges() {
+            const events = document.querySelectorAll('.event input[type="checkbox"]');
+            let selectedEvents = [];
+            let allChecked = true; // Flag to check if all checkboxes are checked
+            
+            events.forEach(event => {
+                if (event.checked) {
+                    selectedEvents.push(event.nextElementSibling.innerText); // Get the event title
+                } else {
+                    allChecked = false; // If any checkbox is unchecked, set flag to false
+                }
+            });
+            
+            alert('You have saved the following events:\n' + selectedEvents.join('\n'));
+            
+            // Show success message if all checkboxes are checked
+            if (allChecked) {
+                document.getElementById('successMessage').style.display = 'block'; // Show the success message
+            }
+            
+            // Save the state of checkboxes in localStorage
+            events.forEach((event, index) => {
+                localStorage.setItem(`event${index + 1}`, event.checked); // Save the checkbox state
+            });
+        }
+
+        // Function to load the state of checkboxes from localStorage
+        function loadCheckboxes() {
+            const events = document.querySelectorAll('.event input[type="checkbox"]');
+            events.forEach((event, index) => {
+                const isChecked = localStorage.getItem(`event${index + 1}`) === 'true'; // Get the saved state
+                event.checked = isChecked; // Set the checkbox state
+            });
+        }
+
+        // Load checkbox states when the page is loaded
+        window.onload = loadCheckboxes;
+
+        // Secret key combination to show the secret text
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey && event.shiftKey && event.key === 'J') { // Ctrl + Shift + j
+                const secretText = document.getElementById('secretText');
+                secretText.style.display = secretText.style.display === 'block' ? 'none' : 'block'; // Toggle visibility
+            }
+        });
+    </script>
+</body>
+</html>
+
