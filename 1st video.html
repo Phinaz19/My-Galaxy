@@ -1,11 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>2nd video</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relat1ship</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin: 0;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        video {
+            max-width: 100%;
+            height: auto;
+        }
+        ::cue {
+            color: black;  /* Couleur des sous-titres */
+            background: rgba(255, 255, 255, 0.7); /* Fond semi-transparent pour lisibilité */
+        }
+    </style>
 </head>
 <body>
-
+    <h1>First video</h1>
+    <video controls>
+        <source src="What True Love Really Is.mp4" type="video/mp4">
+        <track src="What True Love Really Is.srt" kind="subtitles" srclang="fr" label="Français" default>
+        Votre navigateur ne supporte pas la vidéo.
+    </video>
 </body>
 </html>
