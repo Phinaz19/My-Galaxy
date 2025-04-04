@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casefire babe</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        .message {
+            display: none;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .downloadLink {
+            display: none;
+            color: yellow;
+            margin: 10px 0;
+        }
+        .icon {
+            width: 30px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        .section {
+            display: none; /* Hide sections by default */
+        }
+    </style>
+</head>
+<body>
+
+    <div id="message1" class="message">Merhaba bebeğim !</div>
+    <div id="message2" class="message">Zeki bir adam bir gün dedi ... bilge bir adam uzaktan kötülük görür ve kendini önceden hazırlar</div>
+    <div id="message3" class="message">Bu gece iyi uyumadım, ben adamım, bu yüzden ilk adımı atmalıyım...
+        <img class="icon" src="2.png" alt="Icône 2">
+    </div>
+    <div id="message4" class="message">Savaş istemiyorum, barış istiyorum, bu yüzden bu küçük sürprizi yaptım
+        <img class="icon" src="3.png" alt="Icône 3">
+    </div>
+    <div id="message5" class="message">Bebeğim dürüst olalım
+        <img class="icon" src="4.png" alt="Icône 4">
+    </div>
+    <div id="message6" class="message">Seni ölüme sevdiğimi biliyorsun
+        <img class="icon" src="5.png" alt="Icône 5">
+    </div>
+    <div id="message7" class="message">Beni ölüme sevdiğini biliyorum
+        <img class="icon" src="6.png" alt="Icône 6">
+    </div>
+    <div id="message8" class="message">Tanrı bana cennetten önce cennet hissettirmeni sağladı ...
+        <img class="icon" src="1.png" alt="Icône 1">
+    </div>
+    <div id="message9" class="message">Tanrı sana uzun zamandır aradığın adama verdi ...
+        <img class="icon" src="8.png" alt="Icône 8">
+    </div>
+    <div id="message10" class="message">Düzelt ya da düzelt .... hatırlıyorsun
+        <img class="icon" src="9.png" alt="Icône 9">
+    </div>
+    <div id="message11" class="message">Düzeltelim ve bazı ilişki tavsiyeleri videoya sahip olalım ...
+        <img class="icon" src="10.png" alt="Icône 10">
+    </div>
+
+    <div class="section">
+        <h2>Videos</h2>
+        <a class="downloadLink" href="What True Love Really Is.mp4">Télécharger la vidéo 1</a>
+    </div>
+    <div class="section">
+        <h2>Videoların altyazıları</h2>
+        <a class="downloadLink" href="What True Love Really Is.srt">Télécharger les sous-titres 1</a>
+        </div>
+
+
+<div class="section">
+        <a href="1st video.html">Next video</a>
+    </div>
+    <script>
+        let messages = document.querySelectorAll('.message');
+        let downloadLinks = document.querySelectorAll('.downloadLink');
+        let sections = document.querySelectorAll('.section'); // Select all sections
+        let currentMessage = 0;
+
+        function showNextMessage() {
+            if (currentMessage > 0) {
+                messages[currentMessage - 1].style.display = 'none';
+            }
+            if (currentMessage < messages.length) {
+                messages[currentMessage].style.display = 'block';
+                currentMessage++;
+                setTimeout(showNextMessage, 10000); // Affiche chaque message pendant 10 secondes
+            } else {
+                // Show all sections and download links after the last message
+                sections.forEach(section => section.style.display = 'block');
+                downloadLinks.forEach(link => link.style.display = 'block');
+            }
+        }
+
+        showNextMessage();
+    </script>
+
+</body>
+</html>
