@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playlist for karıcım</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #ff6f61;
+        }
+        a {
+            display: inline-block;
+            margin: 20px;
+            padding: 15px 25px;
+            background-color: #ff6f61;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        a:hover {
+            background-color: #ff3b3b;
+        }
+        .heart {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            margin: 50px auto;
+            background-color: red;
+            transform: rotate(-45deg);
+            animation: beat 0.5s infinite alternate;
+        }
+        .heart::before,
+        .heart::after {
+            content: '';
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            border-radius: 50%;
+            position: absolute;
+        }
+        .heart::before {
+            top: -50px;
+            left: 0;
+        }
+        .heart::after {
+            left: 50px;
+            top: 0;
+        }
+        @keyframes beat {
+            0% { transform: rotate(-45deg) scale(1); }
+            100% { transform: rotate(-45deg) scale(1.2); }
+        }
+    </style>
+</head>
+<body>
+    <h3>Bütün gün seni düşünüyorum ve senin için bir çalma listesi yapmaya karar verdim ... Bu müziğin her biri seni hatırlamamı sağlıyor ya da senin için ne hissettiğimi, umarım her birini takdir edersiniz karıcım...</h3>
+    <a href="https://takeout-download-drive-eu.usercontent.google.com/download/Playlist%20for%20kar%C4%B1c%C4%B1m-20250407T140457Z-001.zip?j=6808889a-c68e-477c-8de1-27e74c7f04f1&i=0&user=240963934529&authuser=0" download>Hepsini indir</a>
+    
+    <div class="heart"></div>
+</body>
+</html>
