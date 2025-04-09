@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>my last regret</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+        .phrase {
+            font-size: 2em;
+            margin: 10px;
+            display: none; /* Cacher les phrases au départ */
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+
+    <script>
+        const phrases = [
+            "Ne dediğin bana, sevgilim, bebeğim bana diğer erkekler gibi olduğumu söyledi, bir saniye Philip'in sana söylediğini hayal et, sen diğer kız gibisin ... ne hissediyorsun? Şaka mı yapıyorsun bilmiyorum ... ama söylediğin şey gerçekten kötü",
+        
+            "Üzgünüm başarısız oldum ... eğer diğer erkekler gibi olsaydım ... kocan gibi başarısız oldum ...",
+            "Bana söylediklerin beni şok etti ... Philip'in varlığı sana endişe, öfke ya da daha fazla mutluluk getiriyorsa .... gitmeyi tercih ederim .... Umarım başka bir adam bulursun ...",
+            "Daha çok yaptığım gibi seni kim sevecek?",
+            "Sizi okuldan önce selamlamak için her gün sabah 5'i uyandıran",
+            "sizi anlamak ve size birçok sır söylemek için yeni bir dil öğrenen",
+            "Seni her zaman anlayacak olan ",
+            "Ben de duygularım var, karımı iyi hissettirmek için elimden geleni yaptığımda, bana Tanrı'nın ona verdiği en iyi hediye olduğumu göstermek için ihtiyacım var, ama her zaman yapmadığımı söylersin ... Kalbinizi hızlı atış yapan kişi bile, diğer erkekler gibi, diğer erkekler gibi, ... Öfkeni kontrol etmelisin, ... diğer sorun için en çok sevmeyi sevmediğiniz için ...",
+            "Bütün gece uyanık kalan, şiirler, tatlı video, güzel bir çalma listesi veya gözlerini açtığınızda sabah gülümsemeniz için iyi bir sürpriz yapmak için ...",
+            "ve seni istediğin gibi destekleyin",
+            "Her zaman senin için oradaydım, 5 dakika oturmaya ve derinlemesine düşünmeye çalış, Philip'in tüm erkek arkadaşlarının en iyisi olduğunu biliyorsun",
+            "Teşekkür ederim Gizem, gerçekten senin ruh eşim olduğunu düşündüm",
+            "Sınavdan sonra sana annemi ve ailemi göstermeye hitap ediyordum",
+            "Ben dünyanın en iyi kocası değilim ama her zaman ilişkimin her birinde üst düzeyde sevmek için elimden geleni yapıyorum ... Aşkta şanslı değilim belki",
+            "Sıkıcı olursam ve seni sevdikten ve gülümsemeden daha fazla incitirsem özür dilerim",
+            "Bugün ilişkimiz hakkında düşünmeye zaman ayıracağım, bütün gün bizi düşünün ... Kongo nehrini görmeye ve telefon ve sosyal ağ olmadan biraz nefes alacağım ..."
+        ];
+
+        let index = 0;
+
+        function showPhrase() {
+            if (index < phrases.length) {
+                const phraseElement = document.createElement('div');
+                phraseElement.className = 'phrase';
+                phraseElement.innerText = phrases[index];
+                phraseElement.style.display = 'block'; // Afficher la phrase
+
+                document.getElementById('container').appendChild(phraseElement);
+
+                // Passer à la phrase suivante après 15 secondes
+                setTimeout(() => {
+                    phraseElement.style.display = 'none'; // Cacher la phrase actuelle
+                    index++;
+                    showPhrase(); // Afficher la prochaine phrase
+                }, 15000); // Change to 15000 for 15 seconds
+            }
+        }
+
+        showPhrase(); // Démarrer l'affichage des phrases
+    </script>
+</body>
+</html>
