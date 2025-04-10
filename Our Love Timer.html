@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Love Timer</title>
+    <style>
+        body {
+            background-color: black;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        #outer-container {
+            border: 10px solid #333;
+            border-radius: 16px;
+            padding: 30px;
+            background-color: #e0e0e0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+        #container {
+            border: 5px solid #333;
+            border-radius: 12px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s;
+        }
+        .title-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+        }
+        .title {
+            font-weight: bold;
+            font-size: 32px;
+            color: #fff; /* Changed to white */
+        }
+        #timer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 48px;
+            color: #fff;
+        }
+        .audio-controls {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+        }
+        .time-block {
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+        .time-block:hover {
+            transform: scale(1.05);
+        }
+        .days { background-color: #4CAF50; }
+        .hours { background-color: #2196F3; }
+        .minutes { background-color: #FF9800; }
+        .seconds { background-color: #F44336; }
+        .changing { animation: pulse 0.5s; }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .floating-image {
+            position: absolute;
+            width: 100px;
+            height: auto;
+            display: none;
+            z-index: 0;
+        }
+        .floating-text {
+            position: absolute;
+            font-size: 24px;
+            display: none;
+            z-index: 0;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="title-container">
+        <h2 class="title">Our Love Timer</h2>
+    </div>
+    <div id="outer-container">
+        <div id="container">
+            <div id="timer">
+                <div class="time-block days" id="days-block">
+                    <span id="days">0</span>
+                    <div class="label">Days</div>
+                </div>
+                <div class="time-block hours" id="hours-block">
+                    <span id="hours">00</span>
+                    <div class="label">Hours</div>
+                </div>
+                <div class="time-block minutes" id="minutes-block">
+                    <span id="minutes">00</span>
+                    <div class="label">Minutes</div>
+                </div>
+                <div class="time-block seconds" id="seconds-block">
+                    <span id="seconds">00</span>
+                    <div class="label">Seconds</div>
+                </div>
+            </div>
+        </div>
+
+        <img src="image1.jpg" class="floating-image" id="img1">
+        <img src="image2.jpg" class="floating-image" id="img2">
+        <img src="image3.jpg" class="floating-image" id="img3">
+        <img src="image4.jpg" class="floating-image" id="img4">
+        <img src="image5.jpg" class="floating-image" id="img5">
+        <img src="image6.jpg" class="floating-image" id="img6">
+        <img src="image7.jpg" class="floating-image" id="img7">
+        <img src="image8.jpg" class="floating-image" id="img8">
+        <img src="image9.jpg" class="floating-image" id="img9">
+        <img src="image10.jpg" class="floating-image" id="img10">
+
+        <div class="floating-text" id="text1">Seni çok seviyorum</div>
+        <div class="floating-text" id="text2">I love you more</div>
+        <div class="floating-text" id="text3">Je t'aime</div>
+    </div>
+    <div class="audio-controls">
+        <audio src="heartbeat.mp3" controls loop></audio>
+    </div>
+    
+    <script>
+        const startTime = new Date('2025-02-27T00:00:00').getTime();
+        
+        function updateTimer() {
+            const currentTime = Date.now();
+            const elapsedTime = currentTime - startTime;
+
+            const days = Math.floor(elapsedTime / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((elapsedTime / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((elapsedTime / (1000 * 60)) % 60);
+            const seconds = Math.floor((elapsedTime / 1000) % 60);
+
+            const dayElement = document.getElementById('days');
+            const hourElement = document.getElementById('hours');
+            const minuteElement = document.getElementById('minutes');
+            const secondElement = document.getElementById('seconds');
+
+            if (dayElement.innerText != days) {
+                dayElement.innerText = days;
+                dayElement.classList.add('changing');
+                dayElement.parentElement.classList.add('changing');
+                setTimeout(() => {
+                    dayElement.classList.remove('changing');
+                    dayElement.parentElement.classList.remove('changing');
+                }, 500);
+            }
+            if (hourElement.innerText != String(hours).padStart(2, '0')) {
+                hourElement.innerText = String(hours).padStart(2, '0');
+                hourElement.classList.add('changing');
+                hourElement.parentElement.classList.add('changing');
+                setTimeout(() => {
+                    hourElement.classList.remove('changing');
+                    hourElement.parentElement.classList.remove('changing');
+                }, 500);
+            }
+            if (minuteElement.innerText != String(minutes).padStart(2, '0')) {
+                minuteElement.innerText = String(minutes).padStart(2, '0');
+                minuteElement.classList.add('changing');
+                minuteElement.parentElement.classList.add('changing');
+                setTimeout(() => {
+                    minuteElement.classList.remove('changing');
+                    minuteElement.parentElement.classList.remove('changing');
+                }, 500);
+            }
+            if (secondElement.innerText != String(seconds).padStart(2, '0')) {
+                secondElement.innerText = String(seconds).padStart(2, '0');
+                secondElement.classList.add('changing');
+                secondElement.parentElement.classList.add('changing');
+                setTimeout(() => {
+                    secondElement.classList.remove('changing');
+                    secondElement.parentElement.classList.remove('changing');
+                }, 500);
+            }
+
+            const container = document.getElementById('container');
+            if (hours >= 12) {
+                container.style.backgroundColor = '#000';
+                container.style.color = '#fff';
+            } else {
+                container.style.backgroundColor = '#fff';
+                container.style.color = '#000';
+            }
+
+            setTimeout(updateTimer, 1000);
+        }
+
+        function showRandomImage() {
+            const images = document.querySelectorAll('.floating-image');
+            const randomIndex = Math.floor(Math.random() * images.length);
+            const selectedImage = images[randomIndex];
+
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 100);
+
+            selectedImage.style.left = `${x}px`;
+            selectedImage.style.top = `${y}px`;
+            selectedImage.style.display = 'block';
+
+            setTimeout(() => {
+                selectedImage.style.display = 'none';
+                showRandomImage();
+            }, 3000);
+        }
+
+        function showRandomText() {
+            const texts = document.querySelectorAll('.floating-text');
+            const randomIndex = Math.floor(Math.random() * texts.length);
+            const selectedText = texts[randomIndex];
+
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 100);
+
+            selectedText.style.left = `${x}px`;
+            selectedText.style.top = `${y}px`;
+            selectedText.style.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+            selectedText.style.display = 'block';
+
+            setTimeout(() => {
+                selectedText.style.display = 'none';
+                showRandomText();
+            }, 3000);
+        }
+
+        updateTimer();
+        showRandomImage();
+        showRandomText();
+    </script>
+</body>
+</html>
