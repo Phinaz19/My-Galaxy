@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visionnage Vidéo</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .video-container {
+            width: 80%;
+            max-width: 800px;
+            margin-top: 20px;
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>For karıcım,seni çok özledim</h1>
+    
+    <div class="video-container">
+        <video controls>
+            <source src="First Love S01E02 (2) (2).mp4" type="video/mp4">
+      Votre navigateur ne supporte pas les vidéos HTML5.
+        </video>
+    </div>
+
+    <p style="margin-top: 20px;">Utilisez les contrôles pour jouer/pause la vidéo</p>
+</body>
+</html>
