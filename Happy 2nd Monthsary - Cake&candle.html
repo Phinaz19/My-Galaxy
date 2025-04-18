@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Happy Monthyversary</title>
+    <style>
+        body {
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .cake {
+            position: relative;
+            text-align: center;
+        }
+        .candle {
+            width: 20px;
+            height: 40px;
+            background-color: yellow;
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: opacity 0.5s;
+        }
+        .candle.extinguished {
+            opacity: 0;
+        }
+        .hide {
+            display: none;
+        }
+        .new-image {
+            display: none;
+            width: 300px; /* Ajustez la taille si nécessaire */
+        }
+    </style>
+</head>
+<body>
+    <div class="cake">
+        <img src="IMG-16.png" alt="Gâteau" width="300" id="cakeImage">
+        <div class="candle" id="candle"></div>
+        <img src="IMG-17.png" alt="Nouvelle Image" class="new-image" id="newImage">
+    </div>
+
+    <script>
+        document.body.addEventListener('click', function() {
+            document.getElementById('candle').classList.add('extinguished');
+            document.getElementById('cakeImage').classList.add('hide');
+            setTimeout(() => {
+                document.getElementById('newImage').style.display = 'block';
+            }, 500); // Délai pour laisser le temps de voir la bougie s'éteindre
+        });
+    </script>
+</body>
+</html>
