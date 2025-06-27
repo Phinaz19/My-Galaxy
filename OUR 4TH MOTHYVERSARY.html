@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Un cœur à la fois</title>
+  <style>
+    body {
+      margin: 0;
+      background: white;
+      overflow: hidden;
+      font-family: sans-serif;
+      position: relative;
+      height: 100vh;
+    }
+
+    .message {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 28px;
+      color: #c00;
+      z-index: 10;
+      text-align: center;
+      font-weight: bold;
+      pointer-events: none;
+    }
+
+    .heart {
+      position: absolute;
+      color: red;
+      font-size: 24px;
+      user-select: none;
+      pointer-events: none;
+      animation: fall 4s linear forwards;
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(90vh);
+        opacity: 1;
+      }
+    }
+
+    .bottom-container {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      z-index: 0;
+      padding-bottom: 5px;
+    }
+
+    .bottom-heart {
+      color: red;
+      font-size: 24px;
+      user-select: none;
+      pointer-events: none;
+      margin: 2px;
+    }
+
+    .final-message {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: black;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: left;
+      padding: 40px;
+      font-size: 18px;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 2s;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    .final-message.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="message">Her ayın dönümü kutlu olsun, "bugün her kalp atışı güçlü ve güzel..." ⏳️💯📩🫂</div>
+  <div class="bottom-container" id="pile"></div>
+
+  <div class="final-message" id="finalMessage">
+    Bugün özel bir tarih.
+    Geçirdiğimiz tüm fırtınalara rağmen unutulamayacak bir gün. 27’si. Bizim 27’miz.
+
+    Aramızda o kadar çok şey yaşandı ki... Tatlı anlar, kahkahalar, tartışmalar, ağır sessizlikler, yoğun kavuşmalar...
+    Ama biliyorum ki sen böyle "bağlantı gönderilen" mesajları pek sevmiyorsun. Sana yapmacık veya gereksiz gelebilir… 
+    Ama bu küçük sürprizi başka bir şekilde sana ulaştıramadım. O yüzden bu riski alıyorum. 
+    Çünkü bugün bizim günümüz.
+
+    120 gün.
+    Az değil. Yoğun. Değerli.
+    Ve buna rağmen, her geçen gün biraz daha ilerliyoruz. 
+    Yükselişlere, düşüşlere, yaralara ve şüphelere rağmen… 
+    Her gün biraz daha uzağa ulaşıyoruz, bazen fark etmesek bile.
+
+    Bu tarih bize ait. İkimizin birlikte yazdığı bir hikayeyi anlatıyor. 
+    Kusursuz değil, ama gerçek bir hikaye.
+
+    Hatalar yaptık, ikimiz de.
+    Bazen istemeden birbirimizi kırdık.
+    Bazen duyguların, şüphelerin ve sessizliklerin içinde kaybolduk… 
+    Ama hâlâ buradayız.
+
+    Aklımda kalan şu:
+    Hiçbir zaman tamamen vazgeçmedik.
+    Zor olsa bile, bırakmak istesek bile... Aramızda hâlâ güçlü bir şey var. 
+    Ve bu, inanmaya devam etmeye değer.
+
+    Her şeyi tek başıma onarmak istemiyorum.
+    Beraber yeniden inşa etmek istiyorum. El ele.
+    Birbirimizden öğrenerek. Birlikte ayağa kalkarak.
+
+    Her gün kolay değil.
+    Ama biliyorum ki, gerçekten bir takım olmaya karar verirsek, çok güzel şeyler başarabiliriz.
+
+    O yüzden bugün, yıldönümümüzde, sana bir masal sözü vermiyorum…
+    Sana dürüst, kusurlu ama birlikte sabırla, saygıyla ve aşkla kurulmuş bir gerçeklik sözü veriyorum.
+
+    Yıldönümümüz kutlu olsun.
+    Gücümüze, kırılganlığımıza ve en çok da geleceğimize…
+  </div>
+
+  <script>
+    let heartCount = 0;
+    const pile = document.getElementById('pile');
+    const finalMessage = document.getElementById('finalMessage');
+
+    function createFallingHeart() {
+      if (heartCount >= 240) return;
+
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.textContent = '❤️';
+      heart.style.left = Math.random() * window.innerWidth + 'px';
+      heart.style.fontSize = (20 + Math.random() * 10) + 'px';
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        const staticHeart = document.createElement('div');
+        staticHeart.classList.add('bottom-heart');
+        staticHeart.textContent = '❤️';
+        staticHeart.style.fontSize = heart.style.fontSize;
+        pile.appendChild(staticHeart);
+        heart.remove();
+
+        heartCount++;
+
+        if (heartCount === 240) {
+          finalMessage.classList.add('show');
+        }
+
+      }, 4000);
+    }
+
+    setInterval(createFallingHeart, 2000);
+  </script>
+
+</body>
+</html>
