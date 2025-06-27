@@ -142,38 +142,43 @@
   </div>
 
   <script>
-    let heartCount = 0;
-    const pile = document.getElementById('pile');
-    const finalMessage = document.getElementById('finalMessage');
+  let heartCount = 0;
+  const pile = document.getElementById('pile');
+  const finalMessage = document.getElementById('finalMessage');
+  const MAX_HEARTS = 240;
 
-    function createFallingHeart() {
-      if (heartCount >= 240) return;
+  function createSingleFallingHeart() {
+    if (heartCount >= MAX_HEARTS) return;
 
-      const heart = document.createElement('div');
-      heart.classList.add('heart');
-      heart.textContent = '❤️';
-      heart.style.left = Math.random() * window.innerWidth + 'px';
-      heart.style.fontSize = (20 + Math.random() * 10) + 'px';
-      document.body.appendChild(heart);
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.textContent = '❤️';
+    heart.style.left = Math.random() * window.innerWidth + 'px';
+    heart.style.fontSize = (20 + Math.random() * 10) + 'px';
+    document.body.appendChild(heart);
 
-      setTimeout(() => {
-        const staticHeart = document.createElement('div');
-        staticHeart.classList.add('bottom-heart');
-        staticHeart.textContent = '❤️';
-        staticHeart.style.fontSize = heart.style.fontSize;
-        pile.appendChild(staticHeart);
-        heart.remove();
+    setTimeout(() => {
+      const staticHeart = document.createElement('div');
+      staticHeart.classList.add('bottom-heart');
+      staticHeart.textContent = '❤️';
+      staticHeart.style.fontSize = heart.style.fontSize;
+      pile.appendChild(staticHeart);
+      heart.remove();
 
-        heartCount++;
+      heartCount++;
 
-        if (heartCount === 240) {
-          finalMessage.classList.add('show');
-        }
+      if (heartCount === MAX_HEARTS) {
+        finalMessage.classList.add('show');
+      }
+    }, 4000);
+  }
 
-      }, 4000);
+  // 💡 Crée 5 cœurs toutes les 2 secondes
+  setInterval(() => {
+    for (let i = 0; i < 5; i++) {
+      createSingleFallingHeart();
     }
-
-    setInterval(createFallingHeart, 2000);
+  }, 2000);
   </script>
 
 </body>
