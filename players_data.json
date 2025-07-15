@@ -1,0 +1,3154 @@
+{
+  "White Angels": {
+    "coach": "Alexander Frost",
+    "assistantCoach": "Luis Montenegro",
+    "formation": "4-3-3",
+    "tactics": ["Relance propre", "anticipation des ballons aériens"],
+    "players": [
+      {
+        "number": 1,
+        "name": "Kaito Nakamura",
+        "potential": 3,
+        "age": 24,
+        "position": "Gardien de but",
+        "captain": false,
+        "playerTactics": "Tactics (aucune spécifiée pour le gardien dans la liste fournie)"
+      },
+      {
+        "number": 2,
+        "name": "Mark Svensson",
+        "potential": 5,
+        "age": 27,
+        "position": "Arrière droit",
+        "captain": false,
+        "playerTactics": "Montées offensives, centres précis"
+      },
+      {
+        "number": 3,
+        "name": "Matteo Ricci",
+        "potential": 1,
+        "age": 25,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 4,
+        "name": "Ibrahima Sissé",
+        "potential": 4,
+        "age": 26,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 5,
+        "name": "Ethan Clarke",
+        "potential": 4,
+        "age": 29,
+        "position": "Défenseur central",
+        "captain": true,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 6,
+        "name": "Youssef Benali",
+        "potential": 3,
+        "age": 24,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 7,
+        "name": "Tomás Herrera",
+        "potential": 1,
+        "age": 23,
+        "position": "Milieu défensif",
+        "captain": false,
+        "playerTactics": "Récupération, couverture défensive"
+      },
+      {
+        "number": 8,
+        "name": "Julian Torres",
+        "potential": 4,
+        "age": 25,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 9,
+        "name": "Hugo Fontaine",
+        "potential": 4,
+        "age": 28,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 10,
+        "name": "Joshua Mendes",
+        "potential": 5,
+        "age": 22,
+        "position": "Ailier droit",
+        "captain": false,
+        "playerTactics": "Percées rapides, centres en retrait"
+      },
+      {
+        "number": 11,
+        "name": "Luke Gallagher",
+        "potential": 4,
+        "age": 26,
+        "position": "Ailier gauche",
+        "captain": false,
+        "playerTactics": "Un-contre-un, changement de rythme"
+      },
+      {
+        "number": 12,
+        "name": "Tyler Brooks",
+        "potential": 2,
+        "age": 20,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 13,
+        "name": "Benjamin Hauser",
+        "potential": 1,
+        "age": 21,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 14,
+        "name": "Vlad Petrov",
+        "potential": 1,
+        "age": 28,
+        "position": "Milieu défensif",
+        "captain": false,
+        "playerTactics": "Récupération, couverture défensive"
+      },
+      {
+        "number": 15,
+        "name": "Amir Rahimi",
+        "potential": 3,
+        "age": 24,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 16,
+        "name": "Léo Dubois",
+        "potential": 5,
+        "age": 29,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 17,
+        "name": "Nico Vasquez",
+        "potential": 3,
+        "age": 27,
+        "position": "Ailier gauche",
+        "captain": false,
+        "playerTactics": "Un-contre-un, changement de rythme"
+      },
+      {
+        "number": 18,
+        "name": "Jean-Kévin Ahoua",
+        "potential": 3,
+        "age": 22,
+        "position": "Ailier droit",
+        "captain": false,
+        "playerTactics": "Percées rapides, centres en retrait"
+      },
+      {
+        "number": 19,
+        "name": "David Okoro",
+        "potential": 1,
+        "age": 23,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 20,
+        "name": "Rasmus Holm",
+        "potential": 2,
+        "age": 25,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 21,
+        "name": "Ismail El Amrani",
+        "potential": 5,
+        "age": 21,
+        "position": "Arrière droit",
+        "captain": false,
+        "playerTactics": "Montées offensives, centres précis"
+      }
+    ]
+  },
+  "Caterpillar FC": {
+    "coach": "Miguel Ángel Torres",
+    "assistantCoach": "Bakary Doucouré",
+    "formation": "4-4-2",
+    "tactics": ["Relance propre", "anticipation des ballons aériens"],
+    "players": [
+      {
+        "number": 1,
+        "name": "Fredy Sánchez",
+        "potential": 4,
+        "age": 25,
+        "position": "Gardien de but",
+        "captain": false,
+        "playerTactics": "Relance propre, anticipation des ballons aériens"
+      },
+      {
+        "number": 2,
+        "name": "Zakaria Tlemcani",
+        "potential": 5,
+        "age": 24,
+        "position": "Arrière droit",
+        "captain": false,
+        "playerTactics": "Montées offensives, centres précis"
+      },
+      {
+        "number": 3,
+        "name": "Marco Bellini",
+        "potential": 1,
+        "age": 28,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 4,
+        "name": "Ryan Murphy",
+        "potential": 2,
+        "age": 27,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 5,
+        "name": "Nick van Dijk",
+        "potential": 3,
+        "age": 25,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 6,
+        "name": "Jean-Paul Mutombo",
+        "potential": 2,
+        "age": 30,
+        "position": "Milieu défensif",
+        "captain": false,
+        "playerTactics": "Récupération, couverture défensive"
+      },
+      {
+        "number": 7,
+        "name": "Junior Banza",
+        "potential": 5,
+        "age": 26,
+        "position": "Ailier droit",
+        "captain": false,
+        "playerTactics": "Percées rapides, centres en retrait"
+      },
+      {
+        "number": 8,
+        "name": "Hugo Lemoine",
+        "potential": 5,
+        "age": 23,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 9,
+        "name": "Jérémy Kouassi",
+        "potential": 4,
+        "age": 22,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 10,
+        "name": "Kevin Moreno",
+        "potential": 3,
+        "age": 28,
+        "position": "Ailier gauche",
+        "captain": false,
+        "playerTactics": "Un-contre-un, changement de rythme"
+      },
+      {
+        "number": 11,
+        "name": "Elias Jakobsen",
+        "potential": 1,
+        "age": 24,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 12,
+        "name": "Kennedy Oduro",
+        "potential": 3,
+        "age": 23,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 13,
+        "name": "Prince Owusu",
+        "potential": 5,
+        "age": 27,
+        "position": "Attaquant",
+        "captain": true,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 14,
+        "name": "Karim Ziani",
+        "potential": 4,
+        "age": 25,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 15,
+        "name": "Moussa Dembélé",
+        "potential": 2,
+        "age": 21,
+        "position": "Ailier droit",
+        "captain": false,
+        "playerTactics": "Percées rapides, centres en retrait"
+      },
+      {
+        "number": 16,
+        "name": "Joaquín Pereira",
+        "potential": 2,
+        "age": 29,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 17,
+        "name": "Abdelkader Fekir",
+        "potential": 4,
+        "age": 24,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 18,
+        "name": "Sean Robinson",
+        "potential": 5,
+        "age": 28,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 19,
+        "name": "Franck Essomba",
+        "potential": 4,
+        "age": 21,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 20,
+        "name": "Luca Bianchi",
+        "potential": 1,
+        "age": 22,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 21,
+        "name": "Sven Maier",
+        "potential": 1,
+        "age": 26,
+        "position": "Arrière droit",
+        "captain": false,
+        "playerTactics": "Montées offensives, centres précis"
+      }
+    ]
+  },
+  "Illuminati FC": {
+    "coach": "Leonardo Vescovi",
+    "assistantCoach": "Sergei Mikhailov",
+    "formation": "4-2-3-1",
+    "tactics": ["Relance propre", "anticipation des ballons aériens"],
+    "players": [
+      {
+        "number": 1,
+        "name": "Lionel Dacosta",
+        "potential": 2,
+        "age": 26,
+        "position": "Gardien de but",
+        "captain": true,
+        "playerTactics": "Relance propre, anticipation des ballons aériens"
+      },
+      {
+        "number": 2,
+        "name": "Mikhail Ivanov",
+        "potential": 1,
+        "age": 28,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 3,
+        "name": "Souleymane Diarra",
+        "potential": 1,
+        "age": 24,
+        "position": "Milieu défensif",
+        "captain": false,
+        "playerTactics": "Récupération, couverture défensive"
+      },
+      {
+        "number": 4,
+        "name": "Aaron Cohen",
+        "potential": 2,
+        "age": 29,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 5,
+        "name": "Antoine Lefevre",
+        "potential": 2,
+        "age": 27,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 6,
+        "name": "Diego Salazar",
+        "potential": 1,
+        "age": 25,
+        "position": "Arrière droit",
+        "captain": false,
+        "playerTactics": "Montées offensives, centres précis"
+      },
+      {
+        "number": 7,
+        "name": "Kareem Al-Masri",
+        "potential": 3,
+        "age": 25,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 8,
+        "name": "Brandon Liu",
+        "potential": 2,
+        "age": 24,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 9,
+        "name": "Finn O’Neill",
+        "potential": 5,
+        "age": 23,
+        "position": "Milieu offensif",
+        "captain": false,
+        "playerTactics": "Création d'occasions, passes clés"
+      },
+      {
+        "number": 10,
+        "name": "Rémy Adou",
+        "potential": 3,
+        "age": 22,
+        "position": "Ailier droit",
+        "captain": false,
+        "playerTactics": "Percées rapides, centres en retrait"
+      },
+      {
+        "number": 11,
+        "name": "Daniel Morales",
+        "potential": 3,
+        "age": 27,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 12,
+        "name": "Gustav Nielsen",
+        "potential": 1,
+        "age": 25,
+        "position": "Ailier gauche",
+        "captain": false,
+        "playerTactics": "Un-contre-un, changement de rythme"
+      },
+      {
+        "number": 13,
+        "name": "Mehdi Bouziane",
+        "potential": 3,
+        "age": 24,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 14,
+        "name": "Gabriel Cruz",
+        "potential": 2,
+        "age": 28,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 15,
+        "name": "Carl Johansson",
+        "potential": 4,
+        "age": 26,
+        "position": "Milieu défensif",
+        "captain": false,
+        "playerTactics": "Récupération, couverture défensive"
+      },
+      {
+        "number": 16,
+        "name": "Omar El-Khatib",
+        "potential": 4,
+        "age": 24,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 17,
+        "name": "Santiago Vargas",
+        "potential": 1,
+        "age": 27,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 18,
+        "name": "Félix Mendy",
+        "potential": 5,
+        "age": 25,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 19,
+        "name": "Tyler Morgan",
+        "potential": 3,
+        "age": 23,
+        "position": "Ailier droit",
+        "captain": false,
+        "playerTactics": "Percées rapides, centres en retrait"
+      },
+      {
+        "number": 20,
+        "name": "Noah Becker",
+        "potential": 5,
+        "age": 26,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 21,
+        "name": "William Cheng",
+        "potential": 3,
+        "age": 24,
+        "position": "Arrière droit",
+        "captain": false,
+        "playerTactics": "Montées offensives, centres précis"
+      }
+    ]
+  },
+  "SuperBot": {
+    "coach": "Henry Wallace",
+    "assistantCoach": "Alan Tega",
+    "formation": "3-5-2",
+    "tactics": ["Relance propre", "anticipation des ballons aériens"],
+    "players": [
+      {
+        "number": 1,
+        "name": "Cody Blake",
+        "potential": 5,
+        "age": 24,
+        "position": "Gardien de but",
+        "captain": true,
+        "playerTactics": "Relance propre, anticipation des ballons aériens"
+      },
+      {
+        "number": 2,
+        "name": "Farid Al-Kuwaiti",
+        "potential": 2,
+        "age": 26,
+        "position": "Arrière droit",
+        "captain": false,
+        "playerTactics": "Montées offensives, centres précis"
+      },
+      {
+        "number": 3,
+        "name": "Yuji Takeda",
+        "potential": 5,
+        "age": 25,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 4,
+        "name": "Bruno Castilho",
+        "potential": 4,
+        "age": 27,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 5,
+        "name": "Alexei Romanov",
+        "potential": 2,
+        "age": 28,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 6,
+        "name": "Pierre N'Zinga",
+        "potential": 3,
+        "age": 23,
+        "position": "Milieu défensif",
+        "captain": false,
+        "playerTactics": "Récupération, couverture défensive"
+      },
+      {
+        "number": 7,
+        "name": "Javier Luna",
+        "potential": 1,
+        "age": 26,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 8,
+        "name": "Marcel Degen",
+        "potential": 1,
+        "age": 24,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 9,
+        "name": "Liam Collins",
+        "potential": 3,
+        "age": 22,
+        "position": "Milieu offensif",
+        "captain": false,
+        "playerTactics": "Création d'occasions, passes clés"
+      },
+      {
+        "number": 10,
+        "name": "Moha Traoré",
+        "potential": 4,
+        "age": 25,
+        "position": "Ailier droit",
+        "captain": false,
+        "playerTactics": "Percées rapides, centres en retrait"
+      },
+      {
+        "number": 11,
+        "name": "Aiden Scott",
+        "potential": 5,
+        "age": 24,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 12,
+        "name": "Filippo Andretti",
+        "potential": 1,
+        "age": 23,
+        "position": "Ailier gauche",
+        "captain": false,
+        "playerTactics": "Un-contre-un, changement de rythme"
+      },
+      {
+        "number": 13,
+        "name": "Rachid Ghazali",
+        "potential": 5,
+        "age": 25,
+        "position": "Milieu défensif",
+        "captain": false,
+        "playerTactics": "Récupération, couverture défensive"
+      },
+      {
+        "number": 14,
+        "name": "Victor Nowak",
+        "potential": 2,
+        "age": 26,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 15,
+        "name": "Emre Gül",
+        "potential": 2,
+        "age": 24,
+        "position": "Ailier droit",
+        "captain": false,
+        "playerTactics": "Percées rapides, centres en retrait"
+      },
+      {
+        "number": 16,
+        "name": "Dylan Matthews",
+        "potential": 4,
+        "age": 21,
+        "position": "Arrière droit",
+        "captain": false,
+        "playerTactics": "Montées offensives, centres précis"
+      },
+      {
+        "number": 17,
+        "name": "Achraf Said",
+        "potential": 4,
+        "age": 28,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 18,
+        "name": "Nicolae Dragomir",
+        "potential": 2,
+        "age": 22,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 19,
+        "name": "Jonas Weber",
+        "potential": 3,
+        "age": 23,
+        "position": "Ailier gauche",
+        "captain": false,
+        "playerTactics": "Un-contre-un, changement de rythme"
+      },
+      {
+        "number": 20,
+        "name": "William Santos",
+        "potential": 2,
+        "age": 27,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 21,
+        "name": "Kwame Atta",
+        "potential": 3,
+        "age": 25,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      }
+    ]
+  },
+  "Lions": {
+    "coach": "Jean-Marc Etoundi",
+    "assistantCoach": "Ibrahim Diallo",
+    "formation": "4-4-1-1",
+    "tactics": ["Relance propre", "anticipation des ballons aériens"],
+    "players": [
+      {
+        "number": 1,
+        "name": "Idriss Koulibaly",
+        "potential": 3,
+        "age": 27,
+        "position": "Gardien de but",
+        "captain": false,
+        "playerTactics": "Relance propre, anticipation des ballons aériens"
+      },
+      {
+        "number": 2,
+        "name": "Franck Essomba",
+        "potential": 5,
+        "age": 23,
+        "position": "Arrière droit",
+        "captain": false,
+        "playerTactics": "Montées offensives, centres précis"
+      },
+      {
+        "number": 3,
+        "name": "Patrick Ndombele",
+        "potential": 3,
+        "age": 26,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 4,
+        "name": "Nelson Mavoungou",
+        "potential": 5,
+        "age": 25,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 5,
+        "name": "Marvin Kimbuta",
+        "potential": 4,
+        "age": 24,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 6,
+        "name": "Saïd Ouedraogo",
+        "potential": 5,
+        "age": 29,
+        "position": "Milieu défensif",
+        "captain": false,
+        "playerTactics": "Récupération, couverture défensive"
+      },
+      {
+        "number": 7,
+        "name": "Jean-Claude Makanda",
+        "potential": 5,
+        "age": 28,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 8,
+        "name": "Amos Wanyama",
+        "potential": 5,
+        "age": 26,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 9,
+        "name": "Serge Mbala",
+        "potential": 2,
+        "age": 25,
+        "position": "Milieu offensif",
+        "captain": false,
+        "playerTactics": "Création d'occasions, passes clés"
+      },
+      {
+        "number": 10,
+        "name": "Elias Mungai",
+        "potential": 5,
+        "age": 22,
+        "position": "Ailier droit",
+        "captain": true,
+        "playerTactics": "Percées rapides, centres en retrait"
+      },
+      {
+        "number": 11,
+        "name": "Charles Kiplangat",
+        "potential": 4,
+        "age": 23,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 12,
+        "name": "Godwin Mensah",
+        "potential": 3,
+        "age": 27,
+        "position": "Ailier gauche",
+        "captain": false,
+        "playerTactics": "Un-contre-un, changement de rythme"
+      },
+      {
+        "number": 13,
+        "name": "André Makiese",
+        "potential": 3,
+        "age": 25,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 14,
+        "name": "Rachid Belmadi",
+        "potential": 5,
+        "age": 28,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 15,
+        "name": "Tony Luvualu",
+        "potential": 3,
+        "age": 22,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 16,
+        "name": "Koffi Gohou",
+        "potential": 2,
+        "age": 26,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 17,
+        "name": "Jonathan Dede",
+        "potential": 2,
+        "age": 24,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 18,
+        "name": "Henri Bokassa",
+        "potential": 1,
+        "age": 27,
+        "position": "Arrière droit",
+        "captain": false,
+        "playerTactics": "Montées offensives, centres précis"
+      },
+      {
+        "number": 19,
+        "name": "Elvis Bemba",
+        "potential": 4,
+        "age": 21,
+        "position": "Ailier gauche",
+        "captain": false,
+        "playerTactics": "Un-contre-un, changement de rythme"
+      },
+      {
+        "number": 20,
+        "name": "Malick Sanogo",
+        "potential": 4,
+        "age": 23,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 21,
+        "name": "Yannick Abedi",
+        "potential": 4,
+        "age": 29,
+        "position": "Milieu défensif",
+        "captain": false,
+        "playerTactics": "Récupération, couverture défensive"
+      }
+    ]
+  },
+  "Dragon CF": {
+    "coach": "Chen Wei",
+    "assistantCoach": "Duy Tran",
+    "formation": "4-1-4-1",
+    "tactics": ["Relance propre", "anticipation des ballons aériens"],
+    "players": [
+      {
+        "number": 1,
+        "name": "Zhang Wei",
+        "potential": 4,
+        "age": 24,
+        "position": "Gardien de but",
+        "captain": false,
+        "playerTactics": "Relance propre, anticipation des ballons aériens"
+      },
+      {
+        "number": 2,
+        "name": "Kim Hyun-Joong",
+        "potential": 1,
+        "age": 25,
+        "position": "Arrière droit",
+        "captain": false,
+        "playerTactics": "Montées offensives, centres précis"
+      },
+      {
+        "number": 3,
+        "name": "Nguyễn Văn Đức",
+        "potential": 1,
+        "age": 26,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 4,
+        "name": "Lee Chang-Woo",
+        "potential": 5,
+        "age": 24,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 5,
+        "name": "Bao Ling",
+        "potential": 3,
+        "age": 27,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 6,
+        "name": "Koji Yamamoto",
+        "potential": 3,
+        "age": 25,
+        "position": "Milieu défensif",
+        "captain": false,
+        "playerTactics": "Récupération, couverture défensive"
+      },
+      {
+        "number": 7,
+        "name": "Tony Leung",
+        "potential": 4,
+        "age": 26,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 8,
+        "name": "Muhammad Rizqi",
+        "potential": 3,
+        "age": 25,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 9,
+        "name": "Jin Park",
+        "potential": 3,
+        "age": 23,
+        "position": "Milieu offensif",
+        "captain": false,
+        "playerTactics": "Création d'occasions, passes clés"
+      },
+      {
+        "number": 10,
+        "name": "Arif Rahman",
+        "potential": 3,
+        "age": 21,
+        "position": "Ailier droit",
+        "captain": false,
+        "playerTactics": "Percées rapides, centres en retrait"
+      },
+      {
+        "number": 11,
+        "name": "Wu Yong",
+        "potential": 3,
+        "age": 24,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 12,
+        "name": "Hiroshi Tanaka",
+        "potential": 2,
+        "age": 25,
+        "position": "Ailier gauche",
+        "captain": false,
+        "playerTactics": "Un-contre-un, changement de rythme"
+      },
+      {
+        "number": 13,
+        "name": "Vu Quang",
+        "potential": 3,
+        "age": 26,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 14,
+        "name": "Choi Min-Soo",
+        "potential": 2,
+        "age": 27,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 15,
+        "name": "Satoshi Arai",
+        "potential": 2,
+        "age": 22,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 16,
+        "name": "Nguyen Hoang",
+        "potential": 4,
+        "age": 24,
+        "position": "Arrière gauche",
+        "captain": true,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 17,
+        "name": "Xie Tian",
+        "potential": 5,
+        "age": 23,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 18,
+        "name": "Ryo Suzuki",
+        "potential": 1,
+        "age": 25,
+        "position": "Ailier droit",
+        "captain": false,
+        "playerTactics": "Percées rapides, centres en retrait"
+      },
+      {
+        "number": 19,
+        "name": "Liang Chen",
+        "potential": 4,
+        "age": 26,
+        "position": "Ailier gauche",
+        "captain": false,
+        "playerTactics": "Un-contre-un, changement de rythme"
+      },
+      {
+        "number": 20,
+        "name": "Tao Ming",
+        "potential": 2,
+        "age": 28,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 21,
+        "name": "Song Daewon",
+        "potential": 2,
+        "age": 27,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      }
+    ]
+  },
+  "Eclipse Fc": {
+    "coach": "Ricardo Domínguez",
+    "assistantCoach": "Jules Tchadema",
+    "formation": "4-3-3",
+    "tactics": ["Relance propre", "anticipation des ballons aériens"],
+    "players": [
+      {
+        "number": 1,
+        "name": "Neymar Pinto",
+        "potential": 4,
+        "age": 25,
+        "position": "Gardien de but",
+        "captain": false,
+        "playerTactics": "Relance propre, anticipation des ballons aériens"
+      },
+      {
+        "number": 2,
+        "name": "Lucas Maradona",
+        "potential": 1,
+        "age": 27,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 3,
+        "name": "Théo Silva",
+        "potential": 5,
+        "age": 26,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 4,
+        "name": "Joseph Mboyo",
+        "potential": 1,
+        "age": 24,
+        "position": "Arrière droit",
+        "captain": false,
+        "playerTactics": "Montées offensives, centres précis"
+      },
+      {
+        "number": 5,
+        "name": "Kevin Martinez",
+        "potential": 4,
+        "age": 25,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 6,
+        "name": "Emmanuel Sagna",
+        "potential": 1,
+        "age": 28,
+        "position": "Milieu défensif",
+        "captain": false,
+        "playerTactics": "Récupération, couverture défensive"
+      },
+      {
+        "number": 7,
+        "name": "Alex Torres",
+        "potential": 2,
+        "age": 26,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 8,
+        "name": "Stephan Etoundi",
+        "potential": 1,
+        "age": 25,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 9,
+        "name": "Enzo Delgado",
+        "potential": 3,
+        "age": 22,
+        "position": "Milieu offensif",
+        "captain": false,
+        "playerTactics": "Création d'occasions, passes clés"
+      },
+      {
+        "number": 10,
+        "name": "Tiago Mendes",
+        "potential": 5,
+        "age": 21,
+        "position": "Ailier droit",
+        "captain": false,
+        "playerTactics": "Percées rapides, centres en retrait"
+      },
+      {
+        "number": 11,
+        "name": "Junior Gervais",
+        "potential": 1,
+        "age": 24,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 12,
+        "name": "Jonas Vieira",
+        "potential": 5,
+        "age": 23,
+        "position": "Ailier gauche",
+        "captain": false,
+        "playerTactics": "Un-contre-un, changement de rythme"
+      },
+      {
+        "number": 13,
+        "name": "Ilias Belhoucine",
+        "potential": 4,
+        "age": 25,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 14,
+        "name": "Claudio Estevez",
+        "potential": 3,
+        "age": 24,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 15,
+        "name": "Fabien Tchouaméni",
+        "potential": 1,
+        "age": 27,
+        "position": "Milieu défensif",
+        "captain": false,
+        "playerTactics": "Récupération, couverture défensive"
+      },
+      {
+        "number": 16,
+        "name": "Lamine Diop",
+        "potential": 4,
+        "age": 25,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 17,
+        "name": "Joel Massengo",
+        "potential": 2,
+        "age": 24,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 18,
+        "name": "Manuel Ribeiro",
+        "potential": 4,
+        "age": 26,
+        "position": "Ailier droit",
+        "captain": false,
+        "playerTactics": "Percées rapides, centres en retrait"
+      },
+      {
+        "number": 19,
+        "name": "Rayan Boudjema",
+        "potential": 2,
+        "age": 23,
+        "position": "Ailier gauche",
+        "captain": false,
+        "playerTactics": "Un-contre-un, changement de rythme"
+      },
+      {
+        "number": 20,
+        "name": "Nasser Toure",
+        "potential": 1,
+        "age": 24,
+        "position": "Attaquant",
+        "captain": true,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 21,
+        "name": "Thierry Mandanda",
+        "potential": 3,
+        "age": 28,
+        "position": "Arrière droit",
+        "captain": false,
+        "playerTactics": "Montées offensives, centres précis"
+      }
+    ]
+  },
+  "Titans": {
+    "coach": "Rolf Gunnarsson",
+    "assistantCoach": "Pierre Mabiala",
+    "formation": "3-4-3",
+    "tactics": ["Relance propre", "anticipation des ballons aériens"],
+    "players": [
+      {
+        "number": 1,
+        "name": "Lars Eriksen",
+        "potential": 2,
+        "age": 26,
+        "position": "Gardien de but",
+        "captain": false,
+        "playerTactics": "Relance propre, anticipation des ballons aériens"
+      },
+      {
+        "number": 2,
+        "name": "Mohamed Bachir",
+        "potential": 2,
+        "age": 27,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 3,
+        "name": "Ivan Vuković",
+        "potential": 3,
+        "age": 25,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 4,
+        "name": "Thibaut Renard",
+        "potential": 4,
+        "age": 28,
+        "position": "Arrière droit",
+        "captain": false,
+        "playerTactics": "Montées offensives, centres précis"
+      },
+      {
+        "number": 5,
+        "name": "Diego Ramos",
+        "potential": 3,
+        "age": 24,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 6,
+        "name": "Alioune Konaté",
+        "potential": 2,
+        "age": 26,
+        "position": "Milieu défensif",
+        "captain": false,
+        "playerTactics": "Récupération, couverture défensive"
+      },
+      {
+        "number": 7,
+        "name": "Jonas Fredriksen",
+        "potential": 1,
+        "age": 25,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 8,
+        "name": "Ahmed Farouk",
+        "potential": 2,
+        "age": 24,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 9,
+        "name": "Boubacar Camara",
+        "potential": 1,
+        "age": 22,
+        "position": "Milieu offensif",
+        "captain": false,
+        "playerTactics": "Création d'occasions, passes clés"
+      },
+      {
+        "number": 10,
+        "name": "Daniël de Vries",
+        "potential": 2,
+        "age": 23,
+        "position": "Ailier droit",
+        "captain": false,
+        "playerTactics": "Percées rapides, centres en retrait"
+      },
+      {
+        "number": 11,
+        "name": "Ragnar Holm",
+        "potential": 1,
+        "age": 25,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 12,
+        "name": "Adil Kacem",
+        "potential": 3,
+        "age": 24,
+        "position": "Ailier gauche",
+        "captain": false,
+        "playerTactics": "Un-contre-un, changement de rythme"
+      },
+      {
+        "number": 13,
+        "name": "Elias Grönberg",
+        "potential": 3,
+        "age": 26,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 14,
+        "name": "Tino Ferreira",
+        "potential": 3,
+        "age": 25,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 15,
+        "name": "Collins Mwamba",
+        "potential": 3,
+        "age": 27,
+        "position": "Milieu défensif",
+        "captain": true,
+        "playerTactics": "Récupération, couverture défensive"
+      },
+      {
+        "number": 16,
+        "name": "Sébastien Boniface",
+        "potential": 2,
+        "age": 24,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 17,
+        "name": "Luka Petrovic",
+        "potential": 1,
+        "age": 28,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 18,
+        "name": "Hassan Mahrez",
+        "potential": 1,
+        "age": 23,
+        "position": "Ailier droit",
+        "captain": false,
+        "playerTactics": "Percées rapides, centres en retrait"
+      },
+      {
+        "number": 19,
+        "name": "Yannick Kalulu",
+        "potential": 4,
+        "age": 26,
+        "position": "Ailier gauche",
+        "captain": false,
+        "playerTactics": "Un-contre-un, changement de rythme"
+      },
+      {
+        "number": 20,
+        "name": "Eduard Schmidt",
+        "potential": 1,
+        "age": 25,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 21,
+        "name": "Jordan Mbemba",
+        "potential": 3,
+        "age": 27,
+        "position": "Arrière droit",
+        "captain": false,
+        "playerTactics": "Montées offensives, centres précis"
+      }
+    ]
+  },
+  "Red United": {
+    "coach": "Marcus Bennett",
+    "assistantCoach": "Lewis O’Connor",
+    "formation": "4-4-2",
+    "tactics": ["Relance propre", "anticipation des ballons aériens"],
+    "players": [
+      {
+        "number": 1,
+        "name": "Jason King",
+        "potential": 4,
+        "age": 26,
+        "position": "Gardien de but",
+        "captain": false,
+        "playerTactics": "Relance propre, anticipation des ballons aériens"
+      },
+      {
+        "number": 2,
+        "name": "Tyrone Mitchell",
+        "potential": 2,
+        "age": 26,
+        "position": "Arrière droit",
+        "captain": false,
+        "playerTactics": "Montées offensives, centres précis"
+      },
+      {
+        "number": 3,
+        "name": "Elijah Brooks",
+        "potential": 4,
+        "age": 30,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 4,
+        "name": "Marcus Lane",
+        "potential": 1,
+        "age": 29,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 5,
+        "name": "Nathaniel Young",
+        "potential": 4,
+        "age": 32,
+        "position": "Défenseur central",
+        "captain": true,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 6,
+        "name": "Darren Cole",
+        "potential": 1,
+        "age": 19,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 7,
+        "name": "Andre Wilson",
+        "potential": 2,
+        "age": 21,
+        "position": "Milieu défensif",
+        "captain": false,
+        "playerTactics": "Récupération, couverture défensive"
+      },
+      {
+        "number": 8,
+        "name": "Tyler James",
+        "potential": 1,
+        "age": 34,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 9,
+        "name": "Malik Henderson",
+        "potential": 5,
+        "age": 25,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 10,
+        "name": "Denzel Rivers",
+        "potential": 4,
+        "age": 35,
+        "position": "Ailier droit",
+        "captain": false,
+        "playerTactics": "Percées rapides, centres en retrait"
+      },
+      {
+        "number": 11,
+        "name": "Kevin Moore",
+        "potential": 3,
+        "age": 29,
+        "position": "Ailier gauche",
+        "captain": false,
+        "playerTactics": "Un-contre-un, changement de rythme"
+      },
+      {
+        "number": 12,
+        "name": "Jordan Blackwood",
+        "potential": 5,
+        "age": 18,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 13,
+        "name": "Craig Walters",
+        "potential": 2,
+        "age": 22,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 14,
+        "name": "Quincy Evans",
+        "potential": 2,
+        "age": 30,
+        "position": "Milieu défensif",
+        "captain": false,
+        "playerTactics": "Récupération, couverture défensive"
+      },
+      {
+        "number": 15,
+        "name": "Anthony Greene",
+        "potential": 5,
+        "age": 18,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 16,
+        "name": "Leon Baxter",
+        "potential": 3,
+        "age": 22,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 17,
+        "name": "Jamal White",
+        "potential": 1,
+        "age": 18,
+        "position": "Ailier gauche",
+        "captain": false,
+        "playerTactics": "Un-contre-un, changement de rythme"
+      },
+      {
+        "number": 18,
+        "name": "Rico Sanders",
+        "potential": 1,
+        "age": 19,
+        "position": "Ailier droit",
+        "captain": false,
+        "playerTactics": "Percées rapides, centres en retrait"
+      },
+      {
+        "number": 19,
+        "name": "Kalvin Scott",
+        "potential": 5,
+        "age": 30,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 20,
+        "name": "Terrence Ford",
+        "potential": 3,
+        "age": 31,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 21,
+        "name": "Brian Knight",
+        "potential": 5,
+        "age": 19,
+        "position": "Arrière droit",
+        "captain": false,
+        "playerTactics": "Montées offensives, centres précis"
+      }
+    ]
+  },
+  "White United": {
+    "coach": "Adam Clarke",
+    "assistantCoach": "Daniel Rowe",
+    "formation": "4-3-3",
+    "tactics": ["Relance propre", "anticipation des ballons aériens"],
+    "players": [
+      {
+        "number": 1,
+        "name": "Ethan Cooper",
+        "potential": 4,
+        "age": 28,
+        "position": "Gardien de but",
+        "captain": false,
+        "playerTactics": "Relance propre, anticipation des ballons aériens"
+      },
+      {
+        "number": 2,
+        "name": "Noah Hughes",
+        "potential": 2,
+        "age": 30,
+        "position": "Arrière droit",
+        "captain": false,
+        "playerTactics": "Montées offensives, centres précis"
+      },
+      {
+        "number": 3,
+        "name": "Mason Walker",
+        "potential": 3,
+        "age": 30,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 4,
+        "name": "Harry Davies",
+        "potential": 3,
+        "age": 29,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 5,
+        "name": "Owen Foster",
+        "potential": 4,
+        "age": 31,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 6,
+        "name": "Lucas Turner",
+        "potential": 3,
+        "age": 30,
+        "position": "Milieu défensif",
+        "captain": false,
+        "playerTactics": "Récupération, couverture défensive"
+      },
+      {
+        "number": 7,
+        "name": "Max Jennings",
+        "potential": 2,
+        "age": 28,
+        "position": "Ailier droit",
+        "captain": false,
+        "playerTactics": "Percées rapides, centres en retrait"
+      },
+      {
+        "number": 8,
+        "name": "Ryan Collins",
+        "potential": 5,
+        "age": 27,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 9,
+        "name": "Jack Morgan",
+        "potential": 3,
+        "age": 27,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 10,
+        "name": "Callum Price",
+        "potential": 1,
+        "age": 23,
+        "position": "Ailier gauche",
+        "captain": false,
+        "playerTactics": "Un-contre-un, changement de rythme"
+      },
+      {
+        "number": 11,
+        "name": "Josh Bailey",
+        "potential": 5,
+        "age": 30,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 12,
+        "name": "Charlie West",
+        "potential": 3,
+        "age": 34,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 13,
+        "name": "Alex Gray",
+        "potential": 3,
+        "age": 24,
+        "position": "Attaquant",
+        "captain": true,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 14,
+        "name": "Finn Chapman",
+        "potential": 1,
+        "age": 24,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 15,
+        "name": "Toby Wood",
+        "potential": 2,
+        "age": 24,
+        "position": "Ailier droit",
+        "captain": false,
+        "playerTactics": "Percées rapides, centres en retrait"
+      },
+      {
+        "number": 16,
+        "name": "Harvey Allen",
+        "potential": 4,
+        "age": 29,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 17,
+        "name": "Reece Adams",
+        "potential": 1,
+        "age": 34,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 18,
+        "name": "Louis Cook",
+        "potential": 2,
+        "age": 20,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 19,
+        "name": "Dylan Spencer",
+        "potential": 2,
+        "age": 20,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 20,
+        "name": "Joe Walsh",
+        "potential": 1,
+        "age": 34,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 21,
+        "name": "Sam Riley",
+        "potential": 5,
+        "age": 29,
+        "position": "Arrière droit",
+        "captain": false,
+        "playerTactics": "Montées offensives, centres précis"
+      }
+    ]
+  },
+  "Volta Street": {
+    "coach": "Diego Alvarez",
+    "assistantCoach": "Samuel Eboh",
+    "formation": "5-3-2",
+    "tactics": ["Relance propre", "anticipation des ballons aériens"],
+    "players": [
+      {
+        "number": 1,
+        "name": "Thiago Santos",
+        "potential": 3,
+        "age": 21,
+        "position": "Gardien de but",
+        "captain": false,
+        "playerTactics": "Relance propre, anticipation des ballons aériens"
+      },
+      {
+        "number": 2,
+        "name": "Enzo Marquez",
+        "potential": 1,
+        "age": 32,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 3,
+        "name": "Youssef Kamara",
+        "potential": 3,
+        "age": 21,
+        "position": "Milieu défensif",
+        "captain": false,
+        "playerTactics": "Récupération, couverture défensive"
+      },
+      {
+        "number": 4,
+        "name": "Ayoub El-Fassi",
+        "potential": 3,
+        "age": 21,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 5,
+        "name": "Karim Diallo",
+        "potential": 2,
+        "age": 34,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 6,
+        "name": "Tarek Benali",
+        "potential": 1,
+        "age": 31,
+        "position": "Arrière droit",
+        "captain": false,
+        "playerTactics": "Montées offensives, centres précis"
+      },
+      {
+        "number": 7,
+        "name": "Nelson Kofi",
+        "potential": 5,
+        "age": 24,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 8,
+        "name": "Lamine Sow",
+        "potential": 2,
+        "age": 35,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 9,
+        "name": "Hugo Ferreira",
+        "potential": 1,
+        "age": 30,
+        "position": "Milieu offensif",
+        "captain": false,
+        "playerTactics": "Création d'occasions, passes clés"
+      },
+      {
+        "number": 10,
+        "name": "Moïse Diarra",
+        "potential": 1,
+        "age": 26,
+        "position": "Ailier droit",
+        "captain": false,
+        "playerTactics": "Percées rapides, centres en retrait"
+      },
+      {
+        "number": 11,
+        "name": "Ali Zaki",
+        "potential": 5,
+        "age": 18,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 12,
+        "name": "Ibrahima Ba",
+        "potential": 1,
+        "age": 23,
+        "position": "Ailier gauche",
+        "captain": false,
+        "playerTactics": "Un-contre-un, changement de rythme"
+      },
+      {
+        "number": 13,
+        "name": "Junior Okeke",
+        "potential": 1,
+        "age": 25,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 14,
+        "name": "Rachid Ben Youssef",
+        "potential": 5,
+        "age": 33,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 15,
+        "name": "Saidou Ndiaye",
+        "potential": 4,
+        "age": 31,
+        "position": "Milieu défensif",
+        "captain": false,
+        "playerTactics": "Récupération, couverture défensive"
+      },
+      {
+        "number": 16,
+        "name": "Mateo Ibanez",
+        "potential": 1,
+        "age": 29,
+        "position": "Arrière gauche",
+        "captain": true,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 17,
+        "name": "Hakim Bamba",
+        "potential": 1,
+        "age": 24,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 18,
+        "name": "Paulo Ramos",
+        "potential": 4,
+        "age": 30,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 19,
+        "name": "Yacine Traoré",
+        "potential": 1,
+        "age": 25,
+        "position": "Ailier droit",
+        "captain": false,
+        "playerTactics": "Percées rapides, centres en retrait"
+      },
+      {
+        "number": 20,
+        "name": "Mohamed Kane",
+        "potential": 3,
+        "age": 19,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 21,
+        "name": "Souleymane Fofana",
+        "potential": 4,
+        "age": 26,
+        "position": "Arrière droit",
+        "captain": false,
+        "playerTactics": "Montées offensives, centres précis"
+      }
+    ]
+  },
+  "Galaxys": {
+    "coach": "Zachariah Moon",
+    "assistantCoach": "Leo Van Hart",
+    "formation": "4-3-3",
+    "tactics": ["Relance propre", "anticipation des ballons aériens"],
+    "players": [
+      {
+        "number": 1,
+        "name": "Orion Blaze",
+        "potential": 4,
+        "age": 23,
+        "position": "Gardien de but",
+        "captain": false,
+        "playerTactics": "Relance propre, anticipation des ballons aériens"
+      },
+      {
+        "number": 2,
+        "name": "Jet Carter",
+        "potential": 2,
+        "age": 27,
+        "position": "Arrière droit",
+        "captain": false,
+        "playerTactics": "Montées offensives, centres précis"
+      },
+      {
+        "number": 3,
+        "name": "Phoenix Ray",
+        "potential": 3,
+        "age": 33,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 4,
+        "name": "Nova King",
+        "potential": 1,
+        "age": 34,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 5,
+        "name": "Aster Vega",
+        "potential": 2,
+        "age": 28,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 6,
+        "name": "Axel Storm",
+        "potential": 3,
+        "age": 24,
+        "position": "Milieu défensif",
+        "captain": false,
+        "playerTactics": "Récupération, couverture défensive"
+      },
+      {
+        "number": 7,
+        "name": "Cyrus Moon",
+        "potential": 3,
+        "age": 35,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 8,
+        "name": "Leo Skylar",
+        "potential": 2,
+        "age": 24,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 9,
+        "name": "Drake Starling",
+        "potential": 2,
+        "age": 27,
+        "position": "Milieu offensif",
+        "captain": false,
+        "playerTactics": "Création d'occasions, passes clés"
+      },
+      {
+        "number": 10,
+        "name": "Zephyr Orion",
+        "potential": 2,
+        "age": 34,
+        "position": "Ailier droit",
+        "captain": false,
+        "playerTactics": "Percées rapides, centres en retrait"
+      },
+      {
+        "number": 11,
+        "name": "Quinn Frost",
+        "potential": 5,
+        "age": 29,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 12,
+        "name": "Milo Andros",
+        "potential": 2,
+        "age": 28,
+        "position": "Ailier gauche",
+        "captain": true,
+        "playerTactics": "Un-contre-un, changement de rythme"
+      },
+      {
+        "number": 13,
+        "name": "Cassio Nova",
+        "potential": 2,
+        "age": 23,
+        "position": "Milieu défensif",
+        "captain": false,
+        "playerTactics": "Récupération, couverture défensive"
+      },
+      {
+        "number": 14,
+        "name": "Ryder Knight",
+        "potential": 1,
+        "age": 29,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 15,
+        "name": "Apollo Starr",
+        "potential": 1,
+        "age": 35,
+        "position": "Ailier droit",
+        "captain": false,
+        "playerTactics": "Percées rapides, centres en retrait"
+      },
+      {
+        "number": 16,
+        "name": "Ty Lumen",
+        "potential": 3,
+        "age": 30,
+        "position": "Arrière droit",
+        "captain": false,
+        "playerTactics": "Montées offensives, centres précis"
+      },
+      {
+        "number": 17,
+        "name": "Sky Marley",
+        "potential": 3,
+        "age": 23,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 18,
+        "name": "Titan Shade",
+        "potential": 4,
+        "age": 31,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 19,
+        "name": "Xander Frost",
+        "potential": 4,
+        "age": 21,
+        "position": "Ailier gauche",
+        "captain": false,
+        "playerTactics": "Un-contre-un, changement de rythme"
+      },
+      {
+        "number": 20,
+        "name": "Blaze Orion",
+        "potential": 1,
+        "age": 25,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 21,
+        "name": "Kai Eclipse",
+        "potential": 3,
+        "age": 24,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      }
+    ]
+  },
+  "Golden Rangers": {
+    "coach": "Bernard Doyle",
+    "assistantCoach": "Franklin Thomas",
+    "formation": "4-3-3",
+    "tactics": ["Relance propre", "anticipation des ballons aériens"],
+    "players": [
+      {
+        "number": 1,
+        "name": "Thomas Grant",
+        "potential": 5,
+        "age": 22,
+        "position": "Gardien de but",
+        "captain": false,
+        "playerTactics": "Relance propre, anticipation des ballons aériens"
+      },
+      {
+        "number": 2,
+        "name": "Benjamin Ross",
+        "potential": 1,
+        "age": 31,
+        "position": "Arrière droit",
+        "captain": false,
+        "playerTactics": "Montées offensives, centres précis"
+      },
+      {
+        "number": 3,
+        "name": "Samuel Carter",
+        "potential": 5,
+        "age": 24,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 4,
+        "name": "Harrison Webb",
+        "potential": 2,
+        "age": 20,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 5,
+        "name": "Dominic Reid",
+        "potential": 5,
+        "age": 21,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 6,
+        "name": "Oliver Sharp",
+        "potential": 3,
+        "age": 24,
+        "position": "Milieu défensif",
+        "captain": true,
+        "playerTactics": "Récupération, couverture défensive"
+      },
+      {
+        "number": 7,
+        "name": "Marcus Tate",
+        "potential": 1,
+        "age": 22,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 8,
+        "name": "Dean Hunter",
+        "potential": 1,
+        "age": 27,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 9,
+        "name": "Kyle Bowen",
+        "potential": 1,
+        "age": 19,
+        "position": "Milieu offensif",
+        "captain": false,
+        "playerTactics": "Création d'occasions, passes clés"
+      },
+      {
+        "number": 10,
+        "name": "Wesley Grant",
+        "potential": 4,
+        "age": 33,
+        "position": "Ailier droit",
+        "captain": false,
+        "playerTactics": "Percées rapides, centres en retrait"
+      },
+      {
+        "number": 11,
+        "name": "Leon Martin",
+        "potential": 4,
+        "age": 18,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 12,
+        "name": "Ethan Rhodes",
+        "potential": 4,
+        "age": 26,
+        "position": "Ailier gauche",
+        "captain": false,
+        "playerTactics": "Un-contre-un, changement de rythme"
+      },
+      {
+        "number": 13,
+        "name": "Bradley Knox",
+        "potential": 2,
+        "age": 29,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 14,
+        "name": "Jaden Cole",
+        "potential": 4,
+        "age": 23,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 15,
+        "name": "Elliot Patterson",
+        "potential": 2,
+        "age": 26,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 16,
+        "name": "Logan Blake",
+        "potential": 4,
+        "age": 20,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 17,
+        "name": "Hayden Burke",
+        "potential": 2,
+        "age": 22,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 18,
+        "name": "Reuben Miles",
+        "potential": 1,
+        "age": 35,
+        "position": "Arrière droit",
+        "captain": false,
+        "playerTactics": "Montées offensives, centres précis"
+      },
+      {
+        "number": 19,
+        "name": "Isaac Dawson",
+        "potential": 1,
+        "age": 23,
+        "position": "Ailier gauche",
+        "captain": false,
+        "playerTactics": "Un-contre-un, changement de rythme"
+      },
+      {
+        "number": 20,
+        "name": "Joel Barrett",
+        "potential": 2,
+        "age": 35,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 21,
+        "name": "Morgan Stevens",
+        "potential": 1,
+        "age": 33,
+        "position": "Milieu défensif",
+        "captain": false,
+        "playerTactics": "Récupération, couverture défensive"
+      }
+    ]
+  },
+  "AS": {
+    "coach": "Ahmed Madi",
+    "assistantCoach": "William burn",
+    "formation": "4-4-2",
+    "tactics": ["Relance propre", "anticipation des ballons aériens"],
+    "players": [
+      {
+        "number": 1,
+        "name": "Cédric Mavinga",
+        "potential": 5,
+        "age": 18,
+        "position": "Gardien de but",
+        "captain": false,
+        "playerTactics": "Relance propre, anticipation des ballons aériens"
+      },
+      {
+        "number": 2,
+        "name": "Roland Bokele",
+        "potential": 5,
+        "age": 18,
+        "position": "Arrière droit",
+        "captain": false,
+        "playerTactics": "Montées offensives, centres précis"
+      },
+      {
+        "number": 3,
+        "name": "Alain Tshibanda",
+        "potential": 2,
+        "age": 35,
+        "position": "Défenseur central",
+        "captain": true,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 4,
+        "name": "Hervé Kayembe",
+        "potential": 3,
+        "age": 23,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 5,
+        "name": "Junior Kalonji",
+        "potential": 5,
+        "age": 19,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 6,
+        "name": "Blaise Ngoy",
+        "potential": 4,
+        "age": 30,
+        "position": "Milieu défensif",
+        "captain": false,
+        "playerTactics": "Récupération, couverture défensive"
+      },
+      {
+        "number": 7,
+        "name": "Yannick Mbuyi",
+        "potential": 1,
+        "age": 27,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 8,
+        "name": "Patrick Mavungu",
+        "potential": 2,
+        "age": 33,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 9,
+        "name": "Dany Makusu",
+        "potential": 2,
+        "age": 28,
+        "position": "Milieu offensif",
+        "captain": false,
+        "playerTactics": "Création d'occasions, passes clés"
+      },
+      {
+        "number": 10,
+        "name": "Josué Ikoko",
+        "potential": 5,
+        "age": 22,
+        "position": "Ailier droit",
+        "captain": false,
+        "playerTactics": "Percées rapides, centres en retrait"
+      },
+      {
+        "number": 11,
+        "name": "Brice Mapuata",
+        "potential": 4,
+        "age": 30,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 12,
+        "name": "Rony Ilunga",
+        "potential": 2,
+        "age": 35,
+        "position": "Ailier gauche",
+        "captain": false,
+        "playerTactics": "Un-contre-un, changement de rythme"
+      },
+      {
+        "number": 13,
+        "name": "Richie Banza",
+        "potential": 4,
+        "age": 18,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 14,
+        "name": "Joël Mulumba",
+        "potential": 5,
+        "age": 19,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 15,
+        "name": "Gédéon Ndala",
+        "potential": 2,
+        "age": 33,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 16,
+        "name": "Chadrack Kanku",
+        "potential": 4,
+        "age": 34,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 17,
+        "name": "Elvis Lukusa",
+        "potential": 5,
+        "age": 33,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 18,
+        "name": "Prince Tshimanga",
+        "potential": 5,
+        "age": 21,
+        "position": "Ailier droit",
+        "captain": false,
+        "playerTactics": "Percées rapides, centres en retrait"
+      },
+      {
+        "number": 19,
+        "name": "Emmanuel Kasongo",
+        "potential": 4,
+        "age": 21,
+        "position": "Ailier gauche",
+        "captain": false,
+        "playerTactics": "Un-contre-un, changement de rythme"
+      },
+      {
+        "number": 20,
+        "name": "Moïse Mbayo",
+        "potential": 1,
+        "age": 33,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 21,
+        "name": "Jordan Bompunga",
+        "potential": 5,
+        "age": 22,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      }
+    ]
+  },
+  "Black Tiger FC": {
+    "coach": "Wilbur Wright",
+    "assistantCoach": "Clement Drapp",
+    "formation": "3-5-2",
+    "tactics": ["Relance propre", "anticipation des ballons aériens"],
+    "players": [
+      {
+        "number": 1,
+        "name": "Kwame Osei",
+        "potential": 2,
+        "age": 33,
+        "position": "Gardien de but",
+        "captain": false,
+        "playerTactics": "Relance propre, anticipation des ballons aériens"
+      },
+      {
+        "number": 2,
+        "name": "jean cook",
+        "potential": 1,
+        "age": 40,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 3,
+        "name": "Isaac Dawson",
+        "potential": 4,
+        "age": 40,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 4,
+        "name": "Joshua Owusu",
+        "potential": 5,
+        "age": 20,
+        "position": "Arrière droit",
+        "captain": false,
+        "playerTactics": "Montées offensives, centres précis"
+      },
+      {
+        "number": 5,
+        "name": "Richmond Adomako",
+        "potential": 5,
+        "age": 26,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 6,
+        "name": "Gideon Appiah",
+        "potential": 5,
+        "age": 29,
+        "position": "Milieu défensif",
+        "captain": false,
+        "playerTactics": "Récupération, couverture défensive"
+      },
+      {
+        "number": 7,
+        "name": "Eric Nyarko",
+        "potential": 5,
+        "age": 27,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 8,
+        "name": "Evans docx",
+        "potential": 2,
+        "age": 24,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 9,
+        "name": "nante jigoro",
+        "potential": 1,
+        "age": 21,
+        "position": "Milieu offensif",
+        "captain": false,
+        "playerTactics": "Création d'occasions, passes clés"
+      },
+      {
+        "number": 10,
+        "name": "Muller Tiger",
+        "potential": 2,
+        "age": 17,
+        "position": "Ailier droit",
+        "captain": true,
+        "playerTactics": "Percées rapides, centres en retrait"
+      },
+      {
+        "number": 11,
+        "name": "new traoré",
+        "potential": 5,
+        "age": 27,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 12,
+        "name": "dorfan lavoisier",
+        "potential": 5,
+        "age": 24,
+        "position": "Ailier gauche",
+        "captain": false,
+        "playerTactics": "Un-contre-un, changement de rythme"
+      },
+      {
+        "number": 13,
+        "name": "Samuel Badu",
+        "potential": 3,
+        "age": 22,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 14,
+        "name": "Felix Obeng",
+        "potential": 2,
+        "age": 35,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 15,
+        "name": "justice turr",
+        "potential": 5,
+        "age": 20,
+        "position": "Milieu défensif",
+        "captain": false,
+        "playerTactics": "Récupération, couverture défensive"
+      },
+      {
+        "number": 16,
+        "name": "Kwaku Aidoo",
+        "potential": 3,
+        "age": 35,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 17,
+        "name": "Nana Owusu",
+        "potential": 5,
+        "age": 22,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 18,
+        "name": "Michael Gyamfi",
+        "potential": 5,
+        "age": 22,
+        "position": "Ailier droit",
+        "captain": false,
+        "playerTactics": "Percées rapides, centres en retrait"
+      },
+      {
+        "number": 19,
+        "name": "Daniel Aboagye",
+        "potential": 4,
+        "age": 18,
+        "position": "Ailier gauche",
+        "captain": false,
+        "playerTactics": "Un-contre-un, changement de rythme"
+      },
+      {
+        "number": 20,
+        "name": "Solomon Acheampong",
+        "potential": 2,
+        "age": 34,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 21,
+        "name": "Clinton Okyere",
+        "potential": 2,
+        "age": 23,
+        "position": "Arrière droit",
+        "captain": false,
+        "playerTactics": "Montées offensives, centres précis"
+      }
+    ]
+  },
+  "Royal Angels": {
+    "coach": "King Larisson",
+    "assistantCoach": "Duc Herman",
+    "formation": "3-5-2",
+    "tactics": ["Relance propre", "anticipation des ballons aériens"],
+    "players": [
+      {
+        "number": 1,
+        "name": "Jordan Moka",
+        "potential": 3,
+        "age": 25,
+        "position": "Gardien de but",
+        "captain": true,
+        "playerTactics": "Relance propre, anticipation des ballons aériens"
+      },
+      {
+        "number": 2,
+        "name": "Sami Boya",
+        "potential": 5,
+        "age": 24,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 3,
+        "name": "Tino Mavoko",
+        "potential": 4,
+        "age": 28,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 4,
+        "name": "Junior Zaki",
+        "potential": 1,
+        "age": 27,
+        "position": "Arrière droit",
+        "captain": false,
+        "playerTactics": "Montées offensives, centres précis"
+      },
+      {
+        "number": 5,
+        "name": "Marcel Kima",
+        "potential": 3,
+        "age": 25,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 6,
+        "name": "Ludo Samba",
+        "potential": 1,
+        "age": 30,
+        "position": "Milieu défensif",
+        "captain": false,
+        "playerTactics": "Récupération, couverture défensive"
+      },
+      {
+        "number": 7,
+        "name": "Pato Likuta",
+        "potential": 4,
+        "age": 26,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 8,
+        "name": "Yaya Moke",
+        "potential": 2,
+        "age": 23,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 9,
+        "name": "Dany Bakula",
+        "potential": 2,
+        "age": 22,
+        "position": "Milieu offensif",
+        "captain": false,
+        "playerTactics": "Création d'occasions, passes clés"
+      },
+      {
+        "number": 10,
+        "name": "Blessing Nono",
+        "potential": 3,
+        "age": 28,
+        "position": "Ailier droit",
+        "captain": false,
+        "playerTactics": "Percées rapides, centres en retrait"
+      },
+      {
+        "number": 11,
+        "name": "Kimo Lenga",
+        "potential": 1,
+        "age": 24,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 12,
+        "name": "Zaki Tito",
+        "potential": 4,
+        "age": 23,
+        "position": "Ailier gauche",
+        "captain": false,
+        "playerTactics": "Un-contre-un, changement de rythme"
+      },
+      {
+        "number": 13,
+        "name": "Fally Kito",
+        "potential": 1,
+        "age": 27,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 14,
+        "name": "Chris Dudu",
+        "potential": 3,
+        "age": 25,
+        "position": "Milieu central",
+        "captain": false,
+        "playerTactics": "Distribution, contrôle du rythme"
+      },
+      {
+        "number": 15,
+        "name": "Kevin Mbala",
+        "potential": 3,
+        "age": 21,
+        "position": "Milieu défensif",
+        "captain": false,
+        "playerTactics": "Récupération, couverture défensive"
+      },
+      {
+        "number": 16,
+        "name": "Gédéon Bobo",
+        "potential": 3,
+        "age": 29,
+        "position": "Arrière gauche",
+        "captain": false,
+        "playerTactics": "Débordement, soutien défensif"
+      },
+      {
+        "number": 17,
+        "name": "Ricky Bongo",
+        "potential": 3,
+        "age": 24,
+        "position": "Défenseur central",
+        "captain": false,
+        "playerTactics": "Marquage strict, relance courte"
+      },
+      {
+        "number": 18,
+        "name": "Elvis Teko",
+        "potential": 2,
+        "age": 28,
+        "position": "Ailier droit",
+        "captain": false,
+        "playerTactics": "Percées rapides, centres en retrait"
+      },
+      {
+        "number": 19,
+        "name": "Matou Léon",
+        "potential": 2,
+        "age": 21,
+        "position": "Ailier gauche",
+        "captain": false,
+        "playerTactics": "Un-contre-un, changement de rythme"
+      },
+      {
+        "number": 20,
+        "name": "Kabu Simba",
+        "potential": 1,
+        "age": 22,
+        "position": "Attaquant",
+        "captain": false,
+        "playerTactics": "Finition, appels en profondeur"
+      },
+      {
+        "number": 21,
+        "name": "Jonas Petit",
+        "potential": 2,
+        "age": 26,
+        "position": "Arrière droit",
+        "captain": false,
+        "playerTactics": "Montées offensives, centres précis"
+      }
+    ]
+  }
+}
