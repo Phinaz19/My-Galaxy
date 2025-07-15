@@ -449,6 +449,7 @@
     const demiWinners = [];
     let editionCount = localStorage.getItem('editionCount') ? parseInt(localStorage.getItem('editionCount')) : 1;
     let trophies = JSON.parse(localStorage.getItem('trophies')) || [];
+    let currentEditionMatches = []; // Nouveau : Stockera tous les matchs joués dans l'édition actuelle
 
     // Structure globale pour stocker les données transformées
     let allGameData = {
@@ -474,13 +475,6 @@
                 if (rawData.hasOwnProperty(teamName)) {
                     const teamData = rawData[teamName];
                     
-                    // Ajouter l'équipe à la liste simplifiée des équipes
-                    // Il est crucial que le logo soit dans le fichier JSON pour chaque équipe
-                    // Si votre JSON n'a pas de champ 'logo' directement sous l'équipe,
-                    // vous devrez le récupérer d'une autre source ou le déduire du nom.
-                    // Pour l'exemple, j'assume que le logo est nommé "NomEquipe.png" ou "NomEquipe.jpeg"
-                    // Sinon, il faudra ajouter une propriété "logo" à chaque objet équipe dans votre JSON.
-                    
                     // Exemple de récupération de logo si votre JSON inclut une référence au logo dans la structure équipe
                     // Sinon, on doit inférer. Pour cet exemple, je vais inferer basé sur les noms des logos de votre HTML initial.
                     const teamLogoMap = {
@@ -501,11 +495,13 @@
                         "Royal Angels": "15.png",
                         "SuperBot": "16.jpeg"
                     };
-                    const teamLogo = teamLogoMap[teamName] || `placeholder.png`; // Fallback si non trouvé
+                    // IMPORTANT : Si vos images sont dans un sous-dossier (ex: images/),
+                    // ajustez le chemin ici aussi, par exemple : `images/${teamLogoMap[teamName]}`
+                    const teamLogo = teamLogoMap[teamName] || `placeholder.png`; 
                     
                     allGameData.teams.push({
                         name: teamName,
-                        logo: teamLogo // Assurez-vous que le chemin du logo est correct
+                        logo: teamLogo 
                     });
 
                     // Ajouter les joueurs de cette équipe à la liste globale des joueurs
@@ -579,18 +575,22 @@
       let needsUpdate = false;
 
       for (const trophy of trophies) {
-        if (typeof trophy === 'string') {
+        // Si l'objet trophée ne contient pas d'ID ou de matches (ancien format)
+        if (typeof trophy === 'string' || !trophy.id || !trophy.matches) {
           needsUpdate = true;
-          const parts = trophy.split(' - ');
+          const parts = typeof trophy === 'string' ? trophy.split(' - ') : [`${trophy.team}`, trophy.editionInfo];
           const teamName = parts[0];
           const editionInfo = parts.slice(1).join(' - ');
 
           newTrophies.push({
+            id: Date.now() + Math.random(), // Générer un ID unique temporaire pour les anciens trophées
             team: teamName,
             image: getTeamImage(teamName),
-            editionInfo: editionInfo
+            editionInfo: editionInfo,
+            matches: [] // Les anciens trophées n'avaient pas de détails de match
           });
         } else {
+          // Si l'image manquait dans un objet déjà structuré
           if (!trophy.image) {
             needsUpdate = true;
             trophy.image = getTeamImage(trophy.team);
@@ -655,26 +655,27 @@
       document.getElementById("homeSection").classList.add("active");
     }
 
-    // FONCTION CORRIGÉE pour le palmarès avec affichage des logos
+    // FONCTION MODIFIÉE pour le palmarès avec affichage des logos et liens vers les détails
     function showTrophies() {
       const trophyList = document.getElementById("trophyList");
 
       if (trophies.length === 0) {
         trophyList.innerHTML = "<div style='text-align:center; padding:20px;'>Aucun trophée encore remporté.<br>Sauvegardez le résultat d'un tournoi pour commencer le palmarès.</div>";
       } else {
-        trophyList.innerHTML = trophies.map((t, i) => {
-          const rankEmoji = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '🏅';
-          const editionText = t.editionInfo || `Édition ${i + 1}`;
-
+        trophyList.innerHTML = trophies.map((t) => { // 't' est maintenant l'objet édition complet
           const imageUrl = t.image || getTeamImage(t.team);
+          const rankEmoji = trophies.indexOf(t) === 0 ? '🥇' : trophies.indexOf(t) === 1 ? '🥈' : trophies.indexOf(t) === 2 ? '🥉' : '🏅';
+
+          // Le lien vers la page de détails, seulement si l'édition a un ID
+          const detailsLink = t.id ? `<a href="details.html?id=${t.id}" style="color: #00b09b; text-decoration: none; font-weight: bold; margin-top: 5px; display: inline-block;">Voir les matchs</a>` : '';
 
           return `
             <div class="trophy-item">
               <img src="${imageUrl}" alt="${t.team}" class="trophy-logo">
               <div class="trophy-info">
                 <div class="trophy-title">${rankEmoji} ${t.team}</div>
-                <div>${editionText}</div>
-              </div>
+                <div>${t.editionInfo}</div>
+                ${detailsLink} </div>
             </div>
           `;
         }).join('');
@@ -690,6 +691,9 @@
         alert("Veuillez sélectionner exactement 8 équipes.");
         return;
       }
+
+      // Réinitialiser les matchs de l'édition courante au début d'un nouveau tournoi
+      currentEditionMatches = []; 
 
       // Récupère les équipes complètes (avec logos)
       selectedTeams = Array.from(checkboxes).map(cb => {
@@ -763,16 +767,16 @@
     function playNextQuart() {
       if (currentQuart > 4) return;
 
-      const match = document.getElementById(`quart${currentQuart}`);
-      const vs = match.children[1];
+      const matchElement = document.getElementById(`quart${currentQuart}`); // Renommée pour éviter conflit
+      const vs = matchElement.children[1]; // Utilisez matchElement
       if (vs.innerHTML.includes("Score:")) {
         currentQuart++;
         playNextQuart();
         return;
       }
 
-      const team1Element = match.children[0];
-      const team2Element = match.children[2];
+      const team1Element = matchElement.children[0]; // Utilisez matchElement
+      const team2Element = matchElement.children[2]; // Utilisez matchElement
       const team1Name = team1Element.textContent.trim();
       const team2Name = team2Element.textContent.trim();
 
@@ -815,6 +819,17 @@
       if (currentQuart > 4) {
         document.getElementById("nextFromQuart").disabled = false;
       }
+
+      // AJOUTÉ : Sauvegarder les détails de ce match pour l'édition en cours
+      currentEditionMatches.push({
+          round: "Quart de Finale",
+          team1: team1Name,
+          team2: team2Name,
+          score1: s1,
+          score2: s2,
+          winner: winnerName,
+          details: goalDetailsHTML // Gardez le HTML généré pour la simplicité
+      });
     }
 
     function startDemi() {
@@ -891,6 +906,17 @@
       if (demiWinners.length === 2 && demiWinners[0] && demiWinners[1]) {
           document.getElementById("nextFromDemi").disabled = false;
       }
+
+      // AJOUTÉ : Sauvegarder les détails de ce match pour l'édition en cours
+      currentEditionMatches.push({
+          round: `Demi-finale (Match ${matchIndex})`,
+          team1: team1Name,
+          team2: team2Name,
+          score1: s1,
+          score2: s2,
+          winner: winnerName,
+          details: goalDetailsHTML
+      });
     }
 
     function startFinale() {
@@ -957,6 +983,17 @@
       w.innerHTML = `🏆 VAINQUEUR: ${getTeamHTML(winnerName)}`;
       document.getElementById("endButtons").style.display = "flex";
       editionCount++;
+
+      // AJOUTÉ : Sauvegarder les détails de ce match pour l'édition en cours
+      currentEditionMatches.push({
+          round: "Finale",
+          team1: team1Name,
+          team2: team2Name,
+          score1: s1,
+          score2: s2,
+          winner: winnerName,
+          details: goalDetailsHTML
+      });
     }
 
     function resetTournament() {
@@ -964,6 +1001,7 @@
       currentQuart = 1;
       quartWinners.length = 0;
       demiWinners.length = 0;
+      currentEditionMatches = []; // AJOUTÉ : Réinitialiser les matchs de l'édition courante
 
       document.getElementById("winner").innerHTML = "";
       document.getElementById("endButtons").style.display = "none";
@@ -999,6 +1037,7 @@
       displayHomeInfo();
     }
 
+    // FONCTION MODIFIÉE : Sauvegarde l'objet complet de l'édition avec les matchs
     function saveTournament() {
       const winnerElement = document.querySelector("#winner .team-logo img");
       if (!winnerElement) {
@@ -1014,18 +1053,29 @@
         month: '2-digit',
         year: 'numeric'
       });
+      const timeStr = now.toLocaleTimeString('fr-FR', {
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+
+      const editionId = Date.now(); // ID unique pour cette édition
 
       const history = {
+        id: editionId, // Ajout de l'ID pour la récupération future
         team: winnerName,
         image: winnerImageSrc,
-        editionInfo: `Édition ${editionCount} (${dateStr})`
+        editionInfo: `Édition ${editionCount} (${dateStr} à ${timeStr})`,
+        matches: [...currentEditionMatches] // Sauvegarde une copie des matchs de l'édition actuelle
       };
 
-      trophies.unshift(history);
+      trophies.unshift(history); // Ajoutez au début pour avoir le plus récent en premier
       localStorage.setItem('trophies', JSON.stringify(trophies));
       localStorage.setItem('editionCount', editionCount.toString());
 
       alert("Résultat sauvegardé dans le palmarès !");
+
+      // Réinitialiser les matchs de l'édition courante après sauvegarde pour le prochain tournoi
+      currentEditionMatches = []; 
     }
 
     function resetTrophies() {
@@ -1107,3 +1157,4 @@
   </script>
 </body>
 </html>
+ 
