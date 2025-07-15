@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Détails de l'Édition - Coupe One</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+      padding: 20px;
+      text-align: center;
+      color: white;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    h1 {
+      color: #FFD700;
+      font-size: 2.2rem;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      margin-bottom: 20px;
+    }
+
+    .match-card {
+      background: linear-gradient(to bottom, #1e3c72, #2a5298);
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      border: 2px solid #FFD700;
+      text-align: left;
+      transition: transform 0.3s ease;
+    }
+
+    .match-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .match-round {
+      font-weight: bold;
+      color: #FFD700;
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .match-info {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .match-team {
+      font-weight: bold;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .match-score {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #FFD700;
+    }
+
+    .match-winner {
+      color: #7CFC00; /* Green for winner */
+    }
+
+    .team-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid #FFD700;
+      object-fit: cover;
+    }
+
+    .goal-details {
+        font-size: 0.9em;
+        margin-top: 15px;
+        padding-top: 10px;
+        border-top: 1px dashed rgba(255, 255, 255, 0.2);
+        color: #ddd;
+    }
+    .goal-detail-item {
+        margin-bottom: 5px;
+    }
+
+    .buttons {
+      margin-top: 30px;
+    }
+
+    button {
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      background: linear-gradient(to right, #2196F3, #21CBF3);
+      color: white;
+    }
+
+    button:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+      .match-info {
+        flex-direction: column;
+      }
+      .match-score {
+        margin: 10px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 id="editionTitle">Détails de l'Édition</h1>
+    <div id="matchesContainer">
+      </div>
+    <div class="buttons">
+      <button onclick="window.location.href='index.html'">Retour au Palmarès</button>
+    </div>
+  </div>
+
+  <script>
+    // Ces données seront utilisées pour les logos. Idéalement, elles devraient être chargées une seule fois.
+    // Pour cet exemple, je les duplique pour que details.html fonctionne de manière autonome.
+    const teamLogoMap = {
+        "White Angels": "1.png",
+        "Caterpillar FC": "2.jpeg",
+        "Illuminati FC": "3.jpeg",
+        "Lions": "4.jpeg",
+        "Dragon CF": "5.png",
+        "Golden Rangers": "6.jpeg",
+        "Eclipse FC": "7.png",
+        "Titans": "8.jpeg",
+        "Red united": "9.png",
+        "White united": "10.png",
+        "Volta street": "11.jpeg",
+        "Galaxys": "12.jpeg",
+        "AS": "13.jpeg",
+        "Black tiger FC": "14.jpeg",
+        "Royal Angels": "15.png",
+        "SuperBot": "16.jpeg"
+    };
+
+    // Fonction pour obtenir le chemin de l'image d'une équipe
+    function getTeamImage(teamName) {
+      // IMPORTANT : Si vos images sont dans un sous-dossier (ex: images/),
+      // ajustez le chemin ici aussi, par exemple : `images/${teamLogoMap[teamName]}`
+      return teamLogoMap[teamName] || "placeholder.png";
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const editionId = urlParams.get('id'); // Récupère l'ID de l'URL
+
+      const trophies = JSON.parse(localStorage.getItem('trophies')) || [];
+      // Cherche l'édition par ID (attention: l'ID de Date.now() est un nombre, urlParams.get renvoie une string)
+      const edition = trophies.find(t => t.id == editionId); 
+
+      const editionTitle = document.getElementById('editionTitle');
+      const matchesContainer = document.getElementById('matchesContainer');
+
+      if (edition) {
+        editionTitle.textContent = `Détails de ${edition.editionInfo}`;
+        if (edition.matches && edition.matches.length > 0) {
+          matchesContainer.innerHTML = edition.matches.map(match => {
+            const team1IsWinner = match.team1 === match.winner;
+            const team2IsWinner = match.team2 === match.winner;
+            return `
+              <div class="match-card">
+                <div class="match-round">${match.round}</div>
+                <div class="match-info">
+                  <div class="match-team ${team1IsWinner ? 'match-winner' : ''}">
+                    <img src="${getTeamImage(match.team1)}" alt="${match.team1}" class="team-logo">
+                    ${match.team1}
+                  </div>
+                  <div class="match-score">${match.score1} - ${match.score2}</div>
+                  <div class="match-team ${team2IsWinner ? 'match-winner' : ''}">
+                    <img src="${getTeamImage(match.team2)}" alt="${match.team2}" class="team-logo">
+                    ${match.team2}
+                  </div>
+                </div>
+                ${match.details} </div>
+            `;
+          }).join('');
+        } else {
+          matchesContainer.innerHTML = "<p>Aucun détail de match enregistré pour cette édition.</p>";
+        }
+      } else {
+        editionTitle.textContent = "Édition non trouvée";
+        matchesContainer.innerHTML = "<p>L'édition que vous recherchez n'existe pas ou n'a pas été sauvegardée.</p>";
+      }
+    });
+  </script>
+</body>
+</html>
