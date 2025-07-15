@@ -475,8 +475,7 @@
                 if (rawData.hasOwnProperty(teamName)) {
                     const teamData = rawData[teamName];
                     
-                    // Exemple de récupération de logo si votre JSON inclut une référence au logo dans la structure équipe
-                    // Sinon, on doit inférer. Pour cet exemple, je vais inferer basé sur les noms des logos de votre HTML initial.
+                    // IMPORTANT: Mappage des noms d'équipe aux nouveaux noms de fichiers d'image.
                     const teamLogoMap = {
                         "White Angels": "1.png",
                         "Caterpillar FC": "2.jpeg",
@@ -484,14 +483,14 @@
                         "Lions": "4.jpeg",
                         "Dragon CF": "5.png",
                         "Golden Rangers": "6.jpeg",
-                        "Eclipse FC": "7.png",
+                        "Eclipse FC": "20.png", // CHANGED FROM 7.png to 20.png
                         "Titans": "8.jpeg",
-                        "Red united": "9.png",
-                        "White united": "10.png",
-                        "Volta street": "11.jpeg",
+                        "Red united": "21.png", // CHANGED FROM 9.png to 21.png
+                        "White united": "22.png", // CHANGED FROM 10.png to 22.png
+                        "Volta street": "23.jpeg", // CHANGED FROM 11.jpeg to 23.jpeg
                         "Galaxys": "12.jpeg",
                         "AS": "13.jpeg",
-                        "Black tiger FC": "14.jpeg",
+                        "Black tiger FC": "24.jpeg", // CHANGED FROM 14.jpeg to 24.jpeg
                         "Royal Angels": "15.png",
                         "SuperBot": "16.jpeg"
                     };
@@ -660,7 +659,7 @@
       const trophyList = document.getElementById("trophyList");
 
       if (trophies.length === 0) {
-        trophyList.innerHTML = "<div style='text-align:center; padding:20px;'>Aucun trophée encore remporté.<br>Sauvegardez le résultat d'un tournoi pour commencer le palmarès.</div>";
+        trophies.innerHTML = "<div style='text-align:center; padding:20px;'>Aucun trophée encore remporté.<br>Sauvegardez le résultat d'un tournoi pour commencer le palmarès.</div>";
       } else {
         trophyList.innerHTML = trophies.map((t) => { // 't' est maintenant l'objet édition complet
           const imageUrl = t.image || getTeamImage(t.team);
@@ -747,7 +746,7 @@
             scorer = playersOfScoringTeam[2];
         } else {
              // Si la liste est petite, on s'assure de ne pas sortir de la plage
-            scorer = playersOfScoringTeam[Math.min(Math.floor(Math.random() * 3), playersOfScoringTeam.length - 1)];
+            scorer = playersOfScallGameDataoringTeam[Math.min(Math.floor(Math.random() * 3), playersOfScoringTeam.length - 1)];
         }
 
 
@@ -1157,4 +1156,3 @@
   </script>
 </body>
 </html>
- 
