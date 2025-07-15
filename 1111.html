@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coupe One</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+      padding: 20px;
+      text-align: center;
+      color: white;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #FFD700;
+      font-size: 2.5rem;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      color: #FFD700;
+      font-size: 1.8rem;
+      margin-top: 0;
+    }
+
+    .section {
+      display: none;
+      margin-top: 30px;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .active {
+      display: block;
+      animation: fadeIn 0.8s ease;
+    }
+
+    .bracket {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    .match {
+      background: linear-gradient(to bottom, #1e3c72, #2a5298);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      width: 260px;
+      border: 2px solid #FFD700;
+      transition: transform 0.3s ease;
+    }
+
+    .match:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .team {
+      font-weight: bold;
+      margin: 12px 0;
+      font-size: 1.1rem;
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .vs {
+      margin: 15px 0;
+      color: #FFD700;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .buttons {
+      margin-top: 40px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    button {
+      padding: 12px 25px;
+      margin: 10px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-play {
+      background: linear-gradient(to right, #00b09b, #96c93d);
+      color: white;
+    }
+
+    .btn-next {
+      background: linear-gradient(to right, #2196F3, #21CBF3);
+      color: white;
+    }
+
+    .btn-back {
+      background: linear-gradient(to right, #FF416C, #FF4B2B);
+      color: white;
+    }
+
+    .btn-reset {
+      background: linear-gradient(to right, #FF9800, #FFC107);
+      color: white;
+    }
+
+    .btn-save {
+      background: linear-gradient(to right, #9c27b0, #673AB7);
+      color: white;
+    }
+
+    #winner {
+      font-size: 2rem;
+      margin-top: 30px;
+      color: #FFD700;
+      font-weight: bold;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+      animation: pulse 2s infinite;
+    }
+
+    .team-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 15px;
+      max-width: 900px;
+      margin: 20px auto;
+    }
+
+    .team-list label {
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .team-list label:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-3px);
+    }
+
+    .team-list label.checked {
+      background: rgba(0, 255, 0, 0.1);
+      border-color: #00FF00;
+    }
+
+    .team-list img {
+      width: 40px;
+      height: 40px;
+      margin-right: 15px;
+      border-radius: 50%;
+      border: 2px solid #FFD700;
+      object-fit: cover;
+    }
+
+    .team-list input {
+      margin-right: 10px;
+      width: 20px;
+      height: 20px;
+    }
+
+    #trophyList {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 25px;
+      border-radius: 15px;
+      max-width: 700px;
+      margin: 30px auto;
+      text-align: left;
+      font-size: 1.2rem;
+      border: 2px solid #FFD700;
+    }
+
+    .trophy-item {
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border-left: 4px solid #FFD700;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .trophy-logo {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 2px solid #FFD700;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .trophy-info {
+      flex-grow: 1;
+    }
+
+    .trophy-title {
+      font-size: 1.4rem;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #FFD700;
+    }
+
+    .instructions {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 10px;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      opacity: 1;
+      transition: opacity 1s ease-out;
+    }
+
+    .instructions.hidden {
+      opacity: 0;
+      height: 0;
+      padding: 0;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    .home-info {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+      border-left: 4px solid #FFD700;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .trophy-icon {
+      font-size: 3rem;
+      color: #FFD700;
+    }
+
+    .counter {
+      background: rgba(255, 215, 0, 0.2);
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-weight: bold;
+    }
+
+    .team-logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 8px;
+    }
+
+    .team-logo img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      margin-right: 8px;
+      vertical-align: middle;
+      border: 2px solid #FFD700;
+      object-fit: cover;
+    }
+
+    /* Styles pour les détails des buteurs/passeurs */
+    .goal-details {
+        font-size: 0.85em;
+        margin-top: 8px;
+        text-align: left;
+        line-height: 1.4;
+        color: #ddd; /* Light gray for readability */
+        padding-top: 5px;
+        border-top: 1px dashed rgba(255, 255, 255, 0.2);
+    }
+    .goal-detail-item {
+        margin-bottom: 3px;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .bracket {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .match {
+        width: 90%;
+      }
+
+      .team-list {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .trophy-item {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .trophy-logo {
+        margin-bottom: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="trophy-icon">🏆</div>
+      <h1>Coupe One Football</h1>
+      <div class="trophy-icon">⚽</div>
+    </div>
+
+    <div id="instructionsSection" class="instructions">
+      <p>Bienvenue dans le simulateur de tournoi de football ! Sélectionnez 8 équipes, regardez les matchs se dérouler et découvrez le vainqueur final.</p>
+      <p>Le problème du palmarès a été corrigé - les logos des équipes s'affichent maintenant correctement !</p>
+    </div>
+
+    <div id="homeSection" class="section active">
+      <div class="buttons">
+        <button class="btn-next" onclick="goToSelection()">Commencer le Tournoi</button>
+        <button class="btn-save" onclick="showTrophies()">Voir le Palmarès</button>
+      </div>
+
+      <div id="homeInfo" class="home-info">
+        </div>
+    </div>
+
+    <div id="trophySection" class="section">
+      <h2>Palmarès du Tournoi</h2>
+      <div id="trophyList"></div>
+      <div class="buttons">
+        <button class="btn-back" onclick="goBackToHome()">Retour à l'accueil</button>
+        <button class="btn-reset" onclick="resetTrophies()">Réinitialiser le Palmarès</button>
+      </div>
+    </div>
+
+    <div id="selectSection" class="section">
+      <h2>Sélectionnez 8 équipes</h2>
+      <form id="teamForm" class="team-list">
+        </form>
+      <div class="buttons">
+        <button class="btn-back" onclick="goBackToHome()">Retour</button>
+        <button class="btn-next" onclick="startTournament()">Commencer le Tournoi</button>
+        <div class="counter" id="selectedCount">0 sélectionnées</div>
+      </div>
+    </div>
+
+    <div id="quartSection" class="section">
+      <h2>Quart de Finale</h2>
+      <div class="bracket" id="quartMatches"></div>
+      <div class="buttons">
+        <button class="btn-back" onclick="goBack('quart')">Retour</button>
+        <button class="btn-play" onclick="playNextQuart()">Jouer le Match</button>
+        <button class="btn-next" onclick="startDemi()" id="nextFromQuart" disabled>Demi-finales</button>
+      </div>
+    </div>
+
+    <div id="demiSection" class="section">
+      <h2>Demi-finale</h2>
+      <div class="bracket" id="demiMatches">
+        <div class="match" id="demi1">
+          <div class="team" id="d1t1"></div>
+          <div class="vs" id="d1vs">VS</div>
+          <div class="team" id="d1t2"></div>
+        </div>
+        <div class="match" id="demi2">
+          <div class="team" id="d2t1"></div>
+          <div class="vs" id="d2vs">VS</div>
+          <div class="team" id="d2t2"></div>
+        </div>
+      </div>
+      <div class="buttons">
+        <button class="btn-play" onclick="playDemi(1)">Jouer Match 1</button>
+        <button class="btn-play" onclick="playDemi(2)">Jouer Match 2</button>
+        <button class="btn-next" onclick="startFinale()" id="nextFromDemi" disabled>Finale</button>
+      </div>
+    </div>
+
+    <div id="finaleSection" class="section">
+      <h2>Finale</h2>
+      <div class="bracket">
+        <div class="match" id="finalMatch">
+          <div class="team" id="final1"></div>
+          <div class="vs" id="finalvs">VS</div>
+          <div class="team" id="final2"></div>
+        </div>
+      </div>
+      <div class="buttons">
+        <button class="btn-play" onclick="playFinale()">Jouer la Finale</button>
+      </div>
+      <div id="winner"></div>
+      <div class="buttons" id="endButtons" style="display:none;">
+        <button class="btn-reset" onclick="resetTournament()">Nouveau Tournoi</button>
+        <button class="btn-save" onclick="saveTournament()">Sauvegarder</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Variables globales
+    let selectedTeams = [];
+    let currentQuart = 1;
+    const quartWinners = [];
+    const demiWinners = [];
+    let editionCount = localStorage.getItem('editionCount') ? parseInt(localStorage.getItem('editionCount')) : 1;
+    let trophies = JSON.parse(localStorage.getItem('trophies')) || [];
+
+    // Structure globale pour stocker les données transformées
+    let allGameData = {
+        teams: [],    // Tableau des objets équipe simplifiés: { name: "Team Name", logo: "path/to/logo.png" }
+        players: []   // Tableau de tous les objets joueur, avec 'teamName' et 'stats' ajoutés/adaptés
+    };
+
+    // --- Fonction pour charger et transformer les données JSON ---
+    async function loadGameData() {
+        try {
+            const response = await fetch('players_data.json');
+            if (!response.ok) {
+                throw new Error(`Erreur de chargement du JSON: ${response.statusText}`);
+            }
+            const rawData = await response.json();
+            console.log("Données JSON brutes chargées :", rawData); // Pour le débogage
+
+            // Transformer les données pour les rendre plus utilisables
+            allGameData.teams = [];
+            allGameData.players = [];
+
+            for (const teamName in rawData) {
+                if (rawData.hasOwnProperty(teamName)) {
+                    const teamData = rawData[teamName];
+                    
+                    // Ajouter l'équipe à la liste simplifiée des équipes
+                    // Il est crucial que le logo soit dans le fichier JSON pour chaque équipe
+                    // Si votre JSON n'a pas de champ 'logo' directement sous l'équipe,
+                    // vous devrez le récupérer d'une autre source ou le déduire du nom.
+                    // Pour l'exemple, j'assume que le logo est nommé "NomEquipe.png" ou "NomEquipe.jpeg"
+                    // Sinon, il faudra ajouter une propriété "logo" à chaque objet équipe dans votre JSON.
+                    
+                    // Exemple de récupération de logo si votre JSON inclut une référence au logo dans la structure équipe
+                    // Sinon, on doit inférer. Pour cet exemple, je vais inferer basé sur les noms des logos de votre HTML initial.
+                    const teamLogoMap = {
+                        "White Angels": "1.png",
+                        "Caterpillar FC": "2.jpeg",
+                        "Illuminati FC": "3.jpeg",
+                        "Lions": "4.jpeg",
+                        "Dragon CF": "5.png",
+                        "Golden Rangers": "6.jpeg",
+                        "Eclipse FC": "7.png",
+                        "Titans": "8.jpeg",
+                        "Red united": "9.png",
+                        "White united": "10.png",
+                        "Volta street": "11.jpeg",
+                        "Galaxys": "12.jpeg",
+                        "AS": "13.jpeg",
+                        "Black tiger FC": "14.jpeg",
+                        "Royal Angels": "15.png",
+                        "SuperBot": "16.jpeg"
+                    };
+                    const teamLogo = teamLogoMap[teamName] || `placeholder.png`; // Fallback si non trouvé
+                    
+                    allGameData.teams.push({
+                        name: teamName,
+                        logo: teamLogo // Assurez-vous que le chemin du logo est correct
+                    });
+
+                    // Ajouter les joueurs de cette équipe à la liste globale des joueurs
+                    teamData.players.forEach(player => {
+                        // Ajouter le nom de l'équipe au joueur
+                        player.teamName = teamName;
+                        
+                        // Ajouter/adapter les stats offense/defense si elles n'existent pas
+                        if (!player.stats) {
+                            player.stats = {};
+                        }
+                        // Utiliser 'potential' pour estimer l'offense/defense si pas déjà là
+                        // Adapter le potentiel (1-5) à une échelle plus large pour la simulation (ex: 40-90)
+                        const baseStat = 30 + (player.potential * 10); 
+                        if (player.position.includes("Attaquant") || player.position.includes("Ailier")) {
+                            player.stats.offense = baseStat + 20; // Plus offensif
+                            player.stats.defense = baseStat - 10;
+                        } else if (player.position.includes("Milieu")) {
+                            player.stats.offense = baseStat + 5;
+                            player.stats.defense = baseStat + 5;
+                        } else if (player.position.includes("Défenseur") || player.position.includes("Arrière")) {
+                            player.stats.offense = baseStat - 10;
+                            player.stats.defense = baseStat + 20; // Plus défensif
+                        } else if (player.position.includes("Gardien")) {
+                            player.stats.offense = 10; // Très faible en attaque
+                            player.stats.defense = baseStat + 30; // Très fort en défense
+                        } else { // Position inconnue ou générique
+                            player.stats.offense = baseStat;
+                            player.stats.defense = baseStat;
+                        }
+                        
+                        // S'assurer que les stats sont dans une plage raisonnable (0-100)
+                        player.stats.offense = Math.max(0, Math.min(100, player.stats.offense));
+                        player.stats.defense = Math.max(0, Math.min(100, player.stats.defense));
+
+                        allGameData.players.push(player);
+                    });
+                }
+            }
+            
+            console.log("Données du jeu transformées :", allGameData); // Pour vérifier la structure finale
+
+            // Après le chargement et la transformation, initialisez les éléments dépendants des données
+            initializeTeamSelection();
+            displayHomeInfo();
+            updateSelectedCount();
+            migrateTrophies();
+            displayInstructions();
+
+        } catch (error) {
+            console.error("Erreur lors du chargement ou de la transformation des données du jeu :", error);
+            alert("Impossible de charger les données du jeu. Veuillez vérifier le fichier 'players_data.json' et sa structure. Erreur: " + error.message);
+        }
+    }
+
+    // Fonction pour obtenir le chemin de l'image d'une équipe (utilise allGameData.teams)
+    function getTeamImage(teamName) {
+      const team = allGameData.teams.find(t => t.name === teamName);
+      return team ? team.logo : "placeholder.png";
+    }
+
+    // Fonction pour afficher image + nom de l'équipe
+    function getTeamHTML(name) {
+      const src = getTeamImage(name);
+      return `<span class="team-logo"><img src="${src}" alt="${name}">${name}</span>`;
+    }
+
+    // Migration des anciens trophées vers le nouveau format (ajustée pour allGameData)
+    function migrateTrophies() {
+      const newTrophies = [];
+      let needsUpdate = false;
+
+      for (const trophy of trophies) {
+        if (typeof trophy === 'string') {
+          needsUpdate = true;
+          const parts = trophy.split(' - ');
+          const teamName = parts[0];
+          const editionInfo = parts.slice(1).join(' - ');
+
+          newTrophies.push({
+            team: teamName,
+            image: getTeamImage(teamName),
+            editionInfo: editionInfo
+          });
+        } else {
+          if (!trophy.image) {
+            needsUpdate = true;
+            trophy.image = getTeamImage(trophy.team);
+          }
+          newTrophies.push(trophy);
+        }
+      }
+
+      if (needsUpdate) {
+        trophies = newTrophies;
+        localStorage.setItem('trophies', JSON.stringify(trophies));
+      }
+    }
+
+    // Initialisation
+    document.addEventListener('DOMContentLoaded', function() {
+        loadGameData(); // Lance le chargement des données et l'initialisation qui en découle
+    });
+
+    function displayHomeInfo() {
+      const homeInfoDiv = document.getElementById("homeInfo");
+      // Utilise les équipes chargées du JSON
+      const allTeamNames = allGameData.teams.map(t => t.name);
+      // Gérer le cas où il n'y a pas d'équipes chargées
+      const randomHostTeamName = allTeamNames.length > 0 ? allTeamNames[Math.floor(Math.random() * allTeamNames.length)] : "Équipe Inconnue";
+      const today = new Date();
+      const dateOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
+      const formattedDate = today.toLocaleDateString('fr-FR', dateOptions);
+
+      homeInfoDiv.innerHTML = `
+        <h3>Informations du Tournoi</h3>
+        <p><strong>Édition actuelle:</strong> ${editionCount}</p>
+        <p><strong>Date:</strong> ${formattedDate}</p>
+        <p><strong>Équipe Hôte:</strong> ${getTeamHTML(randomHostTeamName)}</p>
+      `;
+    }
+
+    // Mise à jour du compteur de sélection
+    function updateSelectedCount() {
+      const checkboxes = document.querySelectorAll('#teamForm input:checked');
+      const count = checkboxes.length;
+      document.getElementById('selectedCount').textContent = `${count} sélectionnée${count !== 1 ? 's' : ''}`;
+
+      const labels = document.querySelectorAll('#teamForm label');
+      labels.forEach(label => {
+        const checkbox = label.querySelector('input');
+        if (checkbox.checked) {
+          label.classList.add('checked');
+        } else {
+          label.classList.remove('checked');
+        }
+      });
+    }
+
+    function goToSelection() {
+      document.getElementById("homeSection").classList.remove("active");
+      document.getElementById("selectSection").classList.add("active");
+    }
+
+    function goBackToHome() {
+      document.getElementById("trophySection").classList.remove("active");
+      document.getElementById("homeSection").classList.add("active");
+    }
+
+    // FONCTION CORRIGÉE pour le palmarès avec affichage des logos
+    function showTrophies() {
+      const trophyList = document.getElementById("trophyList");
+
+      if (trophies.length === 0) {
+        trophyList.innerHTML = "<div style='text-align:center; padding:20px;'>Aucun trophée encore remporté.<br>Sauvegardez le résultat d'un tournoi pour commencer le palmarès.</div>";
+      } else {
+        trophyList.innerHTML = trophies.map((t, i) => {
+          const rankEmoji = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '🏅';
+          const editionText = t.editionInfo || `Édition ${i + 1}`;
+
+          const imageUrl = t.image || getTeamImage(t.team);
+
+          return `
+            <div class="trophy-item">
+              <img src="${imageUrl}" alt="${t.team}" class="trophy-logo">
+              <div class="trophy-info">
+                <div class="trophy-title">${rankEmoji} ${t.team}</div>
+                <div>${editionText}</div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      document.getElementById("homeSection").classList.remove("active");
+      document.getElementById("trophySection").classList.add("active");
+    }
+
+    function startTournament() {
+      const checkboxes = document.querySelectorAll('#teamForm input:checked');
+      if (checkboxes.length !== 8) {
+        alert("Veuillez sélectionner exactement 8 équipes.");
+        return;
+      }
+
+      // Récupère les équipes complètes (avec logos)
+      selectedTeams = Array.from(checkboxes).map(cb => {
+        return allGameData.teams.find(t => t.name === cb.value);
+      });
+
+      shuffle(selectedTeams);
+
+      const bracket = document.getElementById("quartMatches");
+      bracket.innerHTML = "";
+      for (let i = 0; i < 4; i++) {
+        const team1 = selectedTeams[i * 2];
+        const team2 = selectedTeams[i * 2 + 1];
+        bracket.innerHTML += `
+          <div class="match" id="quart${i + 1}">
+            <div class="team">${getTeamHTML(team1.name)}</div>
+            <div class="vs">VS</div>
+            <div class="team">${getTeamHTML(team2.name)}</div>
+          </div>`;
+      }
+
+      document.getElementById("selectSection").classList.remove("active");
+      document.getElementById("quartSection").classList.add("active");
+    }
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    // --- Fonction pour simuler buteur et passeur ---
+    function simulateGoalScorerAndAssist(scoringTeamName) {
+        const playersOfScoringTeam = allGameData.players.filter(p => p.teamName === scoringTeamName);
+
+        if (playersOfScoringTeam.length === 0) {
+            return { scorer: "Inconnu", assist: "Aucun" };
+        }
+
+        // Tri par statistique 'offense' (si définie, sinon 0)
+        playersOfScoringTeam.sort((a, b) => (b.stats.offense || 0) - (a.stats.offense || 0));
+
+        let scorer = playersOfScoringTeam[0]; // Le joueur le plus offensif comme premier choix par défaut
+
+        // Introduire un peu de hasard pour que ce ne soit pas toujours le même joueur
+        const randomRollScorer = Math.random();
+        if (randomRollScorer < 0.3 && playersOfScoringTeam.length > 1) { // 30% de chance que ce soit le 2ème plus offensif
+            scorer = playersOfScoringTeam[1];
+        } else if (randomRollScorer < 0.1 && playersOfScoringTeam.length > 2) { // 10% que ce soit le 3ème
+            scorer = playersOfScoringTeam[2];
+        } else {
+             // Si la liste est petite, on s'assure de ne pas sortir de la plage
+            scorer = playersOfScoringTeam[Math.min(Math.floor(Math.random() * 3), playersOfScoringTeam.length - 1)];
+        }
+
+
+        let assist = "Aucun";
+        // 60% de chance d'avoir une passe décisive
+        if (Math.random() > 0.4) {
+            const potentialAssisters = playersOfScoringTeam.filter(p => p.name !== scorer.name);
+            if (potentialAssisters.length > 0) {
+                // Choisir un passeur aléatoirement parmi les autres joueurs
+                assist = potentialAssisters[Math.floor(Math.random() * potentialAssisters.length)].name;
+            }
+        }
+        return { scorer: scorer.name, assist: assist };
+    }
+
+
+    function playNextQuart() {
+      if (currentQuart > 4) return;
+
+      const match = document.getElementById(`quart${currentQuart}`);
+      const vs = match.children[1];
+      if (vs.innerHTML.includes("Score:")) {
+        currentQuart++;
+        playNextQuart();
+        return;
+      }
+
+      const team1Element = match.children[0];
+      const team2Element = match.children[2];
+      const team1Name = team1Element.textContent.trim();
+      const team2Name = team2Element.textContent.trim();
+
+      const s1 = Math.floor(Math.random() * 5);
+      const s2 = Math.floor(Math.random() * 5);
+
+      let winnerName;
+      if (s1 > s2) {
+        team1Element.style.color = "#7CFC00";
+        winnerName = team1Name;
+      } else if (s2 > s1) {
+        team2Element.style.color = "#7CFC00";
+        winnerName = team2Name;
+      } else {
+        winnerName = Math.random() > 0.5 ? team1Name : team2Name;
+        (winnerName === team1Name ? team1Element : team2Element).style.color = "#7CFC00";
+      }
+
+      let goalDetailsHTML = '<div class="goal-details">';
+      // Ajoutez les détails des buts pour chaque équipe
+      for (let i = 0; i < s1; i++) {
+          const goal = simulateGoalScorerAndAssist(team1Name);
+          goalDetailsHTML += `<div class="goal-detail-item">${team1Name}: ⚽ ${goal.scorer} ${goal.assist !== "Aucun" ? `(Passe: ${goal.assist})` : ''}</div>`;
+      }
+      for (let i = 0; i < s2; i++) {
+          const goal = simulateGoalScorerAndAssist(team2Name);
+          goalDetailsHTML += `<div class="goal-detail-item">${team2Name}: ⚽ ${goal.scorer} ${goal.assist !== "Aucun" ? `(Passe: ${goal.assist})` : ''}</div>`;
+      }
+      goalDetailsHTML += '</div>';
+
+      let scoreDisplay = `<span style="color:#FFD700;">Score: ${s1} - ${s2}</span>`;
+      if (s1 === s2) {
+          scoreDisplay += " <span style='font-size:0.9em;'>(Tirs au but)</span>";
+      }
+      vs.innerHTML = scoreDisplay + goalDetailsHTML;
+
+      quartWinners.push(winnerName);
+      currentQuart++;
+
+      if (currentQuart > 4) {
+        document.getElementById("nextFromQuart").disabled = false;
+      }
+    }
+
+    function startDemi() {
+      if (quartWinners.length < 4) {
+          alert("Veuillez jouer tous les quarts de finale avant de passer aux demi-finales.");
+          return;
+      }
+
+      document.getElementById("quartSection").classList.remove("active");
+      document.getElementById("demiSection").classList.add("active");
+      document.getElementById("d1t1").innerHTML = getTeamHTML(quartWinners[0]);
+      document.getElementById("d1t2").innerHTML = getTeamHTML(quartWinners[1]);
+      document.getElementById("d2t1").innerHTML = getTeamHTML(quartWinners[2]);
+      document.getElementById("d2t2").innerHTML = getTeamHTML(quartWinners[3]);
+
+      document.getElementById("d1t1").style.color = "white";
+      document.getElementById("d1t2").style.color = "white";
+      document.getElementById("d1vs").innerHTML = "VS";
+      document.getElementById("d2t1").style.color = "white";
+      document.getElementById("d2t2").style.color = "white";
+      document.getElementById("d2vs").innerHTML = "VS";
+      document.getElementById("nextFromDemi").disabled = true;
+      demiWinners.length = 0;
+    }
+
+    function playDemi(matchIndex) {
+      const t1Element = document.getElementById(`d${matchIndex}t1`);
+      const t2Element = document.getElementById(`d${matchIndex}t2`);
+      const vs = document.getElementById(`d${matchIndex}vs`);
+
+      if (vs.innerHTML.includes("Score:")) return;
+
+      const team1Name = t1Element.textContent.trim();
+      const team2Name = t2Element.textContent.trim();
+
+      const s1 = Math.floor(Math.random() * 5);
+      const s2 = Math.floor(Math.random() * 5);
+
+      let winnerName;
+      if (s1 > s2) {
+        t1Element.style.color = "#7CFC00";
+        winnerName = team1Name;
+      } else if (s2 > s1) {
+        t2Element.style.color = "#7CFC00";
+        winnerName = team2Name;
+      } else {
+        winnerName = Math.random() > 0.5 ? team1Name : team2Name;
+        (winnerName === team1Name ? t1Element : t2Element).style.color = "#7CFC00";
+      }
+
+      let goalDetailsHTML = '<div class="goal-details">';
+      for (let i = 0; i < s1; i++) {
+          const goal = simulateGoalScorerAndAssist(team1Name);
+          goalDetailsHTML += `<div class="goal-detail-item">${team1Name}: ⚽ ${goal.scorer} ${goal.assist !== "Aucun" ? `(Passe: ${goal.assist})` : ''}</div>`;
+      }
+      for (let i = 0; i < s2; i++) {
+          const goal = simulateGoalScorerAndAssist(team2Name);
+          goalDetailsHTML += `<div class="goal-detail-item">${team2Name}: ⚽ ${goal.scorer} ${goal.assist !== "Aucun" ? `(Passe: ${goal.assist})` : ''}</div>`;
+      }
+      goalDetailsHTML += '</div>';
+
+      let scoreDisplay = `<span style="color:#FFD700;">Score: ${s1} - ${s2}</span>`;
+      if (s1 === s2) {
+          scoreDisplay += " <span style='font-size:0.9em;'>(Tirs au but)</span>";
+      }
+      vs.innerHTML = scoreDisplay + goalDetailsHTML;
+
+      if (matchIndex === 1) {
+          demiWinners[0] = winnerName;
+      } else {
+          demiWinners[1] = winnerName;
+      }
+
+      if (demiWinners.length === 2 && demiWinners[0] && demiWinners[1]) {
+          document.getElementById("nextFromDemi").disabled = false;
+      }
+    }
+
+    function startFinale() {
+      if (demiWinners.length < 2 || !demiWinners[0] || !demiWinners[1]) {
+          alert("Veuillez jouer toutes les demi-finales avant de passer à la finale.");
+          return;
+      }
+
+      document.getElementById("demiSection").classList.remove("active");
+      document.getElementById("finaleSection").classList.add("active");
+      document.getElementById("final1").innerHTML = getTeamHTML(demiWinners[0]);
+      document.getElementById("final2").innerHTML = getTeamHTML(demiWinners[1]);
+
+      document.getElementById("final1").style.color = "white";
+      document.getElementById("final2").style.color = "white";
+      document.getElementById("finalvs").innerHTML = "VS";
+      document.getElementById("winner").innerHTML = "";
+      document.getElementById("endButtons").style.display = "none";
+    }
+
+    function playFinale() {
+      const t1Element = document.getElementById("final1");
+      const t2Element = document.getElementById("final2");
+      const vs = document.getElementById("finalvs");
+      const w = document.getElementById("winner");
+
+      if (vs.innerHTML.includes("Score:")) return;
+
+      const team1Name = t1Element.textContent.trim();
+      const team2Name = t2Element.textContent.trim();
+
+      const s1 = Math.floor(Math.random() * 5);
+      const s2 = Math.floor(Math.random() * 5);
+
+      let winnerName;
+      if (s1 > s2) {
+        t1Element.style.color = "#7CFC00";
+        winnerName = team1Name;
+      } else if (s2 > s1) {
+        t2Element.style.color = "#7CFC00";
+        winnerName = team2Name;
+      } else {
+        winnerName = Math.random() > 0.5 ? team1Name : team2Name;
+        (winnerName === team1Name ? t1Element : t2Element).style.color = "#7CFC00";
+      }
+
+      let goalDetailsHTML = '<div class="goal-details">';
+      for (let i = 0; i < s1; i++) {
+          const goal = simulateGoalScorerAndAssist(team1Name);
+          goalDetailsHTML += `<div class="goal-detail-item">${team1Name}: ⚽ ${goal.scorer} ${goal.assist !== "Aucun" ? `(Passe: ${goal.assist})` : ''}</div>`;
+      }
+      for (let i = 0; i < s2; i++) {
+          const goal = simulateGoalScorerAndAssist(team2Name);
+          goalDetailsHTML += `<div class="goal-detail-item">${team2Name}: ⚽ ${goal.scorer} ${goal.assist !== "Aucun" ? `(Passe: ${goal.assist})` : ''}</div>`;
+      }
+      goalDetailsHTML += '</div>';
+
+      let scoreDisplay = `<span style="color:#FFD700; font-size:1.4rem;">Score: ${s1} - ${s2}</span>`;
+      if (s1 === s2) {
+          scoreDisplay += " <span style='font-size:0.9em;'>(Tirs au but)</span>";
+      }
+      vs.innerHTML = scoreDisplay + goalDetailsHTML;
+
+      w.innerHTML = `🏆 VAINQUEUR: ${getTeamHTML(winnerName)}`;
+      document.getElementById("endButtons").style.display = "flex";
+      editionCount++;
+    }
+
+    function resetTournament() {
+      selectedTeams = [];
+      currentQuart = 1;
+      quartWinners.length = 0;
+      demiWinners.length = 0;
+
+      document.getElementById("winner").innerHTML = "";
+      document.getElementById("endButtons").style.display = "none";
+      document.getElementById("homeSection").classList.add("active");
+      document.getElementById("selectSection").classList.remove("active");
+      document.getElementById("quartSection").classList.remove("active");
+      document.getElementById("demiSection").classList.remove("active");
+      document.getElementById("finaleSection").classList.remove("active");
+
+      document.querySelectorAll('#teamForm input').forEach(cb => {
+          cb.checked = false;
+          cb.closest('label').classList.remove('checked');
+      });
+      document.getElementById("quartMatches").innerHTML = "";
+      updateSelectedCount();
+
+      for (let i = 1; i <= 2; i++) {
+        document.getElementById(`d${i}t1`).innerHTML = "";
+        document.getElementById(`d${i}t2`).innerHTML = "";
+        document.getElementById(`d${i}vs`).innerHTML = "VS";
+        document.getElementById(`d${i}t1`).style.color = "white";
+        document.getElementById(`d${i}t2`).style.color = "white";
+      }
+
+      document.getElementById("nextFromDemi").disabled = true;
+      document.getElementById("final1").innerHTML = "";
+      document.getElementById("final2").innerHTML = "";
+      document.getElementById("finalvs").innerHTML = "VS";
+      document.getElementById("final1").style.color = "white";
+      document.getElementById("final2").style.color = "white";
+      document.getElementById("nextFromQuart").disabled = true;
+      
+      displayHomeInfo();
+    }
+
+    function saveTournament() {
+      const winnerElement = document.querySelector("#winner .team-logo img");
+      if (!winnerElement) {
+        alert("Aucun gagnant à sauvegarder.");
+        return;
+      }
+      const winnerName = winnerElement.alt;
+      const winnerImageSrc = winnerElement.src;
+
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('fr-FR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      });
+
+      const history = {
+        team: winnerName,
+        image: winnerImageSrc,
+        editionInfo: `Édition ${editionCount} (${dateStr})`
+      };
+
+      trophies.unshift(history);
+      localStorage.setItem('trophies', JSON.stringify(trophies));
+      localStorage.setItem('editionCount', editionCount.toString());
+
+      alert("Résultat sauvegardé dans le palmarès !");
+    }
+
+    function resetTrophies() {
+      if (confirm("Êtes-vous sûr de vouloir réinitialiser tout le palmarès ? Cette action est irréversible.")) {
+        trophies = [];
+        editionCount = 1;
+        localStorage.removeItem('trophies');
+        localStorage.removeItem('editionCount');
+        localStorage.removeItem('instructionsDisplayed');
+        showTrophies();
+        displayHomeInfo();
+      }
+    }
+
+    function goBack(stage) {
+      if(stage === 'quart') {
+        document.getElementById("quartSection").classList.remove("active");
+        document.getElementById("selectSection").classList.add("active");
+        document.getElementById("nextFromQuart").disabled = true;
+        currentQuart = 1;
+        quartWinners.length = 0;
+        document.getElementById("quartMatches").innerHTML = "";
+      } else if(stage === 'demi') {
+        document.getElementById("demiSection").classList.remove("active");
+        document.getElementById("quartSection").classList.add("active");
+        document.getElementById("nextFromDemi").disabled = true;
+        demiWinners.length = 0;
+        document.getElementById("d1t1").innerHTML = ""; document.getElementById("d1t2").innerHTML = "";
+        document.getElementById("d1vs").innerHTML = "VS";
+        document.getElementById("d1t1").style.color = "white"; document.getElementById("d1t2").style.color = "white";
+        document.getElementById("d2t1").innerHTML = ""; document.getElementById("d2t2").innerHTML = "";
+        document.getElementById("d2vs").innerHTML = "VS";
+        document.getElementById("d2t1").style.color = "white"; document.getElementById("d2t2").style.color = "white";
+      } else if(stage === 'finale') {
+        document.getElementById("finaleSection").classList.remove("active");
+        document.getElementById("demiSection").classList.add("active");
+        document.getElementById("endButtons").style.display = "none";
+        document.getElementById("final1").innerHTML = ""; document.getElementById("final2").innerHTML = "";
+        document.getElementById("finalvs").innerHTML = "VS";
+        document.getElementById("final1").style.color = "white"; document.getElementById("final2").style.color = "white";
+        document.getElementById("winner").innerHTML = "";
+      }
+    }
+
+    // --- Nouvelle fonction pour gérer l'affichage des instructions ---
+    function displayInstructions() {
+        const instructionsSection = document.getElementById("instructionsSection");
+        const instructionsDisplayed = localStorage.getItem('instructionsDisplayed');
+
+        if (!instructionsDisplayed) {
+            instructionsSection.style.display = 'block';
+            setTimeout(() => {
+                instructionsSection.classList.add('hidden');
+                instructionsSection.addEventListener('transitionend', () => {
+                    instructionsSection.style.display = 'none';
+                }, { once: true });
+            }, 3000);
+            localStorage.setItem('instructionsDisplayed', 'true');
+        } else {
+            instructionsSection.style.display = 'none';
+        }
+    }
+
+    // --- Nouvelle fonction pour initialiser la sélection des équipes à partir du JSON ---
+    function initializeTeamSelection() {
+        const teamForm = document.getElementById("teamForm");
+        teamForm.innerHTML = ''; // Nettoyer les équipes existantes du HTML
+
+        allGameData.teams.forEach(team => {
+            const label = document.createElement('label');
+            label.innerHTML = `<input type="checkbox" value="${team.name}" data-image="${team.logo}"> <img src="${team.logo}" alt="${team.name}"> ${team.name}`;
+            teamForm.appendChild(label);
+
+            const checkbox = label.querySelector('input');
+            checkbox.addEventListener('change', updateSelectedCount);
+        });
+    }
+
+  </script>
+</body>
+</html>
