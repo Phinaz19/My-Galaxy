@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notre Aventure Amoureuse</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #000; /* Fond noir par défaut */
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden; /* Important pour les animations et les cœurs qui tombent */
+            position: relative; /* Pour positionner les éléments internes */
+        }
+
+        /* Styles généraux des écrans */
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            opacity: 0; /* Tous les écrans sont invisibles par défaut */
+            transition: opacity 1s ease-in-out; /* Transition douce lors de l'apparition/disparition */
+            z-index: 1; /* Par défaut, les écrans sont au même niveau */
+            padding: 20px; /* Ajoute un peu d'espace par défaut */
+            box-sizing: border-box; /* Inclut le padding dans la largeur/hauteur */
+            text-align: center; /* Centre le texte */
+        }
+
+        .screen.active {
+            opacity: 1; /* L'écran actif est visible */
+            z-index: 2; /* L'écran actif est au-dessus des autres */
+        }
+
+        /* --- Écran 1 : Musique --- */
+        #screen1 {
+            background-color: #000;
+            cursor: pointer;
+        }
+
+        .play-text {
+            font-size: 2.5em;
+            font-weight: bold;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+        }
+
+        /* Masque le lecteur audio HTML par défaut */
+        #background-music {
+            display: none;
+        }
+
+        /* --- Écran 2 : Cœur et cœurs qui tombent --- */
+        #screen2 {
+            background-color: #fce4ec; /* Rose pâle doux */
+            color: #333; /* Texte plus sombre sur fond clair */
+        }
+
+        .main-heart-container {
+            font-size: 10em;
+            color: #e91e63; /* Rose vif */
+            cursor: pointer;
+            animation: pulse 1.5s infinite alternate;
+            user-select: none;
+            text-shadow: 0 0 15px rgba(233, 30, 99, 0.5);
+            margin-top: -50px; /* Ajustement pour centrer le cœur visuellement */
+            transition: opacity 0.5s ease-out; /* Pour une disparition douce */
+        }
+
+        .main-heart-container.hidden {
+            opacity: 0;
+            pointer-events: none; 
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.08); }
+        }
+
+        /* Styles pour les petits cœurs qui tombent */
+        .falling-heart {
+            position: absolute;
+            font-size: 2em;
+            color: #ff4081; /* Rose un peu plus clair */
+            opacity: 0;
+            animation: fall linear forwards;
+            pointer-events: none; /* Ne pas bloquer les clics */
+            will-change: transform, opacity; /* Optimisation de performance */
+            z-index: 3; /* Assure que les cœurs sont au-dessus de tout le reste */
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-50px) scale(0.5); opacity: 0.8; }
+            100% { transform: translateY(100vh) scale(1.2); opacity: 0; }
+        }
+
+        /* Cache initialement le texte "Clique sur le cœur" */
+        #clickHeartPrompt {
+            opacity: 0;
+            transition: opacity 0.5s ease; /* Transition plus rapide pour le message */
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+        #screen2.active #clickHeartPrompt {
+            opacity: 1; /* Rend visible quand l'écran 2 est actif */
+        }
+        #clickHeartPrompt.hidden {
+            opacity: 0; /* Masque le texte d'invite */
+            pointer-events: none; /* Empêche les interactions quand caché */
+        }
+
+        /* --- Écran 3 : Texte Apparaissant d'un Coup --- */
+        #screen3 {
+            background-color: #add8e6; /* Bleu clair doux */
+            color: #2c3e50; /* Couleur de texte plus foncée pour le contraste */
+            font-size: 1.2em; /* Taille de police par défaut */
+            line-height: 1.6;
+            padding: 20px; /* Padding pour tous les écrans */
+            text-align: center; /* Centre le texte */
+            opacity: 0; /* Commence invisible pour la transition globale de l'écran */
+            transition: opacity 1s ease-in-out; /* Transition douce pour l'apparition de l'écran 3 */
+            overflow-y: auto; /* Permet le défilement si le contenu dépasse */
+            -webkit-overflow-scrolling: touch; /* Améliore le défilement sur iOS */
+        }
+
+        #screen3.active {
+            opacity: 1; /* Rendre l'écran 3 visible d'un coup */
+        }
+
+        /* Styles des paragraphes pour l'écran 3, tout sera visible par défaut */
+        #screen3 p {
+            margin-bottom: 0.8em; /* Espace entre les paragraphes */
+            max-width: 90%; /* Limite la largeur du texte pour ne pas qu'il soit trop large sur grand écran */
+            margin-left: auto; /* Centre les paragraphes */
+            margin-right: auto; /* Centre les paragraphes */
+        }
+
+        /* --- Écran 4 : Photo --- */
+        #screen4 {
+            background-color: #000; /* Fond noir pour la photo */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* Cache ce qui dépasse */
+        }
+
+        #screen4 img {
+            max-width: 100%; /* L'image ne dépassera pas la largeur de l'écran */
+            max-height: 100%; /* L'image ne dépassera pas la hauteur de l'écran */
+            object-fit: contain; /* Redimensionne l'image pour qu'elle tienne dans le conteneur tout en conservant ses proportions */
+            display: block; /* Supprime l'espace sous l'image */
+        }
+
+        /* --- Écran 5 : "Je t'aime" en plusieurs langues --- */
+        #screen5 {
+            background-color: #ff69b4; /* Rose vif pour l'amour ! */
+            color: white; /* Texte blanc */
+            font-size: 3em; /* Grande taille de police par défaut */
+            font-weight: bold;
+            text-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            display: flex; /* Utilise flexbox pour centrer le texte */
+            justify-content: center;
+            align-items: center;
+        }
+
+        #screen5 #loveYouText {
+            opacity: 0; /* Commence invisible */
+            transition: opacity 0.5s ease-in-out; /* Transition douce pour chaque phrase */
+        }
+
+        #screen5 #loveYouText.visible {
+            opacity: 1; /* Rend visible */
+        }
+
+
+        /* Media Queries pour la Responsivité */
+        @media (max-width: 768px) { /* Pour les tablettes et mobiles */
+            .play-text {
+                font-size: 1.8em; /* Plus petite sur mobile */
+            }
+            .main-heart-container {
+                font-size: 8em; /* Plus petit sur mobile */
+            }
+            #clickHeartPrompt {
+                font-size: 1em; /* Plus petit sur mobile */
+            }
+            #screen3 {
+                font-size: 1em; /* Adapte la taille de la police pour mobile */
+                padding: 15px; /* Réduit le padding pour plus d'espace */
+            }
+            #screen3 p {
+                margin-bottom: 0.6em; /* Moins d'espace entre les paragraphes sur mobile */
+            }
+            #screen5 {
+                font-size: 1.8em; /* Plus petite sur mobile */
+            }
+        }
+
+        @media (max-width: 480px) { /* Pour les petits mobiles */
+            .play-text {
+                font-size: 1.5em;
+            }
+            .main-heart-container {
+                font-size: 6em;
+            }
+            #clickHeartPrompt {
+                font-size: 0.9em;
+            }
+            #screen3 {
+                font-size: 0.9em;
+                padding: 10px;
+            }
+            #screen5 {
+                font-size: 1.5em; /* Encore plus petite pour les très petits écrans */
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <audio id="background-music" src="TN - Dandelions (Ruth B).m4a" loop></audio>
+
+    <div id="screen1" class="screen active">
+        <p class="play-text">Maceramızı başlatmak için tıklayınız... </p>
+    </div>
+
+    <div id="screen2" class="screen">
+        <div class="main-heart-container" id="mainHeart">
+            ❤️
+        </div>
+        <p id="clickHeartPrompt">Aşkımızın büyüdüğünü görmek için kalbi tıklayın... </p>
+    </div>
+
+    <div id="screen3" class="screen">
+        <p>Aşkım,
+
+Bugün yollarımızın kesiştiği 5 ay, hayatlarımızın iç içe geçtiği 5 ay oldu. Her zaman kolay olmadı, biliyorum. Tartışmalar yaşadık, şüphe anlarından geçtik, güven kayıpları oldu, hatta ayrılık ve engellerin gölgesi üzerimize düştü. Unutulmaz kahkahalarla dolu anlarımız da oldu, bizi daha da yakınlaştıran, hatta bizi şekillendiren gözyaşlarımız da...
+
+Ama tüm bunların içinden tek bir şey sarsılmaz kaldı ve her şeyin üstesinden geldi: aşkımız. En karanlık anları atlatmamızı ve güzel anlara daha da sıkı sarılmamızı sağlayan işte bu aşk oldu. Her zorluk, sana karşı hislerimi güçlendirdi ve aramızdaki bağın ne kadar eşsiz, gerçek bir güç olduğunu bana kanıtladı.
+
+Teşekkür ederim. Bu inişli çıkışlı 5 aylık maceramız için Allah'a şükrediyorum. Paylaştığımız her an için, en zorları bile olsa, derinden minnettarım; çünkü onlar bizi bugünkü biz yaptı. Biliyorum ki birlikte aşmamız gereken daha çok, çok fazla zorluk var, ama Allah bize yardım etsin ve daha da güçlü olalım. Her şeye rağmen, her şeyden çok, daima sen ve ben dünyaya karşıyız. Seni her şeyden çok seviyorum.
+
+5. ayımız kutlu olsun biricik sevgilim!
+            wait...
+</p>    </div>
+
+    <div id="screen4" class="screen">
+        <img src="511.png" alt="Notre photo d'amour">
+    </div>
+
+    <div id="screen5" class="screen">
+        <span id="loveYouText"></span>
+    </div>
+
+    <script>
+        const backgroundMusic = document.getElementById('background-music');
+        const screen1 = document.getElementById('screen1');
+        const screen2 = document.getElementById('screen2');
+        const mainHeart = document.getElementById('mainHeart');
+        const clickHeartPrompt = document.getElementById('clickHeartPrompt');
+        const screen3 = document.getElementById('screen3');
+        const screen4 = document.getElementById('screen4');
+        const screen5 = document.getElementById('screen5'); // Get screen 5
+        const loveYouTextSpan = document.getElementById('loveYouText'); // Get the span for the "I love you" text
+
+        let heartsFallenCount = 0;
+        const heartsToFall = 1000;
+        let heartFallingInterval = null;
+
+        // Array of "I love you" in 100 languages
+        // (This list has 100 entries, but you can add or remove as needed)
+        const loveYouPhrases = [
+            "Je t'aime", "I love you", "Seni seviyorum", "Te amo", "Eu te amo",
+            "Ich liebe dich", "Ti amo", "我爱你 (Wǒ ài nǐ)", "사랑해 (Saranghae)", "愛してる (Aishiteru)",
+            "Я тебя люблю (Ya tebya lyublyu)", "أحبك (Uhibbuk)", "Σ'αγαπώ (S'agapo)", "Mám tě rád", "Jeg elsker deg",
+            "Jag älskar dig", "Minä rakastan sinua", "Eg elskar deg", "Rakastan sinua", "Nani o ai",
+            "Ani ohev otakh (m) / Ani ohevet otkha (f)", "Mahal kita", "Te iubesc", "Volim te", "Kocham cię",
+            "Milujem ťa", "Ljubim te", "Es mīlu tevi", "Aš tave myliu", "Ma armastan sind",
+            "Ég elska þig", "Ek het jou lief", "Inhobbok", "S'agapó", "Kei te aroha au ki a koe",
+            "Ndimakukonda", "Ndinokuda", "Nakupenda", "Ndiyakuthanda", "Ndikhululekile",
+            "Ndashukuru", "Nagligevik", "Ndrabatska", "Namaste", "Namoaste",
+            "Nkhumama", "Nomu", "Nq’en", "Nthanda", "N’taime",
+            "Obicham te", "Oma armastus", "Palangga ta ka", "Penda wewe", "Phom rak khun",
+            "Rwy'n dy garu di", "Sagapao", "Sanam", "Sen hara", "Seni oya",
+            "Shalom", "Snehichuk", "Ta graih aym ort", "Takku", "Tako",
+            "Te quero", "Tekuf", "Tena", "Thanda wena", "Thiok",
+            "Tika", "Tivey", "T'estim", "Ua ou alofa ia te oe", "Ubem",
+            "Una-ga-go-li", "Ura'a", "Usiku mwema", "Vash", "Veel liefde",
+            "Wo ai ni", "Ya tabe", "Yeni", "Yêu em", "Zola",
+            "Jeg elsker dig", "S'agapo", "Minarmaste", "Ég elska þig", "Te dua",
+            "Wo men", "Kärlek", "Láska", "Miłość", "Lyubov",
+            "Rakkaus", "Amore", "Dragoste", "Liefde", "Kärlek",
+            "Armastus", "Meilė", "Cinta", "Amor", "Love","Na lingi yo"
+        ];
+        let currentPhraseIndex = 0;
+        let typingInterval;
+        let phraseDisplayTimeout;
+
+        // --- Fonctions de gestion des écrans ---
+        function showScreen(screenId) {
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+            
+            // For screen 3, transition to screen 4 after 25 seconds
+            if (screenId === 'screen3') {
+                setTimeout(() => {
+                    showScreen('screen4'); 
+                }, 30000); // 25 seconds delay before moving to screen 4
+            } 
+            // For screen 4, transition to screen 5 after 5 seconds (adjust if photo needs more viewing time)
+            else if (screenId === 'screen4') {
+                setTimeout(() => {
+                    showScreen('screen5');
+                    startLoveYouTyping(); // Start typing effect when screen 5 is active
+                }, 5000); // 5 seconds delay for photo
+            }
+            // For screen 5, initialize and start typing effect
+            else if (screenId === 'screen5') {
+                // Ensure text is clear for new display
+                loveYouTextSpan.textContent = ''; 
+                loveYouTextSpan.classList.remove('visible'); // Hide initially
+                currentPhraseIndex = 0; // Reset index for fresh start
+                startLoveYouTyping();
+            }
+        }
+
+        // --- Écran 1 Logic ---
+        screen1.addEventListener('click', () => {
+            backgroundMusic.play()
+                .then(() => {
+                    console.log('Musique lancée !');
+                    showScreen('screen2'); 
+                })
+                .catch(error => {
+                    console.error("Erreur lors de la lecture de la musique :", error);
+                    alert("Impossible de lire la musique. Le navigateur a peut-être bloqué la lecture automatique sans interaction suffisante.");
+                });
+        });
+
+        // --- Écran 2 Logic ---
+        mainHeart.addEventListener('click', () => {
+            if (!heartFallingInterval) {
+                mainHeart.classList.add('hidden'); 
+                clickHeartPrompt.classList.add('hidden');
+                
+                heartFallingInterval = setInterval(() => {
+                    if (heartsFallenCount < heartsToFall) {
+                        const fallingHeart = document.createElement('div');
+                        fallingHeart.classList.add('falling-heart');
+                        fallingHeart.innerHTML = '❤️';
+                        fallingHeart.style.left = `${Math.random() * 100}vw`;
+                        fallingHeart.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                        
+                        document.body.appendChild(fallingHeart); 
+                        heartsFallenCount++;
+
+                        fallingHeart.addEventListener('animationend', () => {
+                            fallingHeart.remove();
+                        });
+                    } else {
+                        clearInterval(heartFallingInterval); 
+                        console.log(`Objectif de ${heartsToFall} cœurs atteint ! Redirection vers le prochain écran.`);
+                        setTimeout(() => {
+                            showScreen('screen3'); 
+                        }, 1000); 
+                    }
+                }, 50); 
+            }
+        });
+
+        // --- Écran 5 Logic: Typewriter Effect ---
+        function typeWriter(text, i, cb) {
+            if (i < text.length) {
+                loveYouTextSpan.textContent += text.charAt(i);
+                typingInterval = setTimeout(() => typeWriter(text, i + 1, cb), 75); // Speed of typing
+            } else {
+                if (cb) cb(); // Call callback when typing is complete
+            }
+        }
+
+        function startLoveYouTyping() {
+            clearTimeout(phraseDisplayTimeout); // Clear any existing timeout
+            clearTimeout(typingInterval);       // Clear any existing typing interval
+
+            if (currentPhraseIndex < loveYouPhrases.length) {
+                loveYouTextSpan.classList.remove('visible'); // Hide current text for fade out
+                loveYouTextSpan.textContent = ''; // Clear text content
+
+                // Wait a moment for fade out, then type next phrase
+                setTimeout(() => {
+                    loveYouTextSpan.classList.add('visible'); // Prepare for fade in
+                    typeWriter(loveYouPhrases[currentPhraseIndex], 0, () => {
+                        // After typing is complete, show for 2 seconds, then move to next phrase
+                        phraseDisplayTimeout = setTimeout(() => {
+                            // Vérifier si c'est le 101ème message et si c'est "Na lingi yo"
+                            // L'index 100 correspond au 101ème élément si le tableau est de 101 éléments
+                            if (currentPhraseIndex === 100 && loveYouPhrases[currentPhraseIndex] === "Na lingi yo") {
+                                // Rediriger vers la nouvelle page HTML
+                                // Remplacez 'votre_page_finale.html' par le nom de votre fichier HTML
+                                window.location.href = 'Our Love Timer ver.2.html'; 
+                            } else {
+                                currentPhraseIndex++;
+                                startLoveYouTyping(); // Call itself to type the next phrase
+                            }
+                        }, 2000); // How long each phrase stays visible after typing
+                    });
+                }, 500); // Small delay to allow fade out before typing new text
+            } else {
+                // Tous les messages ont été affichés, si vous ne voulez pas de redirection ici
+                console.log("All 'I love you' phrases displayed!");
+            }
+        }
+
+        // Initialisation : s'assurer que l'écran 1 est visible au chargement
+        document.addEventListener('DOMContentLoaded', () => {
+            showScreen('screen1');
+        });
+
+        // Fonction pour gérer le cas où la lecture automatique est bloquée
+        backgroundMusic.addEventListener('play', () => {
+            console.log("Musique a commencé à jouer.");
+        });
+        backgroundMusic.addEventListener('pause', () => {
+            console.log("Musique mise en pause.");
+        });
+        backgroundMusic.addEventListener('error', (e) => {
+            console.error("Erreur de lecture audio:", e);
+        });
+
+    </script>
+</body>
+</html>
