@@ -1,0 +1,906 @@
+[
+  {
+    "id": "lec_01",
+    "type": "lecture",
+    "title": "Un week-end de détente",
+    "description": "Texte 1 : Apprenez à décrire un week-end relaxant.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Ce week-end, j'ai décidé de me détendre à la maison.", "ar": "في نهاية هذا الأسبوع، قررت الاسترخاء في المنزل." },
+      { "fr": "Je me suis levé tard et je me suis préparé une grande tasse de café.", "ar": "استيقظت متأخرًا وأعددت فنجانًا كبيرًا من القهوة." },
+      { "fr": "J'ai passé la matinée à lire un livre fascinant dans mon jardin.", "ar": "قضيت الصباح في قراءة كتاب رائع في حديقتي." },
+      { "fr": "Le temps était parfait, ni trop chaud ni trop froid.", "ar": "كان الطقس مثالياً، ليس حاراً جداً وليس بارداً جداً." },
+      { "fr": "L'après-midi, j'ai regardé un nouveau film.", "ar": "في فترة ما بعد الظهر، شاهدت فيلماً جديداً." },
+      { "fr": "C'était une excellente façon de se décompresser et de se ressourcer pour la semaine à venir.", "ar": "لقد كانت طريقة رائعة للاسترخاء واستعادة النشاط للأسبوع القادم." }
+    ]
+  },
+  {
+    "id": "lec_02",
+    "type": "lecture",
+    "title": "Planifier des vacances",
+    "description": "Texte 2 : Vocabulaire utile pour organiser un voyage.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Mon ami et moi prévoyons des vacances pour l'été prochain.", "ar": "أنا وصديقي نخطط لإجازة في الصيف القادم." },
+      { "fr": "Nous voulons visiter un pays où nous ne sommes jamais allés.", "ar": "نريد زيارة بلد لم نزره من قبل." },
+      { "fr": "Nous regardons des cartes et lisons des blogs de voyage pour trouver des idées.", "ar": "نحن ننظر في الخرائط ونقرأ مدونات السفر بحثًا عن أفكار." },
+      { "fr": "J'aimerais aller quelque part avec de belles plages.", "ar": "أود أن أذهب إلى مكان به شواطئ جميلة." },
+      { "fr": "Mon ami préfère explorer les villes historiques.", "ar": "صديقي يفضل استكشاف المدن التاريخية." },
+      { "fr": "Nous devons trouver une destination qui nous plaira à tous les deux.", "ar": "نحتاج إلى إيجاد وجهة نستمتع بها كلانا." }
+    ]
+  },
+  {
+    "id": "lec_03",
+    "type": "lecture",
+    "title": "Commander de la nourriture",
+    "description": "Conversation : Apprenez à commander dans un restaurant.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Serveur : Bonjour, êtes-vous prêts à commander ?", "ar": "مرحبًا، هل أنتم جاهزون للطلب؟" },
+      { "fr": "Vous : Oui, je crois. Quelle est la soupe du jour ?", "ar": "نعم، أعتقد ذلك. ما هو حساء اليوم؟" },
+      { "fr": "Serveur : La soupe du jour est une soupe de tomates.", "ar": "حساء اليوم هو حساء الطماطم." },
+      { "fr": "Vous : D'accord, je vais prendre la soupe de tomates pour commencer, s'il vous plaît.", "ar": "حسنًا، سآخذ حساء الطماطم كبداية، من فضلك." },
+      { "fr": "Serveur : Et pour votre plat principal ?", "ar": "وبالنسبة للطبق الرئيسي؟" },
+      { "fr": "Vous : Je voudrais le poulet grillé avec des légumes.", "ar": "أود الدجاج المشوي مع الخضار." },
+      { "fr": "Serveur : Excellent choix. Et à boire ?", "ar": "اختيار ممتاز. وماذا تشرب؟" },
+      { "fr": "Vous : Juste une bouteille d'eau, s'il vous plaît.", "ar": "فقط زجاجة ماء، من فضلك." },
+      { "fr": "Serveur : Parfait. Je reviens tout de suite avec votre soupe.", "ar": "ممتاز. سأعود حالاً مع حسائك." }
+    ]
+  },
+  {
+    "id": "lec_04",
+    "type": "lecture",
+    "title": "L'Ombre de la Citadelle",
+    "description": "Texte 1 : Une ambiance littéraire et mystérieuse.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Le brouillard s'accrochait aux pierres moussues de la citadelle telle une étreinte spectrale.", "ar": "كان الضباب يتشبث بحجارة القلعة المشبعة بالطحالب مثل عنق شبحية." },
+      { "fr": "En bas, dans les ruelles tortueuses de la ville, les rares lueurs des lanternes luttaient vainement contre l'obscurité humide.", "ar": "في الأسفل، في أزقة المدينة المتعرجة، كانت البصيصات النادرة لفوانيس المصابيح تكافح عبثًا ضد الظلمة الرطبة." },
+      { "fr": "Le guetteur, engoncé dans son manteau, sentait le poids de la nuit et des secrets qu'elle dissimulait.", "ar": "شعر الحارس، المتجهم داخل معطفه، بثقل الليل والأسرار التي كانت تخفيها." },
+      { "fr": "Chaque gargouille semblait être un démon figé dans la pierre, observant impassible le théâtre des ambitions humaines.", "ar": "بدا كل تمثال غارغويل شيطانًا متجمدًا في الحجر، يراقب بلا اكتراث مسرح الطموحات البشرية." },
+      { "fr": "Il se demanda, non pour la première fois, de quel côté du rempart se trouvaient réellement les monstres.", "ar": "تساءل، ليس للمرة الأولى، في أي جانب من جانبي السور توجد الوحوش حقًا." },
+      { "fr": "Le son étouffé des pas sur les pavés glissants lui parvenait, porteur de menaces invisibles.", "ar": "وصل إليه صوت الخطوات المكبوتة على الحجارة الزلقة، حاملًا معه تهديدات غير مرئية." },
+      { "fr": "La paix n'était qu'une façade, un mince vernis craquelé sous lequel grondait la guerre.", "ar": "لم يكن السلام سوى واجهة، طلاء رقيق متشقق يهدد تحته الحرب بالاندلاع." }
+    ]
+  },
+  {
+    "id": "lec_05",
+    "type": "lecture",
+    "title": "La Nature des Trous Noirs",
+    "description": "Texte 2 : Une exploration scientifique fascinante.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Les trous noirs représentent l'une des manifestations les plus extrêmes et contre-intuitives des lois de la physique.", "ar": "تمثل الثقوب السوداء واحدة من أقصى وأكثر تجليات قوانين الفيزياء غرابة." },
+      { "fr": "Ces régions de l'espace-temps où la gravité est si intense que même la lumière ne peut s'en échapper défient notre compréhension conventionnelle.", "ar": "هذه المناطق من الزمكان، حيث الجاذبية شديدة لدرجة أن حتى الضوء لا يمكنه الإفلات منها، تتحدى فهمنا التقليدي." },
+      { "fr": "Leur cœur, abritant une singularité gravitationnelle, est un point de densité infinie où les lois de la physique telles que nous les connaissons cessent de s'appliquer.", "ar": "قلبها، الذي يؤوي تفردًا جاذبيًا، هو نقطة ذات كثافة لا نهائية حيث تتوقف قوانين الفيزياء كما نعرفها عن العمل." },
+      { "fr": "Pourtant, Stephen Hawking a révolutionné notre vision en postulant que les trous noirs ne sont pas complètement « noirs » mais émettent un faible rayonnement, maintenant appelé rayonnement de Hawking.", "ar": "مع ذلك، أحدث ستيفن هوكينج ثورة في نظرتنا باقتراحه أن الثقوب السوداء ليست 'سوداء' تمامًا ولكنها تشع إشعاعًا ضعيفًا، يُسمى الآن إشعاع هوكينج." },
+      { "fr": "Ce phénomène suggère qu'ils possèdent une température et qu'ils peuvent, sur des échelles de temps astronomiques, s'évaporer.", "ar": "تقترح هذه الظاهرة أن لديها درجة حرارة وأنه يمكنها، على مدى زمني فلكي، أن تتبخر." },
+      { "fr": "Ainsi, ces géants destructeurs pourraient bien avoir une fin, ajoutant une nouvelle couche de mystère à leur existence déjà énigmatique.", "ar": "وبالتالي، قد يكون لهذه العمالقة المدمرة نهاية، مما يضيف طبقة جديدة من الغموض إلى وجودها الغامض أصلاً." }
+    ]
+  },
+  {
+    "id": "lec_06",
+    "type": "lecture",
+    "title": "Une dispute familiale",
+    "description": "Conversation : Un dialogue intense et réaliste.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Élise : Je ne peux pas croire que tu poses encore la question, Camille.", "ar": "لا أصدق أنك لا تزالين تطرحين هذا السؤال، كاميل." },
+      { "fr": "Bien sûr qu'il faut qu'il aille en établissement spécialisé.", "ar": "بالطبع يجب أن يذهب إلى مؤسسة متخصصة." },
+      { "fr": "Je ne peux plus faire face toute seule.", "ar": "لم أعد أستطيع المواجهة وحدي." },
+      { "fr": "Camille : Et je ne peux pas croire que tu sois prête à le « parquer » comme un vieux meuble dont on ne veut plus.", "ar": "ولا أنا أصدق أنك مستعدة 'لركنه' مثل قطعة أثاث قديمة لم نعد نريدها." },
+      { "fr": "C'est notre père.", "ar": "إنه أبونا." },
+      { "fr": "Élise : Notre père ? Vraiment ?", "ar": "أبونا؟ حقًا؟" },
+      { "fr": "Depuis quand est-ce que tu le considères comme tel ?", "ar": "منذ متى وأنتِ تعتبرينه كذلك؟" },
+      { "fr": "Depuis que c'est toi qui paie les factures ?", "ar": "منذ أن أصبحتِ أنتِ من تدفع الفواتير؟" },
+      { "fr": "Depuis que c'est toi qui passes tes nuits à le relever, à lui donner ses médicaments, à nettoyer après ses… accidents ?", "ar": "منذ أن أصبحتِ أنتِ من تقضين لياليكِ في إقامته، وإعطائه أدويته، وتنظيف ما بعد 'حوادثه'؟" },
+      { "fr": "Tu débarques après quatre ans d'absence et tu me fais la leçon sur la piété filiale ?", "ar": "تصلين فجأة بعد أربع سنوات من الغياب وتعطيني درسًا في البر بالوالدين؟" },
+      { "fr": "Camille : Je n'ai pas « débarqué », Élise.", "ar": "لم 'أصل فجأة'، إليز." },
+      { "fr": "J'étais en conférence à Singapour quand tu m'as appelée en panique.", "ar": "كنت في مؤتمر في سنغافورة عندما اتصلت بي في ذعر." },
+      { "fr": "J'ai tout laissé tomber.", "ar": "تركت كل شيء." },
+      { "fr": "Qu'est-ce que tu veux de plus ?", "ar": "ماذا تريدين أكثر من ذلك؟" },
+      { "fr": "Que je m'installe ici définitivement pour jouer les infirmières ?", "ar": "أن أستقر هنا بشكل دائم لألعب دور الممرضة؟" },
+      { "fr": "Je peux payer les meilleurs soins à domicile, une équipe 24h/24.", "ar": "يمكنني دفع ثمن أفضل رعاية منزلية، فريق على مدار 24 ساعة." },
+      { "fr": "L'argent n'est pas un problème.", "ar": "المال ليس مشكلة." },
+      { "fr": "Élise : L'argent ! Toujours l'argent avec toi !", "ar": "المال! دائمًا المال معكِ!" },
+      { "fr": "Tu crois que tout se règle avec un chèque ?", "ar": "هل تعتقدين أن كل شيء يُحل بشيك؟" },
+      { "fr": "Il a besoin de stabilité, de soins constants, pas d'une rotation de étrangers en blouse blanche qui lui pincent le bras pour lui prendre son taux de glycémie !", "ar": "هو بحاجة إلى الاستقرار، إلى رعاية دائمة، وليس إلى تناوب غرباء بالمعاطف البيضاء يقرصون ذراعه لأخذ نسبة السكر في دمه!" },
+      { "fr": "Camille : Et tu penses qu'un hospice anonyme sera mieux ?", "ar": "وهل تعتقدين أن دار رعاية مجهولة ستكون أفضل؟" },
+      { "fr": "Où il sera un numéro parmi d'autres ? Au moins à la maison, il est dans son environnement, avec ses repères.", "ar": "على الأقل في البيت، هو في بيئته، مع معالمه المعتادة." },
+      { "fr": "Élise : Ses repères ?", "ar": "معالمه المعتادة؟" },
+      { "fr": "Il ne reconnaît même plus le jardin la moitié du temps !", "ar": "إنه لا يتعرف حتى على الحديقة نصف الوقت!" },
+      { "fr": "Il m'appelle « maman », Camille.", "ar": "يناديني 'ماما'، يا كاميل." },
+      { "fr": "Sa propre mère, morte il y a vingt ans !", "ar": "أمه التي ماتت منذ عشرين عامًا!" },
+      { "fr": "Tu ne vois pas la réalité en face.", "ar": "أنتِ لا ترين الواقع أمامكِ." },
+      { "fr": "Tu veux une solution propre, aseptisée, qui ne dérange pas ta précieuse carrière.", "ar": "تريدين حلاً نظيفًا، معقمًا، لا يزعج مسيرتكِ المهنية الثمينة." },
+      { "fr": "Tu veux acheter ta tranquillité d'esprit.", "ar": "تريدين شراء راحة بالكِ." },
+      { "fr": "Camille : Ce n'est pas vrai.", "ar": "هذا غير صحيح." },
+      { "fr": "C'est toi qui veux te débarrasser du fardeau.", "ar": "أنتِ من تريدين التخلص من العبء." },
+      { "fr": "Tu as toujours voulu être la martyre, la fille parfaite qui sacrifie tout pour la famille.", "ar": "لطالما أردتِ أن تكوني الضحية، الابنة المثالية التي تضحي بكل شيء من أجل العائلة." },
+      { "fr": "Et maintenant que ça devient difficile, tu craques et tu veux que tout le monde partage ton échec.", "ar": "والآن وقد أصبح الأمر صعبًا، انهارتِ وتريدين أن يشارك الجميع فشلكِ." },
+      { "fr": "Élise : Mon échec ? Tu appelles ça un échec ?", "ar": "فشلي؟ أتسمين هذا فشلاً؟" },
+      { "fr": "Sors, Camille. Sors de cette maison.", "ar": "اخرجي، يا كاميل. اخرجي من هذا البيت." },
+      { "fr": "Va retrouver ton hôtel cinq étoiles et ton monde parfait.", "ar": "اذهبي إلى فندقك الخماسي نجوم وعالمك المثالي." },
+      { "fr": "Je prendrai la décision toute seule, comme j'ai toujours tout fait ici.", "ar": "سأتخذ القرار وحدي، كما فعلت دائمًا كل شيء هنا." },
+      { "fr": "De toute façon, tu n'as jamais été là quand on avait besoin de toi.", "ar": "على أي حال، لم تكوني أبدًا موجودة عندما كنا بحاجة إليكِ." }
+    ]
+  },
+  {
+    "id": "lec_07",
+    "type": "lecture",
+    "title": "Ma journée",
+    "description": "Texte 1 : Phrases simples pour décrire une journée.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Le soleil brille intensément dans le ciel bleu.", "ar": "تشرق الشمس بشدة في السماء الزرقاء." },
+      { "fr": "Les enfants jouent joyeusement dans le parc.", "ar": "يلعب الأطفال بسعادة في الحديقة." },
+      { "fr": "Le parfum des fleurs emplit l'air du printemps.", "ar": "يعطر عبق الزهور هواء الربيع." },
+      { "fr": "Je prépare une tasse de café chaud le matin.", "ar": "أحتسي فنجان قهوة ساخنة في الصباح." },
+      { "fr": "Le chat dort paisiblement sur le canapé.", "ar": "تنام القطة بسلام على الأريكة." },
+      { "fr": "Nous lisons des livres pour enrichir nos connaissances.", "ar": "نقرأ الكتب لإثراء معرفتنا." },
+      { "fr": "La musique adoucit le cœur et l'esprit.", "ar": "الموسيقى تهدئ القلب والعقل." },
+      { "fr": "La famille se réunit pour dîner le soir.", "ar": "تجتمع العائلة لتناول العشاء في المساء." },
+      { "fr": "J'apprends le français depuis deux ans.", "ar": "أنا أتعلم اللغة الفرنسية منذ عامين." },
+      { "fr": "La mer est calme et sereine aujourd'hui.", "ar": "البحر هادئ وسلمي اليوم." },
+      { "fr": "Il voyage à travers le monde pour son travail.", "ar": "يسافر حول العالم من أجل عمله." },
+      { "fr": "Le médecin aide les personnes malades.", "ar": "يساعد الطبيب الأشخاص المرضى." },
+      { "fr": "J'aime marcher sous la pluie.", "ar": "أحب المشي تحت المطر." },
+      { "fr": "Le gâteau au chocolat est délicieux.", "ar": "كعكة الشوكولاتة لذيذة." },
+      { "fr": "La vie est pleine de défis et d'opportunités.", "ar": "الحياة مليئة بالتحديات والفرص." }
+    ]
+  },
+  {
+    "id": "lec_08",
+    "type": "lecture",
+    "title": "Durant l'examen",
+    "description": "Texte 2 : Décrire l'atmosphère d'une salle d'examen.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Le silence est total dans la salle d'examen.", "ar": "يسود الصمت المطلق في قاعة الامتحان." },
+      { "fr": "Seul le bruit des stylos qui grattent le papier se fait entendre.", "ar": "لا يُسمع سوى صوت الأقلام التي تخدش الورق." },
+      { "fr": "Je me concentre intensément sur chaque question.", "ar": "أركز بشدة على كل سؤال." },
+      { "fr": "Le temps semble passer à une vitesse incroyable.", "ar": "يبدو أن الوقت يمر بسرعة لا تصدق." },
+      { "fr": "Je vérifie mes réponses une fois terminé.", "ar": "أتحقق من إجاباتي بعد أن أنهي." },
+      { "fr": "Certains étudiants ont l'air confiants, d'autres inquiets.", "ar": "يبدو بعض الطلاب واثقين، والبعض الآخر قلقا." },
+      { "fr": "La surveillante marche silencieusement entre les rangées.", "ar": "المشرفة تمشي بصمت بين الصفوف." },
+      { "fr": "J'essaye de me souvenir de ce que j'ai étudié.", "ar": "أحاول أن أتذكر ما درسته." },
+      { "fr": "Le stress monte lorsque je ne connais pas une réponse.", "ar": "يرتفع التوتر عندما لا أعرف إجابة." },
+      { "fr": "Je prends une profonde respiration pour me calmer.", "ar": "آخذ نفسا عميقا لأهدأ." },
+      { "fr": "Je surveille l'horloge constamment.", "ar": "أراقب الساعة باستمرار." },
+      { "fr": "J'écris aussi vite et aussi clairement que possible.", "ar": "أكتب بأسرع ما يمكن وبأكبر قدر من الوضوح." },
+      { "fr": "Enfin, j'ai répondu à la dernière question.", "ar": "أخيرا، أجبت على السؤال الأخير." },
+      { "fr": "Je relis rapidement ma copie avant la fin.", "ar": "أعيد قراءة ورقة إجابتي بسرعة قبل النهاية." },
+      { "fr": "Quand la cloche sonne, c'est le soulagement.", "ar": "عندما يدق الجرس، يشعر الجميع بالارتياح." }
+    ]
+  },
+  {
+    "id": "lec_09",
+    "type": "lecture",
+    "title": "Randonnée en forêt",
+    "description": "Conversation : Un échange pendant une promenade dans la nature.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Clara: Regarde la taille de ces arbres ! C'est magnifique ici.", "ar": "كلارا: !انظري إلى حجم هذه الأشجار. إنه مكان رائع هنا" },
+      { "fr": "Marc: Je te l'avais dit que cette forêt était spéciale. Respire cet air pur !", "ar": "مارك: !ألم أقل لك أن هذه الغابة خاصة؟ استنشقي هذا الهواء النقي" },
+      { "fr": "Clara: J'entends le bruit d'un ruisseau. Il doit être proche.", "ar": "كلارا: .أسمع صوت جدول. لا بد أنه قريب" },
+      { "fr": "Marc: Suis-moi, le sentier continue de ce côté.", "ar": "مارك: .اتبعيني، يستمر المسار من هذا الجانب" },
+      { "fr": "Clara: Attends, je crois que nous avons perdu le balisage.", "ar": "كلارا: .انتظر، أعتقد أننا فقدنا علامات المسار" },
+      { "fr": "Marc: Ne t'inquiète pas, j'ai la carte sur mon téléphone.", "ar": "مارك: .لا تقلقي، لدي الخريطة على هاتفي" },
+      { "fr": "Clara: J'ai soif. On fait une petite pause ?", "ar": "كلارا: ? أنا عطشانة. هل نأخذ استراحة قصيرة" },
+      { "fr": "Marc: Bonne idée. Sortons les gourdes et les fruits secs.", "ar": "مارك: .فكرة جيدة. دعنا نخرج قوارير الماء والفواكه المجففة" },
+      { "fr": "Clara: Écoute ! On dirait un pic-vert qui tambourine.", "ar": "كلارا: ! استمعي! يبدو مثل نقار الخشب يقرع على الشجرة" },
+      { "fr": "Marc: Incroyable. La nature est vraiment vivante.", "ar": "مارك: .مذهل. الطبيعة حقًا نابضة بالحياة" },
+      { "fr": "Clara: J'adore ce sentiment de calme et de sérénité.", "ar": "كلارا: .أحب هذا الشعور بالهدوء والطمأنينة" },
+      { "fr": "Marc: C'est pour ça que je randonne. Pour me reconnecter.", "ar": "مارك: .لهذا أقوم بالتجوال، لأعيد الاتصال مع الطبيعة" },
+      { "fr": "Clara: La pente commence à monter sérieusement maintenant.", "ar": "كلارا: .بدأ المنحدر يصعد بشكل حاد الآن" },
+      { "fr": "Marc: Courage ! La vue au sommet va en valoir la peine.", "ar": "مارك: !تشجعي! المنظر من القمة سيكون يستحق العناء" },
+      { "fr": "Clara: Tu as raison. Allons-y, lentement mais sûrement !", "ar": "كلارا: !أنت محق. دعنا نذهب، ببطء ولكن بثبات" }
+    ]
+  },
+  {
+    "id": "lec_10",
+    "type": "lecture",
+    "title": "Mon nouveau téléphone",
+    "description": "Texte 1 : Décrire un objet technologique moderne.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "J’ai acheté hier un nouveau téléphone moderne, et je dois dire que c’est l’un des meilleurs achats que j’ai faits depuis longtemps.", "ar": "لقد اشتريت بالأمس هاتفا جديدا حديثا، ويجب أن أقول إنه من أفضل المشتريات التي قمت بها منذ فترة طويلة." },
+      { "fr": "Il est beaucoup plus rapide que mon ancien appareil, qui devenait lent et me faisait perdre du temps chaque jour.", "ar": "إنه أسرع بكثير من جهازي القديم، الذي كان يصبح بطيئا ويجعلني أضيع وقتي كل يوم." },
+      { "fr": "L’écran est très grand, lumineux et coloré, ce qui rend chaque image et chaque vidéo agréable à regarder.", "ar": "الشاشة كبيرة جدا ومضيئة وملونة، مما يجعل كل صورة وكل فيديو ممتعا للمشاهدة." },
+      { "fr": "J’aime particulièrement la qualité incroyable des photos qu’il prend, elles sont claires et détaillées.", "ar": "أنا أحب بشكل خاص الجودة المذهلة للصور التي يلتقطها، فهي واضحة ومليئة بالتفاصيل." },
+      { "fr": "La caméra frontale est parfaite pour les selfies et les appels vidéo avec mes amis et ma famille.", "ar": "الكاميرا الأمامية مثالية لالتقاط صور السيلفي ولإجراء مكالمات الفيديو مع أصدقائي وعائلتي." },
+      { "fr": "La batterie dure presque toute la journée, même quand j’utilise beaucoup Internet et les applications.", "ar": "البطارية تدوم تقريبا طوال اليوم، حتى عندما أستخدم الإنترنت والتطبيقات كثيرا." },
+      { "fr": "Je peux regarder des vidéos, écouter de la musique et jouer sans craindre qu’il s’éteigne trop vite.", "ar": "أستطيع مشاهدة الفيديوهات، الاستماع إلى الموسيقى واللعب دون أن أخاف أن ينطفئ بسرعة." },
+      { "fr": "Le son est clair, puissant et agréable, ce qui rend mes chansons préférées encore plus belles.", "ar": "الصوت واضح وقوي وممتع، مما يجعل أغاني المفضلة أجمل بكثير." },
+      { "fr": "J’ai déjà téléchargé plusieurs applications utiles qui m’aident dans ma vie quotidienne.", "ar": "لقد قمت بالفعل بتحميل عدة تطبيقات مفيدة تساعدني في حياتي اليومية." },
+      { "fr": "Mon téléphone m’aide à organiser mon emploi du temps, mes rendez-vous et mes rappels importants.", "ar": "هاتفي يساعدني في تنظيم جدولي، مواعيدي وتذكيراتي المهمة." },
+      { "fr": "Je peux envoyer des messages instantanément et recevoir des réponses en quelques secondes.", "ar": "أستطيع إرسال الرسائل فورا وتلقي الردود في بضع ثوانٍ فقط." },
+      { "fr": "La connexion à Internet est rapide et très stable, même quand je suis en déplacement.", "ar": "الاتصال بالإنترنت سريع ومستقر جدا، حتى عندما أكون في الخارج." },
+      { "fr": "Grâce à lui, je me sens plus connecté au monde et à mes proches où que je sois.", "ar": "بفضله، أشعر بأنني أكثر اتصالا بالعالم وبأقاربي أينما كنت." },
+      { "fr": "Même mes amis admirent beaucoup ce téléphone et veulent l’essayer.", "ar": "حتى أصدقائي يعجبون كثيرا بهذا الهاتف ويريدون تجربته." },
+      { "fr": "Je suis vraiment satisfait et heureux de mon nouvel achat, il me facilite la vie chaque jour.", "ar": "أنا راضٍ جدا وسعيد بشرائي الجديد، فهو يسهل حياتي كل يوم." }
+    ]
+  },
+  {
+    "id": "lec_11",
+    "type": "lecture",
+    "title": "Le jour où j’ai rencontré votre mère",
+    "description": "Texte 2 : Le récit d'une rencontre amoureuse.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "C’était un jour magnifique de printemps, le soleil brillait et l’air était rempli de douceur et de fraîcheur.", "ar": "كان يوما رائعا في فصل الربيع، كانت الشمس مشرقة والهواء مليئا باللطف والانتعاش." },
+      { "fr": "Je me promenais tranquillement dans le parc, profitant de la beauté des arbres et des fleurs.", "ar": "كنت أتمشى بهدوء في الحديقة، أستمتع بجمال الأشجار والزهور." },
+      { "fr": "Soudain, j’ai aperçu une jeune femme assise sur un banc, plongée dans son livre.", "ar": "فجأة، رأيت شابة جالسة على مقعد، غارقة في كتابها." },
+      { "fr": "Elle avait un grand sourire qui illuminait son visage et attirait mon attention immédiatement.", "ar": "كان لديها ابتسامة كبيرة تضيء وجهها وتجذب انتباهي على الفور." },
+      { "fr": "Je me suis approché doucement, un peu timide, mais curieux de lui parler.", "ar": "اقتربت منها بهدوء، بشيء من الخجل، ولكن بدافع الفضول للتحدث معها." },
+      { "fr": "Je lui ai demandé le titre de son livre, car je voulais entamer une conversation.", "ar": "سألتها عن عنوان كتابها، لأنني أردت أن أبدأ محادثة معها." },
+      { "fr": "Elle m’a répondu avec gentillesse et sa voix était douce et agréable.", "ar": "أجابتني بلطف وكان صوتها رقيقا وممتعا." },
+      { "fr": "Nous avons commencé à discuter de littérature, de musique et de nos passions communes.", "ar": "بدأنا نتحدث عن الأدب والموسيقى وشغفنا المشترك." },
+      { "fr": "J’ai découvert qu’elle aimait la musique autant que moi, et cela m’a beaucoup plu.", "ar": "اكتشفت أنها تحب الموسيقى مثلي تماما، وهذا أعجبني كثيرا." },
+      { "fr": "Nous avons marché ensemble dans le parc, parlant et riant comme si nous nous connaissions déjà.", "ar": "سرنا معا في الحديقة، نتحدث ونضحك وكأننا نعرف بعضنا منذ زمن." },
+      { "fr": "Le temps passait si vite que je n’ai pas vu la journée s’écouler.", "ar": "كان الوقت يمر بسرعة لدرجة أنني لم أشعر بانقضاء اليوم." },
+      { "fr": "À ce moment-là, j’ai senti qu’il y avait quelque chose de spécial entre nous.", "ar": "في تلك اللحظة، شعرت أن هناك شيئا مميزا بيننا." },
+      { "fr": "Je savais déjà que je voulais la revoir et ne pas laisser ce jour s’effacer.", "ar": "كنت أعلم منذ ذلك الوقت أنني أريد رؤيتها مجددا وألا أدع ذلك اليوم يختفي." },
+      { "fr": "Depuis ce moment, notre histoire a commencé, pleine d’émotions et de souvenirs précieux.", "ar": "منذ تلك اللحظة، بدأت قصتنا، مليئة بالمشاعر والذكريات الثمينة." },
+      { "fr": "Et ce jour reste gravé pour toujours dans mon cœur comme le plus beau des commencements.", "ar": "وذلك اليوم بقي محفورا إلى الأبد في قلبي كأجمل بداية." }
+    ]
+  },
+  {
+    "id": "lec_12",
+    "type": "lecture",
+    "title": "Mon premier jour en ville",
+    "description": "Conversation : Découvrir une nouvelle ville.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Mari : Bonjour Tanya, aujourd’hui c’est vraiment ma toute première journée dans cette grande ville pleine de vie, et je dois avouer que je suis un peu perdu.", "ar": "ماري: مرحبا تانيا، اليوم هو فعلا يومي الأول في هذه المدينة الكبيرة المليئة بالحياة، ويجب أن أعترف أنني أشعر بالضياع قليلا." },
+      { "fr": "Tanya : Bienvenue Mari, ne t’inquiète pas, tu vas rapidement t’habituer car cette ville a beaucoup à offrir.", "ar": "تانيا: أهلا بك ماري، لا تقلق، ستعتاد بسرعة لأن هذه المدينة لديها الكثير لتقدمه." },
+      { "fr": "Mari : Les rues sont incroyablement animées, avec des voitures, des bus, et des passants qui semblent pressés.", "ar": "ماري: الشوارع مليئة بالحركة بشكل لا يصدق، مع سيارات وحافلات ومارة يبدون مستعجلين." },
+      { "fr": "Tanya : Oui, c’est une ville qui ne dort jamais, il y a toujours du mouvement et de la vie.", "ar": "تانيا: نعم، إنها مدينة لا تنام أبدا، هناك دائما حركة وحياة." },
+      { "fr": "Mari : J’ai vu de nombreux magasins avec des vitrines colorées et des produits que je n’ai jamais vus avant.", "ar": "ماري: رأيت العديد من المحلات بواجهات ملونة وبمنتجات لم أرها من قبل." },
+      { "fr": "Tanya : Alors tu dois visiter le grand marché central, c’est un lieu où l’on trouve de tout et où l’ambiance est unique.", "ar": "تانيا: إذن يجب أن تزور السوق المركزي الكبير، إنه مكان تجد فيه كل شيء وأجواؤه فريدة." },
+      { "fr": "Mari : J’ai très envie de goûter la nourriture locale, les odeurs délicieuses dans les rues m’ont déjà ouvert l’appétit.", "ar": "ماري: لدي رغبة كبيرة في تذوق الطعام المحلي، فالروائح اللذيذة في الشوارع فتحت شهيتي بالفعل." },
+      { "fr": "Tanya : Super, allons dans un petit restaurant traditionnel qui sert les plats les plus authentiques de la ville.", "ar": "تانيا: رائع، لنذهب إلى مطعم تقليدي صغير يقدم أشهى الأطباق الأصيلة للمدينة." },
+      { "fr": "Mari : En marchant, je remarque la beauté des bâtiments, certains sont modernes et d’autres très anciens.", "ar": "ماري: أثناء المشي، ألاحظ جمال المباني، فبعضها حديث والبعض الآخر قديم جدا." },
+      { "fr": "Tanya : C’est vrai, ces bâtiments anciens racontent l’histoire de la ville et montrent sa richesse culturelle.", "ar": "تانيا: صحيح، هذه المباني القديمة تحكي تاريخ المدينة وتظهر غناها الثقافي." },
+      { "fr": "Mari : Les gens ici semblent très gentils, ils sourient souvent et n’hésitent pas à aider.", "ar": "ماري: الناس هنا يبدون لطفاء جدا، يبتسمون كثيرا ولا يترددون في المساعدة." },
+      { "fr": "Tanya : Tu verras, tu te sentiras vite comme chez toi, car les habitants aiment accueillir les nouveaux arrivants.", "ar": "تانيا: سترى، ستشعر بسرعة وكأنك في بيتك، لأن السكان يحبون استقبال الوافدين الجدد." },
+      { "fr": "Mari : Merci Tanya, je suis heureux que tu sois là pour me guider et partager tout ça avec moi.", "ar": "ماري: شكرا تانيا، أنا سعيد لأنك هنا لتوجهيني وتشاركي كل هذا معي." },
+      { "fr": "Tanya : Avec plaisir, je suis contente de t’accompagner et de te montrer mes endroits préférés.", "ar": "تانيا: بكل سرور، أنا سعيدة بمرافقتك وبأن أريك أماكني المفضلة." },
+      { "fr": "Mari : Ce premier jour restera pour moi un souvenir inoubliable grâce à toi et à la découverte de cette ville.", "ar": "ماري: هذا اليوم الأول سيبقى بالنسبة لي ذكرى لا تُنسى بفضلك وبفضل اكتشاف هذه المدينة." }
+    ]
+  },
+  {
+    "id": "lec_13",
+    "type": "lecture",
+    "title": "Mon voyage à la montagne",
+    "description": "Texte 1 : Récit d'une expérience en montagne.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "La semaine dernière, je suis parti en voyage à la montagne avec ma famille, et c’était une expérience incroyable.", "ar": "الأسبوع الماضي، ذهبت في رحلة إلى الجبل مع عائلتي، وكانت تجربة رائعة." },
+      { "fr": "L’air était pur et frais, totalement différent de celui de la ville bruyante et polluée.", "ar": "كان الهواء نقيا ومنعشا، مختلفا تماما عن هواء المدينة المليئة بالضوضاء والتلوث." },
+      { "fr": "Les montagnes étaient couvertes de neige brillante qui scintillait sous le soleil.", "ar": "كانت الجبال مغطاة بالثلج اللامع الذي يتلألأ تحت أشعة الشمس." },
+      { "fr": "Nous avons marché longtemps sur des sentiers entourés de forêts vertes et calmes.", "ar": "سرنا طويلا في ممرات محاطة بغابات خضراء وهادئة." },
+      { "fr": "J’ai pris beaucoup de photos pour garder de beaux souvenirs de ce voyage.", "ar": "التقطت العديد من الصور للاحتفاظ بذكريات جميلة من هذه الرحلة." },
+      { "fr": "Le soir, nous avons fait un feu de camp et chanté des chansons autour des flammes.", "ar": "في المساء، أشعلنا نارا للتخييم وغنّينا أغاني حول اللهب." },
+      { "fr": "La nuit étoilée était splendide, je n’avais jamais vu autant d’étoiles dans le ciel.", "ar": "كانت السماء المرصعة بالنجوم رائعة، لم أرَ يوما هذا العدد الكبير من النجوم في السماء." },
+      { "fr": "Ce voyage m’a appris à apprécier la nature et à me sentir en paix loin du bruit.", "ar": "هذه الرحلة علمتني أن أقدّر الطبيعة وأشعر بالسلام بعيدا عن الضوضاء." },
+      { "fr": "Je rêve déjà d’y retourner un jour avec mes amis.", "ar": "أنا أحلم بالفعل بالعودة يوما ما مع أصدقائي." }
+    ]
+  },
+  {
+    "id": "lec_14",
+    "type": "lecture",
+    "title": "La première fois que j’ai pris l’avion",
+    "description": "Texte 2 : Les émotions d'un premier vol.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Je me souviens encore de ma toute première fois dans un avion, c’était un mélange d’excitation et de peur.", "ar": "ما زلت أتذكر أول مرة ركبت فيها الطائرة، كان ذلك مزيجا من الحماس والخوف." },
+      { "fr": "Quand l’avion a commencé à décoller, mon cœur battait très vite.", "ar": "عندما بدأت الطائرة بالإقلاع، كان قلبي يخفق بسرعة كبيرة." },
+      { "fr": "Mais dès que nous étions dans le ciel, j’ai été émerveillé par la vue incroyable des nuages.", "ar": "لكن بمجرد أن كنا في السماء، اندهشت من المنظر الرائع للسحب." },
+      { "fr": "On aurait dit des montagnes blanches flottant doucement autour de nous.", "ar": "كان الأمر يشبه الجبال البيضاء التي تطفو بهدوء من حولنا." },
+      { "fr": "J’ai aussi regardé par le hublot et j’ai vu les villes devenir toutes petites en bas.", "ar": "كما نظرت من النافذة ورأيت المدن تصبح صغيرة جدا في الأسفل." },
+      { "fr": "Pendant le vol, les hôtesses ont servi des boissons et un petit repas.", "ar": "خلال الرحلة، قدّمت المضيفات مشروبات ووجبة صغيرة." },
+      { "fr": "Après quelques heures, nous avons atterri en douceur et j’étais très heureux de cette expérience.", "ar": "بعد بضع ساعات، هبطنا بلطف وكنت سعيدا جدا بهذه التجربة." },
+      { "fr": "Depuis ce jour, voyager en avion est devenu pour moi une aventure passionnante.", "ar": "منذ ذلك اليوم، أصبح السفر بالطائرة بالنسبة لي مغامرة ممتعة." }
+    ]
+  },
+  {
+    "id": "lec_15",
+    "type": "lecture",
+    "title": "À la bibliothèque",
+    "description": "Conversation : Découvrir la bibliothèque municipale.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Mari : Bonjour Tanya, aujourd’hui j’ai décidé de visiter la bibliothèque de la ville pour la première fois.", "ar": "ماري: مرحبا تانيا، اليوم قررت زيارة مكتبة المدينة لأول مرة." },
+      { "fr": "Tanya : C’est une excellente idée Mari, ici tu trouveras des centaines de livres intéressants.", "ar": "تانيا: إنها فكرة رائعة يا ماري، هنا ستجد مئات الكتب الممتعة." },
+      { "fr": "Mari : Oui, l’endroit est calme et parfait pour lire, ça me plaît beaucoup.", "ar": "ماري: نعم، المكان هادئ ومثالي للقراءة، هذا يعجبني كثيرا." },
+      { "fr": "Tanya : Tu peux emprunter jusqu’à cinq livres à la fois avec ta carte de lecteur.", "ar": "تانيا: يمكنك استعارة حتى خمسة كتب في نفس الوقت ببطاقة القارئ الخاصة بك." },
+      { "fr": "Mari : Je voudrais commencer par des romans, car j’adore les histoires pleines d’émotions.", "ar": "ماري: أود أن أبدأ بالروايات، لأنني أعشق القصص المليئة بالمشاعر." },
+      { "fr": "Tanya : Très bien, je vais te montrer la section littérature, tu vas sûrement trouver ton bonheur.", "ar": "تانيا: جيد جدا، سأريك قسم الأدب، ستجد بالتأكيد ما يسعدك." },
+      { "fr": "Mari : Merci Tanya, avec toi je découvre toujours de nouveaux endroits intéressants.", "ar": "ماري: شكرا تانيا، معك أكتشف دائما أماكن جديدة ومثيرة." },
+      { "fr": "Tanya : Avec plaisir, Mari ! La lecture ouvre l’esprit et fait voyager sans bouger.", "ar": "تانيا: بكل سرور ماري! القراءة تفتح العقل وتجعلك تسافر دون أن تتحرك." }
+    ]
+  },
+  {
+    "id": "lec_16",
+    "type": "lecture",
+    "title": "Préparatifs du dîner",
+    "description": "Texte 1 : L'art de préparer un dîner pour des amis.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "J'invite mes amis à dîner à la maison ce soir.", "ar": "أدعو أصدقائي لتناول العشاء في المنزل هذا المساء." },
+      { "fr": "Je nettoie l'appartement de fond en comble.", "ar": "أنظف الشقة من الأساس إلى السقف." },
+      { "fr": "Je prépare une délicieuse tarte aux pommes en dessert.", "ar": "أحضر فطيرة تفاح لذيذة كحلوى." },
+      { "fr": "L'odeur de l'ail et des herbes emplit la cuisine.", "ar": "تملأ رائحة الثوم والأعشاب المطبخ." },
+      { "fr": "Je choisis de la musique d'ambiance pour créer une atmosphère agréable.", "ar": "أختار موسيقى هادئة لخلق جو لطيف." },
+      { "fr": "J'allume quelques bougies sur la table.", "ar": "أشعل بعض الشموع على الطاولة." },
+      { "fr": "Le fromage est sorti du frigo pour qu'il soit à température.", "ar": "أخرج الجبن من الثلاجة ليصبح في درجة حرارة الغرفة." },
+      { "fr": "Je goûte la sauce pour vérifier l'assaisonnement.", "ar": "أتذوق الصلصة للتحقق من التوابل." },
+      { "fr": "Tout doit être parfait pour leur arrivée.", "ar": "يجب أن يكون كل شيء مثاليًا لوصولهم." }
+    ]
+  },
+  {
+    "id": "lec_17",
+    "type": "lecture",
+    "title": "Pendant le dîner",
+    "description": "Texte 2 : L'ambiance d'un repas convivial.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Les conversations et les rires résonnent dans la salle à manger.", "ar": "تتردد المحادثات والضحكات في غرفة الطعام." },
+      { "fr": "On discute de tout : travail, voyages, projets et souvenirs.", "ar": "نتحدث عن كل شيء: العمل، السفر، المشاريع والذكريات." },
+      { "fr": "Le vin rouge accompagne parfaitement le plat de pâtes.", "ar": "النبيذ الأحمر يواكب طبق المعكرونة بشكل مثالي." },
+      { "fr": "Je sers les plats chauds directement dans les assiettes.", "ar": "أقدم الأطباق الساخنة مباشرة في الصحون." },
+      { "fr": "Un ami raconte une histoire drôle qui fait rire tout le monde.", "ar": "يروي صديق قصة مضحكة تجعل الجميع يضحك." },
+      { "fr": "On mange lentement, en savourant chaque bouchée.", "ar": "نأكل ببطء، نتذوق كل قضمة." },
+      { "fr": "Le niveau de la bouteille de vin descend rapidement.", "ar": "مستوى زجاجة النبيذ ينخفض بسرعة." },
+      { "fr": "L'ambiance est détendue et joyeuse.", "ar": "الجو مرتاح ومبهج." }
+    ]
+  },
+  {
+    "id": "lec_18",
+    "type": "lecture",
+    "title": "Un dîner entre amis",
+    "description": "Conversation : Un échange joyeux à table.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Léa: Merci d'être venus ! Entrez, entrez !", "ar": "ليا: !شكرًا لمجيئكم! ادخلوا، ادخلوا" },
+      { "fr": "Thomas: Wow, ça sent tellement bon ici ! Qu'est-ce que tu as préparé ?", "ar": "توماس: !واو، الرائحة طيبة جدًا هنا! ماذا أعددت؟" },
+      { "fr": "Léa: Des pâtes à la carbonara, comme tu les aimes. Prends place !", "ar": "ليا: .معكرونة كاربونارا، كما تحبها. تفضل، اجلس" },
+      { "fr": "Julie: J'adore ta décoration ! Ces bougies sont si jolies.", "ar": "جولي: !أحب ديكوركِ! هذه الشموع جميلة جدًا" },
+      { "fr": "Léa: Merci ! C'est juste un petit effort. Qui veut du vin ?", "ar": "ليا: !شكرًا! إنه مجرد جهد بسيط. من يريد النبيذ؟" },
+      { "fr": "Thomas: Volontiers ! Je goûte tout de suite.", "ar": "توماس: !بكل تأكيد! سأتذوق على الفور" },
+      { "fr": "Julie: À notre amitié ! Santé !", "ar": "جولي: !لصداقتنا! بصحتنا" },
+      { "fr": "Tous: Santé !", "ar": "الجميع: !بصحتنا" },
+      { "fr": "Thomas: Ces pâtes sont délicieuses ! Tu me donneras la recette.", "ar": "توماس: !هذه المعكرونة لذيذة! ستعطيني الوصفة" },
+      { "fr": "Léa: Bien sûr, c'est un secret de famille... mais pour toi, je ferai une exception !", "ar": "ليا: !بالتأكيد، إنه سر عائلي... ولكن من أجلك، سأستثني" }
+    ]
+  },
+  {
+    "id": "lec_19",
+    "type": "lecture",
+    "title": "L'arrivée au marché",
+    "description": "Texte 1 : L'ambiance d'un marché matinal.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Le marché animé commence tôt le samedi matin.", "ar": "يبدأ السوق النشط باكرًا صباح السبت." },
+      { "fr": "Les étals colorés débordent de fruits et de légumes frais.", "ar": "تمتلئ الأكشاك الملونة بالفواكه والخضروات الطازجة." },
+      { "fr": "Les commerçants installent leurs produits avec soin.", "ar": "يقوم البائعون بترتيب بضائعهم بعناية." },
+      { "fr": "L'odeur du pain chaud et des épices flotte dans l'air.", "ar": "تعبق رائحة الخبز الساخن والتوابل في الهواء." },
+      { "fr": "Les clients cherchent les meilleurs produits au meilleur prix.", "ar": "يبحث الزبائن عن أفضل المنتجات بأفضل سعر." },
+      { "fr": "Je prends un panier en osier pour faire mes achats.", "ar": "آخذ سلة من الخيزران للتسوق." },
+      { "fr": "Le bruit des discussions et des négociations est incessant.", "ar": "ضجيج المحادثات والمفاوضات لا يتوقف." },
+      { "fr": "Un producteur local me propose de goûter son fromage de chèvre.", "ar": "عرض عليّ مزارع محلي أن أتذوق جبن الماعز الخاص به." },
+      { "fr": "J'achète un bouquet de fleurs pour égayer ma maison.", "ar": "اشتريت باقة زهور لتزيين منزلي." },
+      { "fr": "L'atmosphère est joyeuse et pleine de vie.", "ar": "الجو مفعم بالبهجة والحياة." }
+    ]
+  },
+  {
+    "id": "lec_20",
+    "type": "lecture",
+    "title": "Les achats et la négociation",
+    "description": "Texte 2 : Interagir avec les commerçants.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Je choisis des tomates bien rouges et parfumées.", "ar": "أختار طماطم حمراء وذات رائحة زكية." },
+      { "fr": "Le marchand me propose une dégustation d'olives.", "ar": "عرض عليّ البائع تذوق بعض الزيتون." },
+      { "fr": "« C'est excellent, je vous en prends un kilo s'il vous plaît. »", "ar": "إنه ممتاز، سآخذ منك كيلو واحدًا من فضلك." },
+      { "fr": "Je paie avec des pièces de monnaie.", "ar": "أدفع باستعمال قطع نقدية." },
+      { "fr": "Je continue vers le stand de poissonnerie.", "ar": "أتابع طريقي نحو كشك بيع السمك." },
+      { "fr": "Le poissonnier présente des poissons brillants sur de la glace.", "ar": "يضع السمّاك سمكًا لامعًا على الثلج." },
+      { "fr": "« Ils ont été pêchés ce matin, ils sont très frais ! »", "ar": "لقد تم اصطيادهم هذا الصباح، إنهم طازجون جدًا!" },
+      { "fr": "Je négocie le prix d'un joli tissu avec une artisane.", "ar": "أتتفاوض على سعر قماش جميل مع حرفية." },
+      { "fr": "Finalement, nous tombons d'accord avec un sourire.", "ar": "في النهاية، نتفق بابتسامة." },
+      { "fr": "Mon panier est maintenant lourd et plein.", "ar": "سلتي أصبحت الآن ثقيلة وممتلئة." }
+    ]
+  },
+  {
+    "id": "lec_21",
+    "type": "lecture",
+    "title": "Au stand des fruits",
+    "description": "Conversation : Acheter des fruits au marché.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "La vendeuse: Bonjour Madame ! Belle journée, n'est-ce pas ? Des fraises aujourd'hui ? Elles sont sucrées comme du miel !", "ar": "البائعة: !أهلا سيدتي! يوم جميل، أليس كذلك؟ هل تريدين بعض الفراولة اليوم؟ إنها حلوة كالعسل!" },
+      { "fr": "Camille: Bonjour ! Elles ont l'air effectivement délicieuses. C'est combien le panier ?", "ar": "كاميلي: !أهلا! إنها بالفعل تبدو لذيذة. بكم سلة الفراولة؟" },
+      { "fr": "La vendeuse: Cinq euros le panier. Je vous en mets deux ? J'ai aussi des cerises, toutes fraîches.", "ar": "البائعة: .خمسة يورو للسلة. هل أضع لكِ سلتين؟ لدي أيضًا كرز، طازج جدًا" },
+      { "fr": "Camille: Un panier de fraises suffira, merci. Et donnez-moi aussi un kilo de cerises, elles sont magnifiques !", "ar": "كاميلي: .سلة فراولة واحدة ستكفي، شكرًا. وأعطيني أيضًا كيلو واحدًا من الكرز، إنها رائعة!" },
+      { "fr": "La vendeuse: Voilà, c'est un plaisir ! Cela fera dix euros en tout. Vous payez comment ?", "ar": "البائعة: !ها أنت ذا، على الرحب والسعة! المجموع عشرة يورو. كيف ستدفعين؟" },
+      { "fr": "Camille: En liquide, voici dix euros. Merci beaucoup et bonne journée !", "ar": "كاميلي: .نقدًا، هذه عشرة يورو. شكرًا جزيلًا وطاب يومك!" },
+      { "fr": "La vendeuse: À vous aussi Madame ! Et à la prochaine !", "ar": "البائعة: !ولكِ أيضًا سيدتي! وإلى اللقاء" }
+    ]
+  },
+  {
+    "id": "lec_22",
+    "type": "lecture",
+    "title": "Préparatifs de voyage",
+    "description": "Texte 1 : La liste des choses à faire avant de partir.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Je rêve de ce voyage depuis plusieurs mois.", "ar": "أحلم بهذه الرحلة منذ عدة أشهر." },
+      { "fr": "Je fais une liste de toutes les choses à emporter.", "ar": "أعد قائمة بجميع الأشياء التي يجب أخذها." },
+      { "fr": "Mon passeport est valide et mon visa est prêt.", "ar": "جواز سفري ساري المفعول وتأشيرتي جاهزة." },
+      { "fr": "Je réserve mes billets d'avion sur Internet.", "ar": "أحجز تذاكر الطائرة عبر الإنترنت." },
+      { "fr": "Je cherche un hôtel confortable et bien situé.", "ar": "أبحث عن فندق مريح وذو موقع جيد." },
+      { "fr": "Je pense à prendre un adaptateur pour les prises électriques.", "ar": "أفكر في أخذ مُحوّل لمقابس الكهرباء." },
+      { "fr": "J'échange un peu de monnaie à la banque.", "ar": "أصرف بعض العملة في البنك." },
+      { "fr": "J'apprends quelques phrases basiques dans la langue du pays.", "ar": "أتعلم بعض العبارات الأساسية بلغة البلد." },
+      { "fr": "L'excitation monte à l'approche du départ.", "ar": "الترقب يزداد مع اقتراب موعد المغادرة." }
+    ]
+  },
+  {
+    "id": "lec_23",
+    "type": "lecture",
+    "title": "Le jour du départ",
+    "description": "Texte 2 : L'expérience à l'aéroport.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Ma valise est enfin fermée et pèse exactement vingt kilos.", "ar": "حقيبتي مغلقة أخيرًا وتزن بالضبط عشرين كيلو." },
+      { "fr": "Je vérifie une dernière fois que j'ai tous mes documents.", "ar": "أتأكد للمرة الأخيرة أن كل مستنداتي معي." },
+      { "fr": "Je prends un taxi pour me rendre à l'aéroport.", "ar": "آخذ تاكسي إلى المطار." },
+      { "fr": "Le hall de départ est immense et plein de monde.", "ar": "صالة المغادرة ضخمة ومليئة بالناس." },
+      { "fr": "J'enregistre mes bagages et je récupère ma carte d'embarquement.", "ar": "أسجل أمتعتي وأستلم بطاقة الصعود." },
+      { "fr": "Je passe les contrôles de sécurité sans problème.", "ar": "أجتاز عمليات التفتيش الأمني من دون مشكلة." },
+      { "fr": "Ensuite, j'attends à la porte d'embarquement en regardant les avions.", "ar": "بعد ذلك، أنتظر عند بوابة الصعود وأشاهد الطائرات." },
+      { "fr": "Quand l'annonce retentit, je me dirige vers l'avion.", "ar": "عندما يُعلن عن موعد الصعود، أتجه نحو الطائرة." },
+      { "fr": "Je trouve mon siège et je m'installe confortablement.", "ar": "أجد مقعدي وأرتاح بشكل مريح." },
+      { "fr": "L'avion décolle et l'aventure commence !", "ar": "تقلع الطائرة وتبدأ المغامرة!" }
+    ]
+  },
+  {
+    "id": "lec_24",
+    "type": "lecture",
+    "title": "À l'aéroport",
+    "description": "Conversation : Interaction à l'aéroport.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Agent: Bonjour. Passeport et billet s'il vous plaît.", "ar": "الموظف: .أهلاً. جواز السفر والتذكرة من فضلك" },
+      { "fr": "Pierre: Bonjour. Les voici.", "ar": "بيير: .أهلاً. تفضّل" },
+      { "fr": "Agent: Merci. Une valise à enregistrer ?", "ar": "الموظف: .شكرًا. هل لديك حقيبة لتسجيلها؟" },
+      { "fr": "Pierre: Oui, une seule. C'est ici.", "ar": "بيير: .نعم، واحدة فقط. ها هي" },
+      { "fr": "Agent: Parfait. Voici votre carte d'embarquement. Porte d'embarquement B12, embarquement dans 45 minutes.", "ar": "الموظف: .ممتاز. هذه هي بطاقة صعودك. بوابة الصعود B12، سيبدأ الصعود بعد 45 دقيقة" },
+      { "fr": "Pierre: Merci. Où sont les contrôles de sécurité ?", "ar": "بيير: .شكرًا. أين نقطة التفتيش الأمني؟" },
+      { "fr": "Agent: Juste là-bas, sur votre droite. Bon voyage !", "ar": "الموظف: !هناك مباشرة، على يمينك. رحلة سعيدة" },
+      { "fr": "Pierre (à un ami au téléphone): Salut ! Oui, je suis à l'aéroport. Tout se passe bien. L'avion part à l'heure. À tout à l'heure !", "ar": "بيير (لصديق على الهاتف): !أهلاً! نعم، أنا في المطار. كل شيء على ما يرام. الطائرة ستقلع في وقتها. أراك قريبًا!" }
+    ]
+  },
+  {
+    "id": "lec_25",
+    "type": "lecture",
+    "title": "Avant le rendez-vous médical",
+    "description": "Texte 1 : Se préparer pour une visite chez le médecin.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Je ne me sens pas bien depuis quelques jours.", "ar": "أنا لا أشعر أنني بخير منذ بضعة أيام." },
+      { "fr": "J'ai pris rendez-vous avec le docteur Martin.", "ar": "حجزت موعدًا مع الطبيب مارتان." },
+      { "fr": "J'ai de la fièvre et un mal de gorge intense.", "ar": "لدي حرارة وألم شديد في الحلق." },
+      { "fr": "J'arrive au cabinet médical dix minutes à l'avance.", "ar": "وصلت إلى العيادة قبل الموعد بعشر دقائق." },
+      { "fr": "La salle d'attente est calme et bien éclairée.", "ar": "غرفة الانتظار هادئة ومضاءة جيدًا." },
+      { "fr": "Je remplis un formulaire avec mes informations personnelles.", "ar": "أملأ استمارة بمعلوماتي الشخصية." },
+      { "fr": "Une secrétaire m'appelle pour confirmer mon assurance maladie.", "ar": "نادتني سكرتيرة لتأكيد التأمين الصحي." },
+      { "fr": "J'attends mon tour en lisant un magazine.", "ar": "أنتظر دوري وأقرأ مجلة." },
+      { "fr": "Je suis un peu anxieux mais je sais que c'est nécessaire.", "ar": "أنا قلق بعض الشيء لكنني أعرف أن هذا ضروري." }
+    ]
+  },
+  {
+    "id": "lec_26",
+    "type": "lecture",
+    "title": "La consultation",
+    "description": "Texte 2 : Le déroulement d'une consultation médicale.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Le docteur me fait entrer dans son bureau.", "ar": "يطلب مني الطبيب الدخول إلى مكتبه." },
+      { "fr": "Il est très gentil et me demande ce qui ne va pas.", "ar": "هو لطيف جدًا ويسألني ما هي مشكلتي." },
+      { "fr": "« Depuis quand avez-vous ces symptômes ? »", "ar": "منذ متى وأنت تعاني من هذه الأعراض؟" },
+      { "fr": "Il prend ma température et ma tension artérielle.", "ar": "يقيس درجة حرارتي وضغط دمي." },
+      { "fr": "« Ouvrez la bouche et dites 'Ah'... »", "ar": "افتح فمك وقل 'آه'..." },
+      { "fr": "Il examine mes oreilles avec un otoscope.", "ar": "يفحص أذني بمنظار الأذن." },
+      { "fr": "Il m'écoute respirer avec son stéthoscope.", "ar": "يستمع إلى تنفسي بالسماعة الطبية." },
+      { "fr": "« Ce n'est rien de grave, juste une angine. »", "ar": "ليس الأمر خطيرًا، مجرد التهاب في الحلق." },
+      { "fr": "Il me prescrit un antibiotique et du repos.", "ar": "يكتب لي مضادًا حيويًا ويوصي بالراحة." },
+      { "fr": "Je me sens déjà rassuré en sortant.", "ar": "أشعر بالطمأنينة وأنا أغادر." }
+    ]
+  },
+  {
+    "id": "lec_27",
+    "type": "lecture",
+    "title": "À la pharmacie",
+    "description": "Conversation : Obtenir des médicaments sur ordonnance.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Le pharmacien: Bonjour, vous venez pour une ordonnance ?", "ar": "الصيدلي: ? أهلاً، هل أتيت من أجل وصفة طبية" },
+      { "fr": "Sophie: Bonjour. Oui, voici l'ordonnance du docteur Martin.", "ar": "صوفي: .أهلاً. نعم، هذه هي الوصفة من الطبيب مارتان" },
+      { "fr": "Le pharmacien: Très bien. Asseyez-vous, ce sera prêt dans cinq minutes.", "ar": "الصيدلي: .جيد جدًا. اجلسي، سيكون الدواء جاهزًا خلال خمس دقائق" },
+      { "fr": "Sophie: Merci. Dois-je prendre les comprimés avant ou après le repas ?", "ar": "صوفي: .شكرًا. هل يجب أن آخذ الحبوب قبل أم بعد الطعام؟" },
+      { "fr": "Le pharmacien: Après le repas, pour éviter les maux d'estomac. Deux fois par jour.", "ar": "الصيدلي: .بعد الطعام، لتجنب آلام المعدة. مرتين في اليوم" },
+      { "fr": "Sophie: D'accord. Et pour la fièvre, je peux prendre du paracétamol ?", "ar": "صوفي: .حسنًا. وبالنسبة للحرارة، هل يمكنني تناول الباراسيتامول؟" },
+      { "fr": "Le pharmacien: Oui, tout à fait, mais espacez les prises d'au moins quatre heures.", "ar": "الصيدلي: .نعم، بالتأكيد، لكن يجب ترك فاصل أربع ساعات على الأقل بين الجرعات" },
+      { "fr": "Sophie: Parfait, merci beaucoup pour votre conseil.", "ar": "صوفي: .ممتاز، شكرًا جزيلاً على النصيحة" },
+      { "fr": "Le pharmacien: Je vous en prie. Prenez soin de vous et bon rétablissement !", "ar": "الصيدلي: !على الرحب والسعة. اعتن بنفسك وأتمنى لك الشفاء العاجل" }
+    ]
+  },
+  {
+    "id": "lec_28",
+    "type": "lecture",
+    "title": "Le samedi matin en famille",
+    "description": "Texte 1 : Le début d'un week-end en famille.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Le weekend commence enfin après une longue semaine de travail.", "ar": "يبدأ عطلة نهاية الأسبوع أخيرًا بعد أسبوع عمل طويل." },
+      { "fr": "Toute la famille se réunit pour le petit-déjeuner.", "ar": "تجتمع العائلة كلها لتناول الفطور." },
+      { "fr": "Les enfants sont excités à l'idée de passer du temps ensemble.", "ar": "الأطفال متحمسون لفكرة قضاء الوقت معًا." },
+      { "fr": "Nous préparons des crêpes avec de la confiture et du nutella.", "ar": "نحضر فطائر مع المربى والنوتيلا." },
+      { "fr": "Le soleil entre dans la cuisine et réchauffe la pièce.", "ar": "تدخل أشعة الشمس إلى المطبخ وتدفئ المكان." },
+      { "fr": "Après le repas, nous décidons du programme de la journée.", "ar": "بعد الوجبة، نقرر برنامج اليوم." },
+      { "fr": "Une balade en forêt semble être une bonne idée.", "ar": "تبدو نزهة في الغابة فكرة جيدة." },
+      { "fr": "Chacun aide à nettoyer la table et à faire la vaisselle.", "ar": "يساعد كل واحد في تنظيف الطاولة وغسل الصحون." },
+      { "fr": "L'atmosphère est détendue et joyeuse.", "ar": "الجو مرتاح ومبهج." }
+    ]
+  },
+  {
+    "id": "lec_29",
+    "type": "lecture",
+    "title": "Les activités du weekend",
+    "description": "Texte 2 : Profiter du temps libre en famille.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Nous partons en voiture vers le lac le plus proche.", "ar": "نغادر بالسيارة نحو أقرب بحيرة." },
+      { "fr": "Les enfants chantent des chansons à l'arrière de la voiture.", "ar": "يغني الأطفال الأغاني في المقعد الخلفي للسيارة." },
+      { "fr": "Arrivés sur place, nous installons une couverture sur l'herbe.", "ar": "عند الوصول، نفرش بطانية على العشب." },
+      { "fr": "Les plus courageux se baignent dans l'eau fraîche du lac.", "ar": "يسبح الأكثر شجاعة في ماء البحيرة البارد." },
+      { "fr": "D'autres préfèrent lire un livre à l'ombre des arbres.", "ar": "يفضل آخرون قراءة كتاب تحت ظل الأشجار." },
+      { "fr": "Le pique-nique est délicieux : sandwiches, salade et fruits.", "ar": "الوجبة الخفيفة في الخارج لذيذة: سندويشات، سلطة وفواكه." },
+      { "fr": "L'après-midi, nous jouons au ballon et faisons voler un cerf-volant.", "ar": "في المساء، نلعب بالكرة ونطير طائرة ورقية." },
+      { "fr": "Le weekend passe toujours trop vite !", "ar": "دائمًا ما تمر عطلة نهاية الأسبوع بسرعة كبيرة!" }
+    ]
+  },
+  {
+    "id": "lec_30",
+    "type": "lecture",
+    "title": "Planifier le dimanche",
+    "description": "Conversation : Décider d'une activité familiale.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Le père: Alors, qu'est-ce qu'on fait de spécial demain ?", "ar": "الأب: ? إذن، ماذا سنفعل غدًا من شيء خاص" },
+      { "fr": "La mère: Et si on allait au zoo ? Les enfants adorent les animaux.", "ar": "الأم: ? ماذا لو ذهبنا إلى حديقة الحيوان؟ الأطفال يحبون الحيوانات" },
+      { "fr": "La fille: Oh oui ! J'adore les girafes ! Je veux voir les girafes !", "ar": "الابنة: !أوه نعم! أحب الزرافات! أريد أن أرى الزرافات" },
+      { "fr": "Le fils: Moi je veux voir les lions ! Ils sont trop forts.", "ar": "الابن: !أنا أريد أن أرى الأسود! إنهم أقوياء جدًا" },
+      { "fr": "Le père: D'accord, le zoo c'est une excellente idée. On partira tôt pour éviter la foule.", "ar": "الأب: .حسنًا، حديقة الحيوان فكرة ممتازة. سنغادر مبكرًا لتجنب الزحام" },
+      { "fr": "La mère: Parfait. Je préparerai un pique-nique pour le déjeuner.", "ar": "الأم: .ممتاز. سأحضر وجبة غداء خفيفة لنأكلها في الخارج" },
+      { "fr": "La fille: Youpi ! Merci maman ! Merci papa !", "ar": "الابنة: !ياي! شكرًا ماما! شكرًا بابا" },
+      { "fr": "Le fils: Est-ce que je peux prendre mon appareil photo pour photographier les singes ?", "ar": "الابن: ? هل يمكنني أخذ الكاميرا لتصوير القرود" },
+      { "fr": "Le père: Bien sûr, c'est une très bonne idée. N'oublie pas de charger la batterie !", "ar": "الأب: !بالتأكيد، هذه فكرة رائعة. لا تنسى شحن البطارية" }
+    ]
+  },
+  {
+    "id": "lec_31",
+    "type": "lecture",
+    "title": "Le matin de la rentrée",
+    "description": "Texte 1 : L'excitation du premier jour d'école.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Le réveil sonne très tôt ce matin de septembre.", "ar": "يدق المنبه مبكرًا جدًا في هذا الصباح من شهر سبتمبر." },
+      { "fr": "Je m'habille avec mon nouvel uniforme scolaire.", "ar": "أرتدي ملابسي مع زيي المدرسي الجديد." },
+      { "fr": "Mon cartable neuf est rempli de cahiers et de crayons.", "ar": "حقيبتي المدرسية الجديدة مليئة بالدفاتر والأقلام." },
+      { "fr": "Je prends un bon petit-déjeuner avec ma famille.", "ar": "أتناول فطورًا جيدًا مع عائلتي." },
+      { "fr": "Ma mère me prend en photo devant la maison.", "ar": "تأخذني أمي في صورة أمام المنزل." },
+      { "fr": "Je me sens un peu nerveux mais aussi excité.", "ar": "أشعر ببعض التوتر ولكن أيضًا بمشاعر متحمس." },
+      { "fr": "Nous partons à l'école en voiture.", "ar": "نغادر إلى المدرسة بالسيارة." },
+      { "fr": "Devant le portail, beaucoup d'enfants retrouvent leurs amis.", "ar": "أمام البوابة، الكثير من الأطفال يلتقون أصدقاءهم." },
+      { "fr": "La cour de récréation est bruyante et animée.", "ar": "ساحة المدرسة صاخبة ونابضة بالحياة." }
+    ]
+  },
+  {
+    "id": "lec_32",
+    "type": "lecture",
+    "title": "En classe",
+    "description": "Texte 2 : La découverte de la nouvelle classe.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "La cloche sonne et nous entrons en classe.", "ar": "يدق الجرس وندخل إلى الصف." },
+      { "fr": "La salle de classe est spacieuse et bien rangée.", "ar": "غرفة الصف واسعة ومنظمة جيدًا." },
+      { "fr": "Notre professeur nous souhaite la bienvenue.", "ar": "معلمتنا ترحب بنا." },
+      { "fr": "Elle s'appelle Madame Dubois et elle a l'air gentille.", "ar": "اسمها Madame Dubois وهي تبدو لطيفة." },
+      { "fr": "Nous sortons nos affaires de notre cartable.", "ar": "نخرج أدواتنا من حقائبنا." },
+      { "fr": "Le tableau est grand et tout blanc.", "ar": "السبورة كبيرة وبيضاء تمامًا." },
+      { "fr": "Nous apprenons à connaître nos voisins de table.", "ar": "نتعلم التعرف على جيراننا في الطاولة." },
+      { "fr": "La première leçon est facile et intéressante.", "ar": "الدرس الأول سهل وممتع." },
+      { "fr": "La récréation de 10 heures est la bienvenue !", "ar": "فسحة الساعة العاشرة محبوبة!" }
+    ]
+  },
+  {
+    "id": "lec_33",
+    "type": "lecture",
+    "title": "À la récréation",
+    "description": "Conversation : Se faire de nouveaux amis à l'école.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Léa: Salut ! Je m'appelle Léa. Et toi ?", "ar": "ليا: !أهلاً! اسمي ليا. وأنت؟" },
+      { "fr": "Tom: Moi c'est Tom. C'est ta première année ici ?", "ar": "توم: أنا توم. هل هذه سنتك الأولى هنا؟" },
+      { "fr": "Léa: Oui, nous avons déménagé pendant les vacances. Je ne connais personne.", "ar": "ليا: .نعم، انتقلنا للسكن خلال العطلة. لا أعرف أحدًا" },
+      { "fr": "Tom: T'inquiète pas ! Je te présente mes amis. Voici Sami et Lina.", "ar": "توم: !لا تقلقي! سأقدمك لأصدقائي. هذان هما سامي ولينا" },
+      { "fr": "Sami: Salut ! Tu veux jouer au foot avec nous ?", "ar": "سامي: !أهلاً! هل تريدين لعب كرة القدم معنا؟" },
+      { "fr": "Léa: Euh... je préfère la corde à sauter. Vous voulez essayer ?", "ar": "ليا: ...أم... أنا أفضل نط الحبل. هل تريدون المحاولة؟" },
+      { "fr": "Lina: Oh oui ! J'adore ça ! Montre-nous !", "ar": "لينا: !أوه نعم! أحب هذا! أرينا!" },
+      { "fr": "Tom: D'accord, mais après on joue à chat !", "ar": "توم: !حسنًا، لكن بعد ذلك نلعب لعبة التاغ (اللمس)!" },
+      { "fr": "Léa: Super ! Merci les amis !", "ar": "ليا: !ممتاز! شكرًا لكم أصدقائي" }
+    ]
+  },
+  {
+    "id": "lec_34",
+    "type": "lecture",
+    "title": "Préparer la liste de courses",
+    "description": "Texte 1 : L'organisation avant d'aller au supermarché.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Je vérifie le contenu du réfrigérateur et des placards.", "ar": "أتفحص محتوى الثلاجة والخزائن." },
+      { "fr": "Je fais une liste organisée par rayons pour gagner du temps.", "ar": "أعد قائمة منظمة حسب الأقسام لتوفير الوقت." },
+      { "fr": "Il faut acheter des produits laitiers : lait, yaourt et fromage.", "ar": "يجب شراء منتجات الحليب: حليب، لبن وجبن." },
+      { "fr": "Dans le rayon fruits et légumes, il me faut des pommes et des carottes.", "ar": "في قسم الخضار والفواكه، أحتاج تفاحًا وجزرًا." },
+      { "fr": "N'oublions pas la viande et le poisson pour les repas de la semaine.", "ar": "لا ننسى اللحوم والسمك لوجبات الأسبوع." },
+      { "fr": "Les produits d'entretien sont aussi importants : lessive et savon.", "ar": "مواد التنظيف مهمة أيضًا: مسحوق الغسيل والصابون." },
+      { "fr": "Je prends un caddie à l'entrée du supermarché.", "ar": "آخذ عربة عند مدخل السوبرماركت." },
+      { "fr": "La liste me guide pour éviter les achats inutiles.", "ar": "القائمة ترشدني لتجنب المشتريات غير الضرورية." }
+    ]
+  },
+  {
+    "id": "lec_35",
+    "type": "lecture",
+    "title": "Parcourir les rayons",
+    "description": "Texte 2 : L'expérience des courses au supermarché.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Je commence par le rayon des fruits et légumes.", "ar": "أبدأ بقسم الخضار والفواكه." },
+      { "fr": "Je choisis des bananes bien jaunes et des tomates rouges.", "ar": "أختار موزًا أصفرًا ناضجًا وطماطم حمراء." },
+      { "fr": "Ensuite, je vais au rayon frais pour le lait et les œufs.", "ar": "ثم أذهب إلى قسم المنتجات الطازجة للحليب والبيض." },
+      { "fr": "Je compare les prix entre les différentes marques de pâtes.", "ar": "أقارن الأسعار بين الماركات المختلفة للمعكرونة." },
+      { "fr": "Je cherche le poissonnier pour acheter du saumon frais.", "ar": "أبحث عن بائع السمك لشراء سمك السلمون الطازج." },
+      { "fr": "Au rayon boulangerie, l'odeur du pain chaud est irrésistible.", "ar": "في قسم المخبز، رائحة الخبز الساخن لا تُقاوم." },
+      { "fr": "Je vérifie ma liste pour ne rien oublier.", "ar": "أتأكد من قائمتي لكي لا أنسى شيئًا." },
+      { "fr": "Mon caddie est presque plein, il est temps de passer à la caisse.", "ar": "عربتي ممتلئة تقريبًا، حان وقت الذهاب إلى الصندوق." }
+    ]
+  },
+  {
+    "id": "lec_36",
+    "type": "lecture",
+    "title": "À la caisse",
+    "description": "Conversation : Le passage en caisse au supermarché.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "La caissière: Bonjour ! Avez-vous une carte de fidélité ?", "ar": "المحاسبة: !أهلاً! هل لديك بطاقة ولاء؟" },
+      { "fr": "Le client: Bonjour ! Oui, la voici.", "ar": "الزبون: !أهلاً! نعم، هذه هي" },
+      { "fr": "La caissière: Ce sera tout pour aujourd'hui ?", "ar": "المحاسبة: ? هل هذا كل شيء لليوم" },
+      { "fr": "Le client: Oui, merci. Je paie par carte.", "ar": "الزبون: .نعم، شكرًا. سأدفع بالبطاقة" },
+      { "fr": "La caissière: Très bien. Cela fait 48 euros 60.", "ar": "المحاسبة: .جيد جدًا. المجموع 48 يورو و60 سنت" },
+      { "fr": "Le client: Pouvez-vous mettre les œufs dans un sac séparé s'il vous plaît ?", "ar": "الزبون: ? هل يمكنكم وضع البيض في كيس منفصل من فضلكم" },
+      { "fr": "La caissière: Bien sûr, pas de problème. Voici votre ticket. Bonne journée !", "ar": "المحاسبة: !بالتأكيد، لا مشكلة. هذه هي فاتورتك. يومًا سعيدًا" },
+      { "fr": "Le client: Merci, à vous aussi !", "ar": "الزبون: !شكرًا، ولكم أيضًا" }
+    ]
+  },
+  {
+    "id": "lec_37",
+    "type": "lecture",
+    "title": "Arrivée à la plage",
+    "description": "Texte 1 : Les premières sensations d'une journée à la mer.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Nous arrivons tôt le matin pour trouver une bonne place.", "ar": "نصل في الصباح الباكر لإيجاد مكان جيد." },
+      { "fr": "Le sable est déjà chaud sous nos pieds.", "ar": "الرمل أصبح دافئًا بالفعل تحت أقدامنا." },
+      { "fr": "Nous étendons notre grande serviette de plage multicolore.", "ar": "نفرش منشفة الشاطئ الكبيرة متعددة الألوان." },
+      { "fr": "L'odeur de la mer et du sel envahit l'air.", "ar": "تغزو رائحة البحر والملح الهواء." },
+      { "fr": "Les enfants courent déjà vers l'eau avec leurs seaux.", "ar": "الأطفال يجرون بالفعل نحو الماء مع دلائهم." },
+      { "fr": "Le bruit des vagues qui se brisent est apaisant.", "ar": "صوت الأمواج المتكسرة مهدئ." },
+      { "fr": "Je mets de la crème solaire pour me protéger du soleil.", "ar": "أضع كريم الشمس لحماية نفسي من الشمس." },
+      { "fr": "Le ciel est bleu sans aucun nuage.", "ar": "السماء زرقاء بدون أي سحاب." }
+    ]
+  },
+  {
+    "id": "lec_38",
+    "type": "lecture",
+    "title": "Activités balnéaires",
+    "description": "Texte 2 : Les plaisirs d'une journée à la plage.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Mon frère fait du surf sur les grosses vagues.", "ar": "أخي يتزلج على الأمواج الكبيرة." },
+      { "fr": "Ma sœur construit un immense château de sable.", "ar": "أختي تبني قلعة رمل كبيرة." },
+      { "fr": "Moi, je préfère nager et flotter sur l'eau calme.", "ar": "أنا أفضل السباحة والعوم على الماء الهادئ." },
+      { "fr": "Nous collectionnons des coquillages le long du rivage.", "ar": "نجمع الأصداف على طول الشاطئ." },
+      { "fr": "À midi, nous mangeons des sandwiches au jambon.", "ar": "عند الظهيرة، نأكل سندويشات باللحم." },
+      { "fr": "Le vent marin fait voler les cheveux des gens.", "ar": "تطير شعر الناس بسبب رياح البحر." },
+      { "fr": "En fin d'après-midi, nous jouons au beach-volley.", "ar": "في نهاية المساء، نلعب كرة الطائرة الشاطئية." },
+      { "fr": "Le soleil commence à descendre sur l'horizon.", "ar": "بدأت الشمس بالغروب على الأفق." }
+    ]
+  },
+  {
+    "id": "lec_39",
+    "type": "lecture",
+    "title": "À la buvette de la plage",
+    "description": "Conversation : Commander une boisson à la plage.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Paul: J'ai soif ! Et toi ?", "ar": "بول: !أنا عطشان! وأنت؟" },
+      { "fr": "Marie: Oui, moi aussi. Allons à la buvette prendre une boisson.", "ar": "ماري: .نعم، أنا أيضًا. لنذهب إلى كشك المشروبات لأخذ شراب" },
+      { "fr": "Le vendeur: Bonjour ! Que désirez-vous ?", "ar": "البائع: !أهلاً! ماذا تريدون؟" },
+      { "fr": "Paul: Pour moi, un soda bien froid, s'il vous plaît.", "ar": "بول: .لي، مشروب غازي بارد جدًا من فضلك" },
+      { "fr": "Marie: Moi, je vais prendre une glace à la vanille.", "ar": "ماري: .أنا، سآخذ مثلجات بالفانيلا" },
+      { "fr": "Le vendeur: Un soda et une glace vanille. Voilà, ça fait 6 euros.", "ar": "البائع: .مشروب غازي ومثلجات فانيلا. هذه هي، الثمن 6 يورو" },
+      { "fr": "Marie: Tenez. C'est gentil, merci !", "ar": "ماري: .تفضل. هذا لطيف، شكرًا!" },
+      { "fr": "Paul: Regarde le coucher de soleil ! Les couleurs sont magnifiques !", "ar": "بول: !انظر إلى غروب الشمس! الألوان رائعة" },
+      { "fr": "Marie: C'est vrai ! Quelle belle fin de journée !", "ar": "ماري: !هذا صحيح! يا لها من نهاية جميلة لليوم" }
+    ]
+  },
+  {
+    "id": "lec_40",
+    "type": "lecture",
+    "title": "Avant la séance de cinéma",
+    "description": "Texte 1 : L'attente avant le début du film.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Nous décidons d'aller au cinéma ce vendredi soir.", "ar": "نقرر الذهاب إلى السينما مساء هذا الجمعة." },
+      { "fr": "Je consulte le programme sur Internet pour choisir un film.", "ar": "أتطلع على البرنامج عبر الإنترنت لاختيار فيلم." },
+      { "fr": "Nous optons finalement pour une comédie romantique.", "ar": "نقرر في النهاية فيلمًا رومانسيًا كوميديًا." },
+      { "fr": "Mes amis viennent me chercher à la maison vers 19 heures.", "ar": "أصدقائي يأتون لأخذي من المنزل حوالي السابعة مساءً." },
+      { "fr": "Nous arrivons au cinéma trente minutes avant la séance.", "ar": "نصل إلى السينما قبل بدء العرض بثلاثين دقيقة." },
+      { "fr": "La file d'attente devant le guichet est assez longue.", "ar": "طابور الانتظار أمام شباك التذاكر طويل نوعًا ما." },
+      { "fr": "L'ambiance est animée, tout le monde semble content.", "ar": "الأجواء مفعمة بالحيوية، الجميع يبدو سعيدًا." },
+      { "fr": "J'achète les places pendant que mes amis font la queue au snack.", "ar": "أشتري التذاكر بينما ينتظر أصدقائي في طابور الوجبات الخفيفة." }
+    ]
+  },
+  {
+    "id": "lec_41",
+    "type": "lecture",
+    "title": "Pendant la séance",
+    "description": "Texte 2 : L'expérience dans la salle de cinéma.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Nous entrons dans la salle obscure et trouvons nos sièges.", "ar": "ندخل إلى القاعة المظلمة ونجد مقاعدنا." },
+      { "fr": "Les lumières s'éteignent et les bandes-annonces commencent.", "ar": "تنطفئ الأضواء وتبدأ إعلانات الأفلام." },
+      { "fr": "Le son est très fort, on sent les basses dans tout le corps.", "ar": "الصوت عالٍ جدًا، نشعر بالإيقاعات في كل الجسم." },
+      { "fr": "Quelqu'un ouvre un sachet de bonbons bruyamment.", "ar": "شخص ما يفتح كيس حلوى بصوت عالٍ." },
+      { "fr": "Le film commence et le public se tait progressivement.", "ar": "يبدأ الفيلم ويصمت الجمهور تدريجيًا." },
+      { "fr": "Les images sont magnifiques et les acteurs excellents.", "ar": "الصور رائعة والممثلون ممتازون." },
+      { "fr": "Nous rions aux éclats pendant les scènes comiques.", "ar": "نضحك بشدة خلال المشاهد الكوميدية." },
+      { "fr": "À la fin, tout le monde applaudit spontanément.", "ar": "في النهاية، يصفق الجميع تلقائيًا." }
+    ]
+  },
+  {
+    "id": "lec_42",
+    "type": "lecture",
+    "title": "Après le film",
+    "description": "Conversation : Discuter d'un film après la séance.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Luc: Alors, qu'est-ce que vous en avez pensé ?", "ar": "لوك: ? إذن، ما رأيكم فيه؟" },
+      { "fr": "Sophie: J'ai adoré ! C'était drôle et touchant à la fois.", "ar": "صوفي: !لقد أعجبني جدًا! كان مضحكًا و مؤثرًا في نفس الوقت" },
+      { "fr": "Thomas: Moi aussi j'ai bien aimé, mais la fin était un peu prévisible.", "ar": "توماس: .أنا أيضًا أعجبني، لكن النهاية كانت متوقعة بعض الشيء" },
+      { "fr": "Luc: Tu as raison. Mais les acteurs principaux étaient formidables !", "ar": "لوك: !أنت محق. لكن الممثلين الرئيسيين كانوا رائعين" },
+      { "fr": "Sophie: Absolument ! La musique aussi était très belle.", "ar": "صوفي: !تمامًا! الموسيقى أيضًا كانت جميلة جدًا" },
+      { "fr": "Thomas: Et vous avez remarqué les paysages ? Magnifiques !", "ar": "توماس: !وهل لاحظتم المناظر الطبيعية؟ رائعة!" },
+      { "fr": "Luc: Si on allait boire un verre pour en discuter plus longuement ?", "ar": "لوك: ? هل نذهب لشرب كأس للحديث عنه بمزيد من التفصيل" },
+      { "fr": "Sophie: Excellente idée ! Allons au café en face.", "ar": "صوفي: !فكرة ممتازة! لنذهب إلى المقهى المقابل" },
+      { "fr": "Thomas: D'accord, mais cette fois-ci c'est moi qui paie !", "ar": "توماس: !حسنًا، لكن هذه المرة أنا من سيدفع" }
+    ]
+  },
+  {
+    "id": "lec_43",
+    "type": "lecture",
+    "title": "Chez le médecin",
+    "description": "Texte 1 : Avant la consultation.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Je ne me sens pas bien depuis quelques jours.", "ar": "أنا لا أشعر أنني بخير منذ بضعة أيام." },
+      { "fr": "J'ai pris rendez-vous avec le docteur Martin.", "ar": "حجزت موعدًا مع الطبيب مارتان." },
+      { "fr": "La salle d'attente est calme et bien éclairée.", "ar": "غرفة الانتظار هادئة ومضاءة جيدًا." },
+      { "fr": "Je remplis un formulaire avec mes informations personnelles.", "ar": "أملأ استمارة بمعلوماتي الشخصية." },
+      { "fr": "D'autres patients attendent patiemment leur tour.", "ar": "ينتظر مرضى آخرون دورهم بصبر." },
+      { "fr": "Je lis un magazine pour me détendre un peu.", "ar": "أقرأ مجلة لأسترخي قليلاً." },
+      { "fr": "L'infirmière appelle mon nom et me guide vers le cabinet.", "ar": "الممرضة تنادي اسمي وتقودني إلى العيادة." },
+      { "fr": "Le docteur me demande pourquoi je suis là.", "ar": "يسألني الطبيب لماذا أتيت." },
+      { "fr": "Je lui explique mes symptômes avec précision.", "ar": "أشرح له أعراضي بدقة." }
+    ]
+  },
+  {
+    "id": "lec_44",
+    "type": "lecture",
+    "title": "La consultation médicale",
+    "description": "Texte 2 : Pendant la consultation.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Le médecin est très gentil et à l'écoute.", "ar": "الطبيب لطيف جدًا ويصغي جيدًا." },
+      { "fr": "Il me pose plusieurs questions sur ma santé.", "ar": "يطرح عليّ عدة أسئلة حول صحتي." },
+      { "fr": "Il prend ma température et ma tension artérielle.", "ar": "يقيس درجة حرارتي وضغط دمي." },
+      { "fr": "« Respirez profondément, s'il vous plaît. »", "ar": "تنفس بعمق من فضلك." },
+      { "fr": "Il examine ma gorge avec un petit bâtonnet.", "ar": "يفحص حلقي بعصا صغيرة." },
+      { "fr": "Il me demande si je suis allergique à des médicaments.", "ar": "يسألني إذا كنت أعاني من حساسية تجاه أي دواء." },
+      { "fr": "Finalement, il écrit une ordonnance pour moi.", "ar": "في النهاية، يكتب لي روشتة طبية." },
+      { "fr": "Il me conseille de me reposer et de boire beaucoup d'eau.", "ar": "ينصحني أن أرتاح وأشرب الكثير من الماء." },
+      { "fr": "Je le remercie et je sors du cabinet.", "ar": "أشكره وأخرج من العيادة." }
+    ]
+  },
+  {
+    "id": "lec_45",
+    "type": "lecture",
+    "title": "Dans le cabinet du docteur",
+    "description": "Conversation : Dialogue avec le médecin.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Docteur: Bonjour Monsieur Dubois. Asseyez-vous. Alors, qu'est-ce qui ne va pas ?", "ar": "الطبيب: .أهلاً سيد دوبوا. تفضل بالجلوس. إذن، ما هي المشكلة؟" },
+      { "fr": "M. Dubois: Bonjour Docteur. J'ai très mal à la gorge depuis avant-hier, et j'ai un peu de fièvre.", "ar": "السيد دوبوا: .أهلاً دكتور. أعاني من ألم شديد في الحلق منذ أول أمس، لدي أيضًا حرارة خفيفة" },
+      { "fr": "Docteur: Je vois. Vous toussez aussi ? Avez-vous mal à la tête ?", "ar": "الطبيب: .فهمت. هل تسعل أيضًا؟ هل لديك ألم في الرأس؟" },
+      { "fr": "M. Dubois: Oui, je tousse un peu, et j'ai un léger mal de tête.", "ar": "السيد دوبوا: .نعم، أسعل قليلاً، ولدي ألم خفيف في الرأس" },
+      { "fr": "Docteur: Très bien. Ouvrez la bouche et dites 'AAAAH'. Oui, c'est un peu rouge. Je vous prescris un sirop pour la toux et quelque chose pour la fièvre. Reposez-vous bien.", "ar": "الطبيب: .جيد جدًا. افتح فمك وقل 'آآآه'. نعم، هناك احمرار بسيط. سأصف لك شرابًا للسعال ودواءً للحرارة. احصل على قسط كافٍ من الراحة" },
+      { "fr": "M. Dubois: Merci Docteur. Dois-je revenir vous voir ?", "ar": "السيد دوبوا: .شكرًا دكتور. هل يجب أن أعود لرؤيتك؟" },
+      { "fr": "Docteur: Seulement si les symptômes persistent après trois jours. Prenez soin de vous !", "ar": "الطبيب: .فقط إذا استمرت الأعراض بعد ثلاثة أيام. اعتن بنفسك!" }
+    ]
+  },
+  {
+    "id": "lec_46",
+    "type": "lecture",
+    "title": "La préparation du déjeuner",
+    "description": "Texte 1 : Cuisiner en famille.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Aujourd'hui, nous préparons le déjeuner en famille.", "ar": "اليوم، نحضر الغداء مع العائلة." },
+      { "fr": "La recette est une tarte aux légumes du jardin.", "ar": "الوصفة هي فطيرة بالخضار من الحديقة." },
+      { "fr": "Chacun a sa tâche : moi, je lave les légumes.", "ar": "كل واحد له مهمته: أنا، أغسل الخضار." },
+      { "fr": "Mon père coupe les oignons et les tomates en petits morceaux.", "ar": "والدي يقطع البصل والطماطم إلى قطع صغيرة." },
+      { "fr": "Ma mère prépare la pâte à tarte sur le plan de travail.", "ar": "أمي تحضر عجينة الفطيرة على سطح العمل." },
+      { "fr": "Le chat observe tout ce petit monde avec curiosité.", "ar": "القطة تراقب كل هذا الجمع الصغير بفضول." },
+      { "fr": "L'odeur des herbes fraîches remplit la cuisine.", "ar": "رائحة الأعشاب الطازجة تملأ المطبخ." },
+      { "fr": "Nous écoutons de la musique en travaillant.", "ar": "نستمع إلى الموسيقى أثناء العمل." }
+    ]
+  },
+  {
+    "id": "lec_47",
+    "type": "lecture",
+    "title": "La cuisson et le repas",
+    "description": "Texte 2 : Déguster le plat préparé en famille.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "La tarte cuit dans le four pendant trente minutes.", "ar": "الفطيرة تطبخ في الفرن لمدة ثلاثين دقيقة." },
+      { "fr": "Une délicieuse odeur se répand dans toute la maison.", "ar": "رائحة لذيذة تنتشر في كل أنحاء المنزل." },
+      { "fr": "Nous mettons la table avec soin : nappe, assiettes et couverts.", "ar": "نضع الطاولة بعناية: غطاء طاولة، صحون وأواني." },
+      { "fr": "Quand la tarte est dorée, nous la sortons du four.", "ar": "عندما تصبح الفطيرة ذهبية اللون، نخرجها من الفرن." },
+      { "fr": "Elle est si belle que nous la prenons en photo !", "ar": "إنها جميلة جدًا لدرجة أننا نأخذ لها صورة!" },
+      { "fr": "Enfin, nous nous asseyons pour déguster notre chef-d'œuvre.", "ar": "أخيرًا، نجلس لتذوق تحفتنا." },
+      { "fr": "Le goût des légumes frais est exceptionnel.", "ar": "طعم الخضار الطازجة استثنائي." },
+      { "fr": "Nous sommes fiers de notre travail d'équipe.", "ar": "نحن فخورون بعملنا الجماعي." }
+    ]
+  },
+  {
+    "id": "lec_48",
+    "type": "lecture",
+    "title": "Pendant la préparation en cuisine",
+    "description": "Conversation : Dialogue en cuisinant.",
+    "lang": "fr-FR",
+    "sentences": [
+      { "fr": "Le père: Alice, peux-tu me passer le basilic, s'il te plaît ?", "ar": "الأب: ?أليس، هل يمكنك أن تمرري الريحان من فضلك" },
+      { "fr": "Alice: Oui, voilà. Papa, tu veux que je mélange les œufs avec la crème ?", "ar": "أليس: .نعم، هذه هي. بابا، هل تريد أن أخلط البيض مع الكريمة؟" },
+      { "fr": "Le père: Oui, merci. Maman, la pâte est presque prête ?", "ar": "الأب: .نعم، شكرًا. ماما، هل العجينة جاهزة تقريبًا؟" },
+      { "fr": "La mère: Encore deux minutes. Pierre, tu as coupé les courgettes ?", "ar": "الأم: .دقيقتان أخريان. بيير، هل قطعت الكوسا؟" },
+      { "fr": "Pierre: Oui, elles sont dans le saladier bleu. Je les ai coupées en rondelles.", "ar": "بيير: .نعم، هي في الوعاء الأزرق. لقد قطعتها حلقات" },
+      { "fr": "Alice: Regardez, mon mélange est parfait ! C'est beau, n'est-ce pas ?", "ar": "أليس: !انظروا، خليطي ممتاز! إنه جميل، أليس كذلك؟" },
+      { "fr": "Le père: Très beau, ma chérie ! Nous formons une excellente équipe !", "ar": "الأب: !جميل جدًا، حبيبتي! نحن نشكل فريقًا ممتازًا" },
+      { "fr": "La mère: La pâte est prête ! Maintenant, nous pouvons tout assembler.", "ar": "الأم: !العجينة جاهزة! الآن، يمكننا تجميع كل شيء" }
+    ]
+  }
+]

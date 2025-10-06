@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Podcast for you</title>
+    <style>
+        /* --- VARIABLES ET THÈME DE BASE --- */
+        :root {
+            --main-color: #007aff;
+            --main-color-transparent: rgba(0, 122, 255, 0.15);
+            --bg-color: #f4f4f9;
+            --text-color: #1d1d1f;
+            --card-bg-color: #ffffff;
+            --border-color: #d1d1d6;
+            --header-footer-bg: #ffffff;
+            --icon-color: #555;
+            --icon-active-color: var(--main-color);
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --font-size: 16px;
+            --success-color: #34c759;
+            --error-color: #ff3b30;
+            --footer-height: 80px;
+            --control-panel-height: 90px;
+        }
+
+        .dark-mode {
+            --bg-color: #121212;
+            --text-color: #e1e1e3;
+            --card-bg-color: #1e1e1e;
+            --border-color: #3a3a3c;
+            --header-footer-bg: #1e1e1e;
+            --icon-color: #aaa;
+        }
+
+        /* --- RÉINITIALISATION ET STYLES GLOBAUX --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden; /* Empêche le défilement du body */
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: var(--font-size);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex-grow: 1;
+            overflow-y: auto; /* Le défilement se fait ici */
+            padding: 70px 15px 20px 15px;
+            padding-bottom: calc(var(--footer-height) + var(--control-panel-height) + 20px);
+        }
+
+        /* --- ICÔNES SVG --- */
+        .icon {
+            width: 24px;
+            height: 24px;
+            stroke-width: 1.5;
+            fill: none;
+            stroke: currentColor;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .icon-fill {
+            fill: currentColor;
+            stroke: none;
+        }
+
+        /* --- EN-TÊTE (BARRE SUPÉRIEURE) --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: var(--header-footer-bg);
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            height: 60px;
+            gap: 15px;
+            flex-shrink: 0;
+            transition: justify-content 0.3s ease;
+        }
+
+        .settings-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--icon-color);
+            position: relative;
+            padding: 5px;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        .settings-btn:hover {
+            color: var(--icon-active-color);
+        }
+        #color-picker {
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        /* --- BARRE DE RECHERCHE (MODIFIÉ) --- */
+        .search-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            transition: flex-grow 0.3s ease;
+        }
+        #search-btn {
+            padding: 5px;
+        }
+        #search-input {
+            width: 0;
+            padding: 8px 0;
+            border: none;
+            border-bottom: 2px solid var(--main-color);
+            background-color: transparent;
+            color: var(--text-color);
+            outline: none;
+            transition: all 0.3s ease-in-out;
+            font-size: 1em;
+            opacity: 0;
+            visibility: hidden;
+        }
+        #search-results {
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90vw;
+            max-width: 500px;
+            max-height: 300px;
+            overflow-y: auto;
+            background-color: var(--card-bg-color);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            z-index: 1100;
+            display: none;
+        }
+
+        /* NOUVEAUX STYLES POUR LA RECHERCHE ACTIVE */
+        header.search-active {
+            justify-content: flex-start;
+            gap: 5px;
+        }
+        header.search-active .search-container {
+            flex-grow: 1;
+        }
+        header.search-active #search-input {
+            width: 100%;
+            opacity: 1;
+            visibility: visible;
+            padding: 8px 10px;
+        }
+        header.search-active .header-action-icon {
+            opacity: 0;
+            transform: scale(0.5);
+            pointer-events: none;
+            width: 0;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .search-result-item {
+            padding: 12px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.95em;
+        }
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+        .search-result-item:hover {
+            background-color: var(--main-color-transparent);
+        }
+
+        /* --- PIED DE PAGE (BARRE DE NAVIGATION) --- */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: var(--footer-height);
+            background-color: var(--header-footer-bg);
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+            flex-shrink: 0;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: var(--icon-color);
+            font-size: 12px;
+            font-weight: 500;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        .nav-btn.active {
+            color: var(--icon-active-color);
+        }
+        .nav-btn.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* --- VUES PRINCIPALES --- */
+        .view {
+            display: none;
+        }
+        .view.active {
+            display: block;
+        }
+
+        /* --- VUE LISTE --- */
+        .list-menu {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            background-color: var(--card-bg-color);
+            padding: 8px;
+            border-radius: 25px;
+            border: 1px solid var(--border-color);
+        }
+        .list-menu-btn {
+            padding: 8px 18px;
+            border: none;
+            background-color: transparent;
+            color: var(--text-color);
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .list-menu-btn.active {
+            background-color: var(--main-color);
+            color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .podcast-item {
+            background-color: var(--card-bg-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            border: 1px solid var(--border-color);
+        }
+        .podcast-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+        }
+        .podcast-item h2 {
+            font-size: 1.4em;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+        .podcast-item p {
+            font-size: 0.95em;
+            color: #888;
+        }
+        .dark-mode .podcast-item p {
+            color: #aaa;
+        }
+        .unread-indicator {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 10px;
+            height: 10px;
+            background-color: var(--error-color);
+            border-radius: 50%;
+        }
+
+        /* --- VUE ÉCOUTE --- */
+        #ecoute-view .content-container {
+            padding: 20px;
+            background: var(--card-bg-color);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        #ecoute-view .podcast-text-display {
+            font-size: 1.2em;
+            line-height: 1.8;
+        }
+        #ecoute-view .podcast-text-display span.word {
+            transition: background-color 0.2s, color 0.2s;
+            border-radius: 3px;
+            padding: 0 2px;
+            margin: 0 -2px; /* Compense le padding pour ne pas créer d'espace */
+            cursor: pointer;
+        }
+        #ecoute-view .podcast-text-display span.current-word {
+            background-color: var(--main-color);
+            color: white !important;
+        }
+        .translation-toggle {
+            background-color: var(--main-color-transparent);
+            color: var(--main-color);
+            border: none;
+            border-radius: 4px;
+            padding: 0px 6px;
+            font-size: 0.7em;
+            font-weight: bold;
+            margin-left: 8px;
+            cursor: pointer;
+            vertical-align: middle;
+        }
+        .arabic-translation {
+            display: none;
+            direction: rtl;
+            text-align: right;
+            font-size: 1.1em;
+            background-color: var(--main-color-transparent);
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 8px;
+            color: var(--text-color);
+            border-right: 3px solid var(--main-color);
+        }
+
+        /* --- VUE SPEAKING (dans la vue ÉCOUTE) --- */
+        .speaking-section {
+            margin-bottom: 25px;
+        }
+        .speaking-section h3 {
+            font-size: 1.3em;
+            color: var(--main-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+        }
+        .speaking-item {
+            background-color: var(--main-color-transparent);
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .speaking-item:hover {
+            background-color: rgba(0, 122, 255, 0.25);
+        }
+        .speaking-item .fr-text {
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+        .speaking-item .trans-text {
+            font-size: 0.9em;
+            color: #888;
+            margin-top: 4px;
+        }
+        .dark-mode .speaking-item .trans-text {
+            color: #aaa;
+        }
+        
+        /* --- PANNEAU DE CONTRÔLE FIXE --- */
+        .control-panel {
+            position: fixed;
+            bottom: var(--footer-height); /* Au-dessus du footer */
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: var(--control-panel-height);
+            padding: 15px;
+            background-color: var(--header-footer-bg);
+            border-top: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            z-index: 999; /* Juste en dessous du footer et header */
+            flex-shrink: 0;
+        }
+
+        .control-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--icon-color);
+        }
+        .control-btn:hover {
+            color: var(--icon-active-color);
+        }
+        .control-btn .icon {
+            width: 32px;
+            height: 32px;
+        }
+        #play-pause-btn .icon, #start-mic-btn .icon {
+            width: 48px;
+            height: 48px;
+        }
+
+        .speed-control {
+            position: relative;
+        }
+        .speed-options {
+            display: none;
+            position: absolute;
+            bottom: 120%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--card-bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 5px;
+            z-index: 10;
+        }
+        .speed-options button {
+            background: none;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            color: var(--text-color);
+            width: 100%;
+            text-align: center;
+        }
+        .speed-options button.active {
+            background-color: var(--main-color-transparent);
+            font-weight: bold;
+            color: var(--main-color);
+        }
+
+        /* --- VUE LIRE --- */
+        #lire-view .practice-area {
+            text-align: center;
+        }
+        #lire-view .mode-selector {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .mode-selector button {
+            padding: 10px 20px;
+            border: 1px solid var(--border-color);
+            background-color: var(--card-bg-color);
+            color: var(--text-color);
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        .mode-selector button.active {
+            background-color: var(--main-color);
+            color: white;
+            border-color: var(--main-color);
+        }
+        #practice-text-container {
+            min-height: 100px;
+            padding: 20px;
+            background: var(--card-bg-color);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            line-height: 1.8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap; /* Permet aux mots de passer à la ligne */
+            gap: 8px; /* Espace entre les mots corrigés */
+        }
+        #practice-text-container span {
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+        #practice-text-container span.correct { background-color: var(--success-color); color: white; }
+        #practice-text-container span.incorrect { background-color: var(--error-color); color: white; }
+        #recognition-status {
+            margin-top: 10px;
+            font-style: italic;
+            color: #888;
+            min-height: 1.2em; /* Empêche le saut de layout */
+        }
+        #score-display {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        /* --- MODALES (GÉNÉRIQUE) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        .modal-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background: var(--card-bg-color);
+            padding: 25px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transform: scale(0.95);
+            transition: transform 0.3s;
+        }
+        .modal-overlay.visible .modal-content {
+            transform: scale(1);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+        .modal-header h2 {
+            font-size: 1.5em;
+        }
+        .modal-close-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--icon-color);
+        }
+        .modal-body {
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+        .modal-footer {
+            border-top: 1px solid var(--border-color);
+            padding-top: 15px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #888;
+        }
+        .modal-footer a {
+            color: var(--main-color);
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        /* --- MODALE HISTORIQUE SPÉCIFIQUE --- */
+        #history-list {
+            list-style: none;
+        }
+        .history-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 5px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .history-item:last-child {
+            border-bottom: none;
+        }
+        .history-word {
+            font-weight: 600;
+            font-size: 1.1em;
+            flex-grow: 1;
+        }
+        .history-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .history-actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--icon-color);
+        }
+        .history-actions button:hover {
+            color: var(--icon-active-color);
+        }
+        .history-actions .delete-btn:hover {
+            color: var(--error-color);
+        }
+        .favorite-btn.favorited {
+            color: var(--error-color);
+        }
+        .favorite-btn.favorited .icon-heart {
+            fill: currentColor;
+        }
+        #no-history-message {
+            text-align: center;
+            padding: 40px 0;
+            color: #888;
+        }
+
+        /* --- TOAST NOTIFICATION --- */
+        #toast-notification {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0,0,0,0.7);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            z-index: 3000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, bottom 0.3s;
+        }
+        #toast-notification.show {
+            bottom: 120px;
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- DÉFINITION DES ICÔNES SVG -->
+    <svg width="0" height="0" style="display:none;">
+        <symbol id="icon-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></g></symbol>
+        <symbol id="icon-moon" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3a6 6 0 0 0 9 9a9 9 0 1 1-9-9Z"/></symbol>
+        <symbol id="icon-abc" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 20h4L10 4H6zm-1-5h6m7 5l-3-8l-3 8m-2-2h8"/></symbol>
+        <symbol id="icon-palette" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 1 1 0-18a9 9 0 0 1 0 18z"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.5 10.5a2.5 2.5 0 1 1 5 0a2.5 2.5 0 0 1-5 0m-2-3a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0m10 0a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0m-2 8a2 2 0 1 1 4 0a2 2 0 0 1-4 0"/></symbol>
+        <symbol id="icon-brain" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5a4.5 4.5 0 0 1 4.5 4.5c0 1.51-1.005 2.73-2.375 3.427A4.5 4.5 0 0 1 12 17.5a4.5 4.5 0 0 1-4.5-4.5c0-1.51 1.005-2.73 2.375-3.427A4.5 4.5 0 0 1 12 5m0-3v3m-3.5 1.5L6 5m7 1.5l2.5-1.5M12 17.5V22m-3-3.5l-2 2.5m8 0l2-2.5m-8.5-6H5a3 3 0 0 0-3 3v2a3 3 0 0 0 3 3h.5m10.5-8H19a3 3 0 0 1 3 3v2a3 3 0 0 1-3 3h-.5"/></symbol>
+        <symbol id="icon-list" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 4h10m-10 6h10m-10 6h10M5 4v.01M5 10v.01M5 16v.01"/></symbol>
+        <symbol id="icon-headphones" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12a8 8 0 0 1 16 0v7a2 2 0 0 1-2 2h-2v-4h-4v4H6a2 2 0 0 1-2-2z"/></symbol>
+        <symbol id="icon-book" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0M3 6v13m9-13v13m9-13v13"/></symbol>
+        <symbol id="icon-copy" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 8a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2m-4-4H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2"/></symbol>
+        <symbol id="icon-eye" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 12s3-7 10-7s10 7 10 7s-3 7-10 7s-10-7-10-7"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></symbol>
+        <symbol id="icon-book-open" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></symbol>
+        <symbol id="icon-heart" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.5 12.572L12 20l-7.5-7.428A5 5 0 1 1 12 6.006a5 5 0 1 1 7.5 6.566"/></symbol>
+        <symbol id="icon-play" viewBox="0 0 24 24"><path fill="currentColor" d="M7 4v16l13-8z"/></symbol>
+        <symbol id="icon-pause" viewBox="0 0 24 24"><path fill="currentColor" d="M6 4h4v16H6zm8 0h4v16h-4z"/></symbol>
+        <symbol id="icon-next" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 18l6-6l-6-6m7 12V6"/></symbol>
+        <symbol id="icon-prev" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m17 18l-6-6l6-6M10 6v12"/></symbol>
+        <symbol id="icon-restart" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 11A8.1 8.1 0 0 0 4.5 9M4 5v4h4m16 4a8.1 8.1 0 0 1-15.5 2m-2 4v-4h4"/></symbol>
+        <symbol id="icon-speed" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m12 12l-8-4l8-4v8zm0 0l8 4l-8 4v-8z"/></symbol>
+        <symbol id="icon-close" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 6L6 18M6 6l12 12"/></symbol>
+        <symbol id="icon-mic" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3m-7 9a8 8 0 0 0 16 0M19 10v2m-6 11v-4"/></symbol>
+        <symbol id="icon-listen" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 0 1 0 7.072M2 12h3m14 0h3m-8.465-3.535a5 5 0 0 0 0 7.072M6 12a6 6 0 1 0 12 0a6 6 0 0 0-12 0"/></symbol>
+        <symbol id="icon-trash" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16m-2 0l-1-4H7L6 7m-2 1h18v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+        <symbol id="icon-search" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0-14 0m11 11l-4-4"/></symbol>
+        <symbol id="icon-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4m0-4h.01"/></g></symbol>
+    </svg>
+
+    <!-- EN-TÊTE (MODIFIÉ) -->
+    <header>
+        <div class="search-container">
+            <button class="settings-btn" id="search-btn" aria-label="Rechercher">
+                <svg class="icon"><use href="#icon-search"></use></svg>
+            </button>
+            <input type="text" id="search-input" placeholder="Rechercher un titre...">
+            <div id="search-results"></div>
+        </div>
+        <button class="settings-btn header-action-icon" id="info-recap-btn" aria-label="Afficher l'aide">
+            <svg class="icon"><use href="#icon-info"></use></svg>
+        </button>
+        <button class="settings-btn header-action-icon" id="theme-toggle-btn" aria-label="Changer de thème">
+            <svg class="icon" id="theme-icon"><use href="#icon-sun"></use></svg>
+        </button>
+        <button class="settings-btn header-action-icon" id="font-size-btn" aria-label="Changer la taille de police">
+            <svg class="icon"><use href="#icon-abc"></use></svg>
+        </button>
+        <button class="settings-btn header-action-icon" aria-label="Changer la couleur principale">
+            <svg class="icon"><use href="#icon-palette"></use></svg>
+            <input type="color" id="color-picker" value="#007aff">
+        </button>
+        <button class="settings-btn header-action-icon" id="history-btn" aria-label="Voir l'historique des mots">
+            <svg class="icon"><use href="#icon-brain"></use></svg>
+        </button>
+    </header>
+
+    <!-- CONTENU PRINCIPAL -->
+    <main>
+        <!-- VUE LISTE -->
+        <section id="liste-view" class="view active">
+            <div class="list-menu" id="list-menu">
+                <button class="list-menu-btn active" data-mode="podcast">البودكاست</button>
+                <button class="list-menu-btn" data-mode="lecture">النصوص</button>
+                <button class="list-menu-btn" data-mode="speaking">كلمة للتحدث</button>
+            </div>
+            <div id="podcast-list"></div>
+        </section>
+
+        <!-- VUE ÉCOUTE -->
+        <section id="ecoute-view" class="view">
+            <h1 id="ecoute-title"></h1>
+            <div class="content-container">
+                <div id="ecoute-text-display" class="podcast-text-display"></div>
+            </div>
+        </section>
+
+        <!-- VUE LIRE -->
+        <section id="lire-view" class="view">
+            <h1 id="lire-title"></h1>
+            <div class="practice-area">
+                <div class="mode-selector">
+                    <button id="mode-word" class="active">كلمة بكلمة</button>
+                    <button id="mode-sentence">جملة بجملة</button>
+                </div>
+                <div id="practice-text-container"></div>
+                <div id="recognition-status">انقر على الميكروفون ثم اقرأ الكلمة</div>
+                <div id="score-display"></div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- PANNEAUX DE CONTRÔLE -->
+    <div id="ecoute-controls" class="control-panel" style="display: none;">
+        <button class="control-btn" id="ecoute-prev-btn" aria-label="Phrase précédente">
+            <svg class="icon"><use href="#icon-prev"></use></svg>
+        </button>
+        <button class="control-btn" id="ecoute-restart-btn" aria-label="Recommencer le texte">
+            <svg class="icon"><use href="#icon-restart"></use></svg>
+        </button>
+        <button class="control-btn" id="play-pause-btn" aria-label="Lecture/Pause">
+            <svg class="icon icon-fill" id="play-pause-icon"><use href="#icon-play"></use></svg>
+        </button>
+        <div class="speed-control">
+            <button class="control-btn" id="speed-btn" aria-label="Vitesse de lecture">
+                <svg class="icon"><use href="#icon-speed"></use></svg>
+            </button>
+            <div class="speed-options" id="speed-options">
+                <button data-speed="0.2">0.2x</button>
+                <button data-speed="0.5">0.5x</button>
+                <button data-speed="1" class="active">1x</button>
+                <button data-speed="1.5">1.5x</button>
+                <button data-speed="2">2x</button>
+            </div>
+        </div>
+        <button class="control-btn" id="ecoute-next-btn" aria-label="Phrase suivante">
+            <svg class="icon"><use href="#icon-next"></use></svg>
+        </button>
+    </div>
+    
+    <div id="lire-controls" class="control-panel" style="display: none;">
+        <button class="control-btn" id="lire-prev-btn" aria-label="Précédent">
+            <svg class="icon"><use href="#icon-prev"></use></svg>
+        </button>
+        <button class="control-btn" id="lire-restart-btn" aria-label="Réessayer">
+            <svg class="icon"><use href="#icon-restart"></use></svg>
+        </button>
+         <button class="control-btn" id="start-mic-btn" aria-label="Commencer l'enregistrement">
+            <svg class="icon"><use href="#icon-mic"></use></svg>
+        </button>
+        <button class="control-btn" id="listen-correct-btn" aria-label="Écouter la prononciation">
+            <svg class="icon"><use href="#icon-listen"></use></svg>
+        </button>
+        <button class="control-btn" id="lire-next-btn" aria-label="Suivant">
+            <svg class="icon"><use href="#icon-next"></use></svg>
+        </button>
+    </div>
+
+
+    <!-- PIED DE PAGE (NAVIGATION) -->
+    <footer>
+        <button class="nav-btn active" data-view="liste-view" aria-label="Liste">
+            <svg class="icon"><use href="#icon-list"></use></svg>
+            <span>لائحة</span>
+        </button>
+        <button class="nav-btn" data-view="ecoute-view" aria-label="Écouter">
+            <svg class="icon"><use href="#icon-headphones"></use></svg>
+            <span>يستمع</span>
+        </button>
+        <button class="nav-btn" data-view="lire-view" aria-label="Lire">
+            <svg class="icon"><use href="#icon-book"></use></svg>
+            <span>يقرأ</span>
+        </button>
+    </footer>
+
+    <!-- MODALE HISTORIQUE -->
+    <div id="history-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>مفرداتي</h2>
+                <button class="modal-close-btn" aria-label="Fermer">
+                    <svg class="icon"><use href="#icon-close"></use></svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul id="history-list">
+                    <!-- Les mots seront injectés ici par JS -->
+                </ul>
+                <div id="no-history-message">لم يتم حفظ أي كلمات. انقر نقرًا مزدوجًا على أي كلمة في "استماع" لإضافتها هنا. يمكنك نسخها أو حذفها أو إضافتها إلى المفضلة.</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- MODALE D'INFORMATION (pour LIS MOI) -->
+    <div id="info-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="info-modal-title">LIS MOI</h2>
+                <button id="info-modal-close-btn" class="modal-close-btn" aria-label="Fermer">
+                    <svg class="icon"><use href="#icon-close"></use></svg>
+                </button>
+            </div>
+            <div class="modal-body" id="info-modal-body">
+                <!-- Le contenu sera injecté par JS -->
+            </div>
+            <div class="modal-footer">
+                © Created by <a id="copyright-link">Philippe Lelo</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast-notification"></div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- SÉLECTEURS DOM ---
+        const DOMElements = {
+            header: document.querySelector('header'), // Ajout de l'en-tête
+            body: document.body,
+            main: document.querySelector('main'),
+            views: document.querySelectorAll('.view'),
+            navBtns: document.querySelectorAll('.nav-btn'),
+            listMenu: document.getElementById('list-menu'),
+            podcastList: document.getElementById('podcast-list'),
+            ecoute: {
+                view: document.getElementById('ecoute-view'),
+                title: document.getElementById('ecoute-title'),
+                textDisplay: document.getElementById('ecoute-text-display'),
+                controls: document.getElementById('ecoute-controls'),
+                playPauseBtn: document.getElementById('play-pause-btn'),
+                playPauseIcon: document.getElementById('play-pause-icon'),
+                prevBtn: document.getElementById('ecoute-prev-btn'),
+                nextBtn: document.getElementById('ecoute-next-btn'),
+                restartBtn: document.getElementById('ecoute-restart-btn'),
+                speedBtn: document.getElementById('speed-btn'),
+                speedOptions: document.getElementById('speed-options'),
+            },
+            lire: {
+                view: document.getElementById('lire-view'),
+                title: document.getElementById('lire-title'),
+                controls: document.getElementById('lire-controls'),
+                modeWordBtn: document.getElementById('mode-word'),
+                modeSentenceBtn: document.getElementById('mode-sentence'),
+                practiceContainer: document.getElementById('practice-text-container'),
+                status: document.getElementById('recognition-status'),
+                score: document.getElementById('score-display'),
+                micBtn: document.getElementById('start-mic-btn'),
+                listenBtn: document.getElementById('listen-correct-btn'),
+                prevBtn: document.getElementById('lire-prev-btn'),
+                nextBtn: document.getElementById('lire-next-btn'),
+                restartBtn: document.getElementById('lire-restart-btn'),
+                navBtn: document.querySelector('.nav-btn[data-view="lire-view"]'),
+            },
+            settings: {
+                themeToggleBtn: document.getElementById('theme-toggle-btn'),
+                themeIcon: document.getElementById('theme-icon'),
+                fontSizeBtn: document.getElementById('font-size-btn'),
+                colorPicker: document.getElementById('color-picker'),
+                historyBtn: document.getElementById('history-btn'),
+                searchContainer: document.querySelector('.search-container'), // Ajout du conteneur de recherche
+                searchBtn: document.getElementById('search-btn'),
+                searchInput: document.getElementById('search-input'),
+                searchResults: document.getElementById('search-results'),
+                infoRecapBtn: document.getElementById('info-recap-btn'),
+            },
+            historyModal: {
+                overlay: document.getElementById('history-modal'),
+                closeBtn: document.querySelector('#history-modal .modal-close-btn'),
+                list: document.getElementById('history-list'),
+                noHistoryMsg: document.getElementById('no-history-message'),
+            },
+            infoModal: {
+                overlay: document.getElementById('info-modal'),
+                title: document.getElementById('info-modal-title'),
+                body: document.getElementById('info-modal-body'),
+                closeBtn: document.getElementById('info-modal-close-btn'),
+            },
+            toast: document.getElementById('toast-notification'),
+            copyrightLink: document.getElementById('copyright-link'),
+        };
+
+        // --- ÉTAT DE L'APPLICATION ---
+        let state = {
+            allData: [],
+            currentDataMode: 'podcast', // 'podcast', 'lecture', 'speaking'
+            currentPodcast: null,
+            playback: {
+                sentenceData: [],
+                sentenceOffsets: [],
+                currentSentenceIndex: 0,
+                isContinuousPlay: false,
+            },
+            playbackRate: 1,
+            fontSizeLevel: 2,
+            isDarkMode: false,
+            mainColor: '#007aff',
+            vocabulary: [],
+            readPodcasts: [],
+            practice: {
+                mode: 'word',
+                currentIndex: 0,
+                sentences: [],
+                words: [],
+            }
+        };
+
+        // --- API WEB SPEECH ---
+        const synth = window.speechSynthesis;
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        let recognition = SpeechRecognition ? new SpeechRecognition() : null;
+        let recognitionTimer = null;
+        let speakingTranslationTimeout = null; // NOUVEAU: Pour gérer le délai de traduction
+
+        // --- INITIALISATION ---
+        function init() {
+            loadState();
+            setupEventListeners();
+            loadData(state.currentDataMode);
+            updateTheme();
+            updateMainColor(state.mainColor);
+            updateFontSize();
+            if (recognition) {
+                recognition.continuous = true;
+                recognition.interimResults = true;
+            } else {
+                DOMElements.lire.navBtn.style.display = 'none';
+                console.warn("Speech Recognition API non supportée sur ce navigateur.");
+            }
+            
+            // Afficher la modale de bienvenue si c'est la première visite
+            if (!localStorage.getItem('hasSeenWelcomeModal')) {
+                showInfoModal(1, true);
+            }
+        }
+
+        // --- GESTION DE L'ÉTAT LOCAL ---
+        function saveState() {
+            const appState = {
+                fontSizeLevel: state.fontSizeLevel,
+                isDarkMode: state.isDarkMode,
+                mainColor: state.mainColor,
+                vocabulary: state.vocabulary,
+                readPodcasts: state.readPodcasts,
+                currentDataMode: state.currentDataMode,
+            };
+            localStorage.setItem('podcastReaderState', JSON.stringify(appState));
+        }
+
+        function loadState() {
+            const savedState = localStorage.getItem('podcastReaderState');
+            if (savedState) {
+                const parsedState = JSON.parse(savedState);
+                state = { ...state, ...parsedState };
+            }
+        }
+
+        // --- GESTION DES VUES ---
+        function navigateTo(viewId) {
+            if (!state.currentPodcast && (viewId === 'ecoute-view' || viewId === 'lire-view')) {
+                showToast("الرجاء تحديد عنصر من القائمة أولاً.");
+                return;
+            }
+            
+            synth.cancel();
+            if (recognition && recognition.abort) recognition.abort();
+            updatePlayPauseIcon('play');
+
+            document.querySelectorAll('.control-panel').forEach(p => p.style.display = 'none');
+            
+            DOMElements.views.forEach(view => view.classList.remove('active'));
+            const newView = document.getElementById(viewId);
+            newView.classList.add('active');
+
+            // NOUVEAU: Mettre à jour la liste si on retourne à la vue liste
+            if (viewId === 'liste-view') {
+                renderDataList();
+            }
+
+            const isSpeakingMode = state.currentPodcast && state.currentPodcast.type === 'speaking';
+            
+            DOMElements.lire.navBtn.classList.toggle('hidden', isSpeakingMode);
+            DOMElements.ecoute.controls.style.display = (viewId === 'ecoute-view' && !isSpeakingMode) ? 'flex' : 'none';
+            DOMElements.lire.controls.style.display = (viewId === 'lire-view' && !isSpeakingMode) ? 'flex' : 'none';
+
+            DOMElements.navBtns.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.view === viewId);
+            });
+
+            DOMElements.main.scrollTop = 0;
+        }
+
+        // --- CHARGEMENT ET AFFICHAGE DES DONNÉES ---
+        async function loadData(mode) {
+            state.currentDataMode = mode;
+            let data;
+            if (mode === 'speaking') {
+                data = [{"id":"spk_01","type":"speaking","title":"Speaking 1","description":"Verbes d'action et questions de base.","lang":"fr-FR","words_to_memorise":[{"fr":"travailler","trans":"to work"},{"fr":"Dormir","trans":"to sleep"},{"fr":"Marcher","trans":"to walk"},{"fr":"Manger","trans":"to eat"},{"fr":"Boire","trans":"to drink"}],"words_used_while_speaking":[{"fr":"Qui est là ? / il y a quelqu'un ?","trans":"Who's there? / is someone there?"},{"fr":"Peux-tu m'aider ?","trans":"Can you help me ?"},{"fr":"Je veux...","trans":"i want..."}]},{"id":"spk_02","type":"speaking","title":"Speaking 2","description":"Exprimer la capacité et la connaissance.","lang":"fr-FR","words_to_memorise":[{"fr":"Connaître","trans":"to know"},{"fr":"Pouvoir","trans":"can"},{"fr":"Savoir","trans":"to know"},{"fr":"Chanter","trans":"to sing"},{"fr":"Parler","trans":"to speak"}],"words_used_while_speaking":[{"fr":"... n'est pas un problème","trans":"... isn't a problem"},{"fr":"Je peux...","trans":"I can..."},{"fr":"Je vais.../ je veux...","trans":"I'm going to.../ i want to..."}]},{"id":"spk_03","type":"speaking","title":"Speaking 3","description":"Mouvement, émotions et réconfort.","lang":"fr-FR","words_to_memorise":[{"fr":"partir","trans":"to go"},{"fr":"venir","trans":"to come"},{"fr":"adorer/aimer/apprécier","trans":"to like/ to love"},{"fr":"écouter","trans":"to listen"},{"fr":"courage !","trans":"Courage!"}],"words_used_while_speaking":[{"fr":"Quel est le problème ?","trans":"What’s the problem ?"},{"fr":"Dis-moi","trans":"tell me"},{"fr":"Ne t'inquiète pas","trans":"don't worry"},{"fr":"tu as raison","trans":"you're right"}]},{"id":"spk_04","type":"speaking","title":"Speaking 4","description":"Actions et expressions de sentiment.","lang":"fr-FR","words_to_memorise":[{"fr":"Courir","trans":"to run"},{"fr":"Sentir","trans":"to feel"},{"fr":"Pleurer","trans":"to cry"},{"fr":"Rire","trans":"to laugh"},{"fr":"Regarder /voir","trans":"to see"}],"words_used_while_speaking":[{"fr":"Avec plaisir !","trans":"With pleasure!"},{"fr":"C'est drôle/ c'est amusant!","trans":"it's funny!"},{"fr":"C'est bizarre","trans":"it's weird!"},{"fr":"C'est ennuyant","trans":"it's boring!"}]},{"id":"spk_05","type":"speaking","title":"Speaking 5","description":"Loisirs et expressions d'étonnement.","lang":"fr-FR","words_to_memorise":[{"fr":"Lire","trans":"to read"},{"fr":"Voyager","trans":"to travel"},{"fr":"S'habiller/ porter","trans":"to wear"},{"fr":"Écouter","trans":"to listen"},{"fr":"Chanter","trans":"sing"}],"words_used_while_speaking":[{"fr":"Quelle surprise !","trans":"What a surprise!"},{"fr":"C’est magnifique !","trans":"It’s wonderful!"},{"fr":"C’est incroyable !","trans":"It’s unbelievable!"}]},{"id":"spk_06","type":"speaking","title":"Speaking 6 (Dîner)","description":"Vocabulaire et expressions pour un dîner.","lang":"fr-FR","words_to_memorise":[{"fr":"inviter","trans":"يدعو"},{"fr":"préparer","trans":"يُحضِّر"},{"fr":"goûter","trans":"يتذوق"},{"fr":"raconter","trans":"يروي / يحكي"},{"fr":"santé !","trans":"بصحتك! / cheers!"}],"words_used_while_speaking":[{"fr":"Qu'est-ce que tu as préparé ?","trans":"ماذا أعددت؟"},{"fr":"Prends place !","trans":"تفضل، اجلس / تفضلي، اجلسي"},{"fr":"Volontiers !","trans":"بكل تأكيد! / بكل سرور"}]},{"id":"spk_07","type":"speaking","title":"Speaking 7 (Marché)","description":"Vocabulaire et expressions pour le marché.","lang":"fr-FR","words_to_memorise":[{"fr":"acheter","trans":"يشتري"},{"fr":"vendre","trans":"يبيع"},{"fr":"frais / fraîche","trans":"طازج"},{"fr":"combien ?","trans":"بكم؟"},{"fr":"le prix","trans":"السعر"}],"words_used_while_speaking":[{"fr":"C'est combien ?","trans":"بكم؟"},{"fr":"Je vous en prends...","trans":"سآخذ منك..."},{"fr":"C'est un plaisir !","trans":"على الرحب والسعة! / بكل سرور!"}]},{"id":"spk_08","type":"speaking","title":"Speaking 8 (Voyage)","description":"Vocabulaire et expressions pour le voyage.","lang":"fr-FR","words_to_memorise":[{"fr":"réserver","trans":"يحجز"},{"fr":"la valise","trans":"الحقيبة"},{"fr":"l'aéroport","trans":"مطار"},{"fr":"embarquer","trans":"يصعد إلى الطائرة/الباخرة"},{"fr":"bon voyage !","trans":"رحلة سعيدة!"}],"words_used_while_speaking":[{"fr":"Où sont... ?","trans":"أين...؟"},{"fr":"Tout se passe bien.","trans":"كل شيء على ما يرام."},{"fr":"À tout à l'heure !","trans":"أراك قريبًا!"}]},{"id":"spk_09","type":"speaking","title":"Speaking 9 (Santé)","description":"Vocabulaire et expressions pour la santé.","lang":"fr-FR","words_to_memorise":[{"fr":"un rendez-vous","trans":"موعد"},{"fr":"un symptôme","trans":"عَرَض"},{"fr":"une ordonnance","trans":"وصفة طبية"},{"fr":"un comprimé","trans":"حَبّة"},{"fr":"bon rétablissement !","trans":"أتمنى لك الشفاء العاجل!"}],"words_used_while_speaking":[{"fr":"Qu'est-ce qui ne va pas ?","trans":"ما هي المشكلة؟ / ما الذي لايسير على ما يرام؟"},{"fr":"Depuis quand ?","trans":"منذ متى؟"},{"fr":"Prenez soin de vous.","trans":"اعتن بنفسك."}]},{"id":"spk_10","type":"speaking","title":"Speaking 10 (Weekend)","description":"Vocabulaire et expressions pour le weekend.","lang":"fr-FR","words_to_memorise":[{"fr":"une crêpe","trans":"فطيرة"},{"fr":"un pique-nique","trans":"وجبة في الخارج"},{"fr":"un cerf-volant","trans":"طائرة ورقية"},{"fr":"le zoo","trans":"حديقة الحيوان"},{"fr":"Youpi !","trans":"ياي! - تعبير للفرح"}],"words_used_while_speaking":[{"fr":"Qu'est-ce qu'on fait ?","trans":"ماذا نفعل؟"},{"fr":"Et si on... ?","trans":"ماذا لو أننا...؟"},{"fr":"C'est une excellente idée.","trans":"هذه فكرة ممتازة."}]},{"id":"spk_11","type":"speaking","title":"Speaking 11 (École)","description":"Vocabulaire et expressions pour l'école.","lang":"fr-FR","words_to_memorise":[{"fr":"un cartable","trans":"حقيبة مدرسية"},{"fr":"une salle de classe","trans":"غرفة صف"},{"fr":"un professeur","trans":"معلم/معلمة"},{"fr":"une récréation","trans":"فسحة/استراحة"},{"fr":"un ami/une amie","trans":"صديق/صديقة"}],"words_used_while_speaking":[{"fr":"Je m'appelle...","trans":"my name is..."},{"fr":"T'inquiète pas !","trans":"Don't worry !"},{"fr":"Merci les amis !","trans":"thanks friends!"}]},{"id":"spk_12","type":"speaking","title":"Speaking 12 (Courses)","description":"Vocabulaire et expressions pour les courses.","lang":"fr-FR","words_to_memorise":[{"fr":"un caddie","trans":"عربة تسوق"},{"fr":"une liste","trans":"قائمة"},{"fr":"un rayon","trans":"قسم في المتجر"},{"fr":"la caisse","trans":"الصندوق - مكان الدفع"},{"fr":"le ticket","trans":"الفاتورة / الإيصال"}],"words_used_while_speaking":[{"fr":"Ce sera tout ?","trans":"هل هذا كل شيء؟"},{"fr":"Je paie par carte.","trans":"أدفع بالبطاقة."},{"fr":"Bonne journée !","trans":"يومًا سعيدًا!"}]},{"id":"spk_13","type":"speaking","title":"Speaking 13 (Plage)","description":"Vocabulaire et expressions pour la plage.","lang":"fr-FR","words_to_memorise":[{"fr":"une serviette","trans":"منشفة"},{"fr":"une vague","trans":"موجة"},{"fr":"nager","trans":"يسبح"},{"fr":"un coquillage","trans":"صدفة"},{"fr":"un coucher de soleil","trans":"غروب الشمس"}],"words_used_while_speaking":[{"fr":"J'ai soif.","trans":"أنا عطشان."},{"fr":"Que désirez-vous ?","trans":"ماذا تريدون؟"},{"fr":"Quelle belle fin de journée !","trans":"يا لها من نهاية جميلة لليوم!"}]},{"id":"spk_14","type":"speaking","title":"Speaking 14 (Cinéma)","description":"Vocabulaire et expressions pour le cinéma.","lang":"fr-FR","words_to_memorise":[{"fr":"une séance","trans":"جلسة / عرض"},{"fr":"un film","trans":"فيلم"},{"fr":"les bandes-annonces","trans":"إعلانات الأفلام"},{"fr":"applaudir","trans":"يصفق"},{"fr":"un avis","trans":"رأي"}],"words_used_while_speaking":[{"fr":"Lorsque que...","trans":"When..."},{"fr":"Tant que","trans":"as long as"},{"fr":"Dès que","trans":"as soon as"}]},{"id":"spk_15","type":"speaking","title":"Speaking 15 (Santé 2)","description":"Vocabulaire et expressions sur la santé.","lang":"fr-FR","words_to_memorise":[{"fr":"un rendez-vous","trans":"موعد"},{"fr":"un symptôme","trans":"عَرَض"},{"fr":"une ordonnance","trans":"روشتة / وصفة طبية"},{"fr":"un médicament","trans":"دواء"},{"fr":"se reposer","trans":"يرتاح"}],"words_used_while_speaking":[{"fr":"Qu'est-ce qui ne va pas ?","trans":"ما هي المشكلة؟ / ما الأمر؟"},{"fr":"J'ai mal à...","trans":"أعاني من ألم في..."},{"fr":"Prenez soin de vous !","trans":"اعتن بنفسك!"}]},{"id":"spk_16","type":"speaking","title":"Speaking 16 (Cuisine)","description":"Vocabulaire et expressions pour la cuisine.","lang":"fr-FR","words_to_memorise":[{"fr":"une recette","trans":"وصفة"},{"fr":"couper","trans":"يقطع"},{"fr":"mélanger","trans":"يخلط"},{"fr":"cuire","trans":"يطبخ / يخبز"},{"fr":"déguster","trans":"يتذوق / يستمتع بالأكل"}],"words_used_while_speaking":[{"fr":"Peux-tu me passer... ?","trans":"هل يمكنك أن تمرري لي...؟"},{"fr":"Tu veux que je... ?","trans":"هل تريد أن...؟"},{"fr":"C'est beau, n'est-ce pas ?", "trans":"إنه جميل، أليس كذلك؟"}]}];
+            } else {
+                let fileName = mode === 'lecture' ? 'Lecture.json' : 'podcasts.json';
+                try {
+                    const response = await fetch(fileName);
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    data = await response.json();
+                } catch (error) {
+                    console.error(`Impossible de charger ${fileName}:`, error);
+                    DOMElements.podcastList.innerHTML = `<p>Erreur lors du chargement des données. Assurez-vous que le fichier '${fileName}' est présent.</p>`;
+                    return;
+                }
+            }
+            
+            // Fusionner toutes les données pour la recherche
+            const podcastResponse = await fetch('podcasts.json');
+            const lectureResponse = await fetch('Lecture.json');
+            const podcastData = await podcastResponse.json();
+            const lectureData = await lectureResponse.json();
+            const speakingData = [{"id":"spk_01","type":"speaking","title":"Speaking 1","description":"Verbes d'action et questions de base.","lang":"fr-FR","words_to_memorise":[{"fr":"travailler","trans":"to work"},{"fr":"Dormir","trans":"to sleep"},{"fr":"Marcher","trans":"to walk"},{"fr":"Manger","trans":"to eat"},{"fr":"Boire","trans":"to drink"}],"words_used_while_speaking":[{"fr":"Qui est là ? / il y a quelqu'un ?","trans":"Who's there? / is someone there?"},{"fr":"Peux-tu m'aider ?","trans":"Can you help me ?"},{"fr":"Je veux...","trans":"i want..."}]},{"id":"spk_02","type":"speaking","title":"Speaking 2","description":"Exprimer la capacité et la connaissance.","lang":"fr-FR","words_to_memorise":[{"fr":"Connaître","trans":"to know"},{"fr":"Pouvoir","trans":"can"},{"fr":"Savoir","trans":"to know"},{"fr":"Chanter","trans":"to sing"},{"fr":"Parler","trans":"to speak"}],"words_used_while_speaking":[{"fr":"... n'est pas un problème","trans":"... isn't a problem"},{"fr":"Je peux...","trans":"I can..."},{"fr":"Je vais.../ je veux...","trans":"I'm going to.../ i want to..."}]},{"id":"spk_03","type":"speaking","title":"Speaking 3","description":"Mouvement, émotions et réconfort.","lang":"fr-FR","words_to_memorise":[{"fr":"partir","trans":"to go"},{"fr":"venir","trans":"to come"},{"fr":"adorer/aimer/apprécier","trans":"to like/ to love"},{"fr":"écouter","trans":"to listen"},{"fr":"courage !","trans":"Courage!"}],"words_used_while_speaking":[{"fr":"Quel est le problème ?","trans":"What’s the problem ?"},{"fr":"Dis-moi","trans":"tell me"},{"fr":"Ne t'inquiète pas","trans":"don't worry"},{"fr":"tu as raison","trans":"you're right"}]},{"id":"spk_04","type":"speaking","title":"Speaking 4","description":"Actions et expressions de sentiment.","lang":"fr-FR","words_to_memorise":[{"fr":"Courir","trans":"to run"},{"fr":"Sentir","trans":"to feel"},{"fr":"Pleurer","trans":"to cry"},{"fr":"Rire","trans":"to laugh"},{"fr":"Regarder /voir","trans":"to see"}],"words_used_while_speaking":[{"fr":"Avec plaisir !","trans":"With pleasure!"},{"fr":"C'est drôle/ c'est amusant!","trans":"it's funny!"},{"fr":"C'est bizarre","trans":"it's weird!"},{"fr":"C'est ennuyant","trans":"it's boring!"}]},{"id":"spk_05","type":"speaking","title":"Speaking 5","description":"Loisirs et expressions d'étonnement.","lang":"fr-FR","words_to_memorise":[{"fr":"Lire","trans":"to read"},{"fr":"Voyager","trans":"to travel"},{"fr":"S'habiller/ porter","trans":"to wear"},{"fr":"Écouter","trans":"to listen"},{"fr":"Chanter","trans":"sing"}],"words_used_while_speaking":[{"fr":"Quelle surprise !","trans":"What a surprise!"},{"fr":"C’est magnifique !","trans":"It’s wonderful!"},{"fr":"C’est incroyable !","trans":"It’s unbelievable!"}]},{"id":"spk_06","type":"speaking","title":"Speaking 6 (Dîner)","description":"Vocabulaire et expressions pour un dîner.","lang":"fr-FR","words_to_memorise":[{"fr":"inviter","trans":"يدعو"},{"fr":"préparer","trans":"يُحضِّر"},{"fr":"goûter","trans":"يتذوق"},{"fr":"raconter","trans":"يروي / يحكي"},{"fr":"santé !","trans":"بصحتك! / cheers!"}],"words_used_while_speaking":[{"fr":"Qu'est-ce que tu as préparé ?","trans":"ماذا أعددت؟"},{"fr":"Prends place !","trans":"تفضل، اجلس / تفضلي، اجلسي"},{"fr":"Volontiers !","trans":"بكل تأكيد! / بكل سرور"}]},{"id":"spk_07","type":"speaking","title":"Speaking 7 (Marché)","description":"Vocabulaire et expressions pour le marché.","lang":"fr-FR","words_to_memorise":[{"fr":"acheter","trans":"يشتري"},{"fr":"vendre","trans":"يبيع"},{"fr":"frais / fraîche","trans":"طازج"},{"fr":"combien ?","trans":"بكم؟"},{"fr":"le prix","trans":"السعر"}],"words_used_while_speaking":[{"fr":"C'est combien ?","trans":"بكم؟"},{"fr":"Je vous en prends...","trans":"سآخذ منك..."},{"fr":"C'est un plaisir !","trans":"على الرحب والسعة! / بكل سرور!"}]},{"id":"spk_08","type":"speaking","title":"Speaking 8 (Voyage)","description":"Vocabulaire et expressions pour le voyage.","lang":"fr-FR","words_to_memorise":[{"fr":"réserver","trans":"يحجز"},{"fr":"la valise","trans":"الحقيبة"},{"fr":"l'aéroport","trans":"مطار"},{"fr":"embarquer","trans":"يصعد إلى الطائرة/الباخرة"},{"fr":"bon voyage !","trans":"رحلة سعيدة!"}],"words_used_while_speaking":[{"fr":"Où sont... ?","trans":"أين...؟"},{"fr":"Tout se passe bien.","trans":"كل شيء على ما يرام."},{"fr":"À tout à l'heure !","trans":"أراك قريبًا!"}]},{"id":"spk_09","type":"speaking","title":"Speaking 9 (Santé)","description":"Vocabulaire et expressions pour la santé.","lang":"fr-FR","words_to_memorise":[{"fr":"un rendez-vous","trans":"موعد"},{"fr":"un symptôme","trans":"عَرَض"},{"fr":"une ordonnance","trans":"وصفة طبية"},{"fr":"un comprimé","trans":"حَبّة"},{"fr":"bon rétablissement !","trans":"أتمنى لك الشفاء العاجل!"}],"words_used_while_speaking":[{"fr":"Qu'est-ce qui ne va pas ?","trans":"ما هي المشكلة؟ / ما الذي لايسير على ما يرام؟"},{"fr":"Depuis quand ?","trans":"منذ متى؟"},{"fr":"Prenez soin de vous.","trans":"اعتن بنفسك."}]},{"id":"spk_10","type":"speaking","title":"Speaking 10 (Weekend)","description":"Vocabulaire et expressions pour le weekend.","lang":"fr-FR","words_to_memorise":[{"fr":"une crêpe","trans":"فطيرة"},{"fr":"un pique-nique","trans":"وجبة في الخارج"},{"fr":"un cerf-volant","trans":"طائرة ورقية"},{"fr":"le zoo","trans":"حديقة الحيوان"},{"fr":"Youpi !","trans":"ياي! - تعبير للفرح"}],"words_used_while_speaking":[{"fr":"Qu'est-ce qu'on fait ?","trans":"ماذا نفعل؟"},{"fr":"Et si on... ?","trans":"ماذا لو أننا...؟"},{"fr":"C'est une excellente idée.","trans":"هذه فكرة ممتازة."}]},{"id":"spk_11","type":"speaking","title":"Speaking 11 (École)","description":"Vocabulaire et expressions pour l'école.","lang":"fr-FR","words_to_memorise":[{"fr":"un cartable","trans":"حقيبة مدرسية"},{"fr":"une salle de classe","trans":"غرفة صف"},{"fr":"un professeur","trans":"معلم/معلمة"},{"fr":"une récréation","trans":"فسحة/استراحة"},{"fr":"un ami/une amie","trans":"صديق/صديقة"}],"words_used_while_speaking":[{"fr":"Je m'appelle...","trans":"my name is..."},{"fr":"T'inquiète pas !","trans":"Don't worry !"},{"fr":"Merci les amis !","trans":"thanks friends!"}]},{"id":"spk_12","type":"speaking","title":"Speaking 12 (Courses)","description":"Vocabulaire et expressions pour les courses.","lang":"fr-FR","words_to_memorise":[{"fr":"un caddie","trans":"عربة تسوق"},{"fr":"une liste","trans":"قائمة"},{"fr":"un rayon","trans":"قسم في المتجر"},{"fr":"la caisse","trans":"الصندوق - مكان الدفع"},{"fr":"le ticket","trans":"الفاتورة / الإيصال"}],"words_used_while_speaking":[{"fr":"Ce sera tout ?","trans":"هل هذا كل شيء؟"},{"fr":"Je paie par carte.","trans":"أدفع بالبطاقة."},{"fr":"Bonne journée !","trans":"يومًا سعيدًا!"}]},{"id":"spk_13","type":"speaking","title":"Speaking 13 (Plage)","description":"Vocabulaire et expressions pour la plage.","lang":"fr-FR","words_to_memorise":[{"fr":"une serviette","trans":"منشفة"},{"fr":"une vague","trans":"موجة"},{"fr":"nager","trans":"يسبح"},{"fr":"un coquillage","trans":"صدفة"},{"fr":"un coucher de soleil","trans":"غروب الشمس"}],"words_used_while_speaking":[{"fr":"J'ai soif.","trans":"أنا عطشان."},{"fr":"Que désirez-vous ?","trans":"ماذا تريدون؟"},{"fr":"Quelle belle fin de journée !","trans":"يا لها من نهاية جميلة لليوم!"}]},{"id":"spk_14","type":"speaking","title":"Speaking 14 (Cinéma)","description":"Vocabulaire et expressions pour le cinéma.","lang":"fr-FR","words_to_memorise":[{"fr":"une séance","trans":"جلسة / عرض"},{"fr":"un film","trans":"فيلم"},{"fr":"les bandes-annonces","trans":"إعلانات الأفلام"},{"fr":"applaudir","trans":"يصفق"},{"fr":"un avis","trans":"رأي"}],"words_used_while_speaking":[{"fr":"Lorsque que...","trans":"When..."},{"fr":"Tant que","trans":"as long as"},{"fr":"Dès que","trans":"as soon as"}]},{"id":"spk_15","type":"speaking","title":"Speaking 15 (Santé 2)","description":"Vocabulaire et expressions sur la santé.","lang":"fr-FR","words_to_memorise":[{"fr":"un rendez-vous","trans":"موعد"},{"fr":"un symptôme","trans":"عَرَض"},{"fr":"une ordonnance","trans":"روشتة / وصفة طبية"},{"fr":"un médicament","trans":"دواء"},{"fr":"se reposer","trans":"يرتاح"}],"words_used_while_speaking":[{"fr":"Qu'est-ce qui ne va pas ?","trans":"ما هي المشكلة؟ / ما الأمر؟"},{"fr":"J'ai mal à...","trans":"أعاني من ألم في..."},{"fr":"Prenez soin de vous !","trans":"اعتن بنفسك!"}]},{"id":"spk_16","type":"speaking","title":"Speaking 16 (Cuisine)","description":"Vocabulaire et expressions pour la cuisine.","lang":"fr-FR","words_to_memorise":[{"fr":"une recette","trans":"وصفة"},{"fr":"couper","trans":"يقطع"},{"fr":"mélanger","trans":"يخلط"},{"fr":"cuire","trans":"يطبخ / يخبز"},{"fr":"déguster","trans":"يتذوق / يستمتع بالأكل"}],"words_used_while_speaking":[{"fr":"Peux-tu me passer... ?","trans":"هل يمكنك أن تمرري لي...؟"},{"fr":"Tu veux que je... ?","trans":"هل تريد أن...؟"},{"fr":"C'est beau, n'est-ce pas ?", "trans":"إنه جميل، أليس كذلك؟"}]}];
+            state.allData = [...podcastData, ...lectureData, ...speakingData].map(p => ({
+                ...p,
+                fullText: p.sentences ? p.sentences.map(s => s.fr).join(' ') : ''
+            }));
+
+            // Filtrer les données pour la vue actuelle
+            const currentViewData = data.map(p => ({
+                ...p,
+                fullText: p.sentences ? p.sentences.map(s => s.fr).join(' ') : ''
+            }));
+            
+            renderDataList(currentViewData);
+            
+            DOMElements.listMenu.querySelectorAll('.list-menu-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.mode === mode);
+            });
+            saveState();
+        }
+
+        function renderDataList(dataToRender) {
+            // Si aucune donnée n'est fournie, on utilise les données du mode actuel
+            if (!dataToRender) {
+                dataToRender = state.allData.filter(item => {
+                    if (state.currentDataMode === 'podcast') return item.type !== 'lecture' && item.type !== 'speaking';
+                    if (state.currentDataMode === 'lecture') return item.type === 'lecture';
+                    if (state.currentDataMode === 'speaking') return item.type === 'speaking';
+                    return false;
+                });
+            }
+
+            DOMElements.podcastList.innerHTML = '';
+            if (dataToRender.length === 0) {
+                 DOMElements.podcastList.innerHTML = '<p style="text-align:center; color: #888;">Aucun élément à afficher.</p>';
+                 return;
+            }
+            dataToRender.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'podcast-item';
+                div.dataset.id = item.id;
+                div.innerHTML = `
+                    <h2>${item.title}</h2>
+                    <p>${item.description}</p>
+                    ${!state.readPodcasts.includes(item.id) ? '<div class="unread-indicator"></div>' : ''}
+                `;
+                div.addEventListener('click', () => selectItem(item.id));
+                DOMElements.podcastList.appendChild(div);
+            });
+        }
+
+        function selectItem(id) {
+            // On cherche l'item dans TOUTES les données
+            state.currentPodcast = state.allData.find(p => p.id === id);
+            if (state.currentPodcast) {
+                if (state.currentPodcast.type === 'speaking') {
+                    setupSpeakingView();
+                } else {
+                    setupEcouteView();
+                    if (recognition) setupLireView();
+                }
+                
+                // Marquer comme lu immédiatement au clic
+                if (!state.readPodcasts.includes(state.currentPodcast.id)) {
+                    state.readPodcasts.push(state.currentPodcast.id);
+                    saveState();
+                    renderDataList(); // Rafraîchit la liste en arrière-plan
+                }
+
+                navigateTo('ecoute-view');
+            }
+        }
+
+        // --- LOGIQUE SPÉCIFIQUE AUX MODES ---
+
+        function setupSpeakingView() {
+            const item = state.currentPodcast;
+            DOMElements.ecoute.title.textContent = item.title;
+            const display = DOMElements.ecoute.textDisplay;
+            display.innerHTML = '';
+
+            const createSection = (title, data) => {
+                if (!data || data.length === 0) return;
+
+                const section = document.createElement('div');
+                section.className = 'speaking-section';
+                
+                const h3 = document.createElement('h3');
+                h3.textContent = title;
+                section.appendChild(h3);
+
+                data.forEach(entry => {
+                    const speakItem = document.createElement('div');
+                    speakItem.className = 'speaking-item';
+                    
+                    const frTextDiv = document.createElement('div');
+                    frTextDiv.className = 'fr-text';
+                    
+                    // Sépare le texte en mots tout en conservant les espaces
+                    const words = entry.fr.split(/(\s+)/);
+                    words.forEach(part => {
+                        if (part.trim() === '') {
+                            frTextDiv.appendChild(document.createTextNode(part));
+                        } else {
+                            const wordSpan = document.createElement('span');
+                            wordSpan.textContent = part;
+                            wordSpan.style.cursor = 'pointer';
+                            // Ajout de l'événement double-clic pour l'historique
+                            wordSpan.addEventListener('dblclick', (e) => {
+                                e.stopPropagation(); // Empêche le déclenchement du simple clic
+                                addWordToHistory(part.trim().toLowerCase().replace(/[.,/#!$%\^&\*;:{}=\-_`~()]/g,""));
+                            });
+                            frTextDiv.appendChild(wordSpan);
+                        }
+                    });
+
+                    const transTextDiv = document.createElement('div');
+                    transTextDiv.className = 'trans-text';
+                    transTextDiv.textContent = entry.trans;
+
+                    speakItem.appendChild(frTextDiv);
+                    speakItem.appendChild(transTextDiv);
+                    
+                    // NOUVELLE LOGIQUE DE CLIC (MODIFIÉ)
+                    speakItem.addEventListener('click', () => {
+                        // Annuler toute lecture ou timeout précédent
+                        if (speakingTranslationTimeout) clearTimeout(speakingTranslationTimeout);
+                        synth.cancel();
+
+                        // Lire le texte en français
+                        const utteranceFr = new SpeechSynthesisUtterance(entry.fr);
+                        utteranceFr.lang = item.lang;
+                        utteranceFr.rate = state.playbackRate;
+                        
+                        // Quand la lecture française est terminée
+                        utteranceFr.onend = () => {
+                            // Démarrer un timer de 3 secondes
+                            speakingTranslationTimeout = setTimeout(() => {
+                                const utteranceTrans = new SpeechSynthesisUtterance(entry.trans);
+                                
+                                // Détecter la langue de la traduction
+                                const arabicRegex = /[\u0600-\u06FF]/;
+                                if (arabicRegex.test(entry.trans)) {
+                                    utteranceTrans.lang = 'ar-SA'; // Voix arabe
+                                } else {
+                                    utteranceTrans.lang = 'en-US'; // Voix anglaise par défaut
+                                }
+                                utteranceTrans.rate = state.playbackRate;
+                                synth.speak(utteranceTrans);
+                            }, 3000); // Délai de 3 secondes
+                        };
+
+                        synth.speak(utteranceFr);
+                    });
+                    section.appendChild(speakItem);
+                });
+                display.appendChild(section);
+            };
+
+            createSection('Mots à mémoriser', item.words_to_memorise);
+            createSection('Mots utilisés en conversation', item.words_used_while_speaking);
+        }
+
+        function setupEcouteView() {
+            const podcast = state.currentPodcast;
+            DOMElements.ecoute.title.textContent = podcast.title;
+            DOMElements.ecoute.textDisplay.innerHTML = '';
+            
+            state.playback.sentenceData = podcast.sentences;
+            state.playback.sentenceOffsets = [];
+            let charIndex = 0;
+
+            podcast.sentences.forEach((sentence, index) => {
+                state.playback.sentenceOffsets.push(charIndex);
+                
+                const sentenceContainer = document.createElement('span');
+                
+                const wordsAndSpaces = sentence.fr.split(/(\s+)/);
+                wordsAndSpaces.forEach(part => {
+                    if (part.trim() === '') {
+                        sentenceContainer.appendChild(document.createTextNode(part));
+                    } else {
+                        const wordSpan = document.createElement('span');
+                        wordSpan.className = 'word';
+                        wordSpan.textContent = part;
+                        wordSpan.dataset.charStart = charIndex + sentence.fr.indexOf(part);
+                        wordSpan.addEventListener('dblclick', () => {
+                            addWordToHistory(part.trim().toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,""));
+                        });
+                        sentenceContainer.appendChild(wordSpan);
+                    }
+                });
+
+                DOMElements.ecoute.textDisplay.appendChild(sentenceContainer);
+
+                if (sentence.ar) {
+                    const toggleBtn = document.createElement('button');
+                    toggleBtn.className = 'translation-toggle';
+                    toggleBtn.textContent = 'ar';
+                    toggleBtn.setAttribute('aria-label', `Traduire la phrase ${index + 1}`);
+                    DOMElements.ecoute.textDisplay.appendChild(toggleBtn);
+
+                    const translationDiv = document.createElement('div');
+                    translationDiv.className = 'arabic-translation';
+                    translationDiv.textContent = sentence.ar;
+                    DOMElements.ecoute.textDisplay.appendChild(translationDiv);
+
+                    toggleBtn.addEventListener('click', () => {
+                        translationDiv.style.display = translationDiv.style.display === 'block' ? 'none' : 'block';
+                    });
+                }
+
+                charIndex += sentence.fr.length;
+            });
+
+            state.playback.currentSentenceIndex = 0;
+            updatePlayPauseIcon('play');
+        }
+        
+        // --- CONTRÔLE DE LECTURE AUDIO ---
+        
+        function speakText(text, lang) {
+            synth.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = lang;
+            utterance.rate = state.playbackRate;
+            synth.speak(utterance);
+        }
+
+        // Logique Play/Pause/Resume améliorée
+        function playPause() {
+            if (synth.speaking) {
+                if (synth.paused) {
+                    synth.resume(); // Reprend la lecture
+                    updatePlayPauseIcon('pause');
+                } else {
+                    synth.pause(); // Met en pause
+                    updatePlayPauseIcon('play');
+                }
+            } else {
+                // Si rien n'est en cours de lecture, on lance la lecture continue
+                state.playback.isContinuousPlay = true;
+                playCurrentSentence();
+            }
+        }
+        
+        function restartFullText() {
+            synth.cancel();
+            state.playback.isContinuousPlay = true;
+            state.playback.currentSentenceIndex = 0;
+            playCurrentSentence();
+        }
+
+        function playCurrentSentence() {
+            if (synth.speaking && !synth.paused) {
+                synth.cancel();
+            }
+            
+            const sentenceIndex = state.playback.currentSentenceIndex;
+            if (sentenceIndex >= state.playback.sentenceData.length) {
+                state.playback.isContinuousPlay = false;
+                updatePlayPauseIcon('play');
+                return;
+            }
+            
+            const textToSpeak = state.playback.sentenceData[sentenceIndex].fr;
+            const utterance = new SpeechSynthesisUtterance(textToSpeak);
+            utterance.lang = state.currentPodcast.lang;
+            utterance.rate = state.playbackRate;
+
+            utterance.onboundary = (event) => handleSpeechBoundary(event, sentenceIndex);
+            
+            utterance.onend = () => {
+                document.querySelectorAll('#ecoute-text-display .current-word').forEach(el => el.classList.remove('current-word'));
+                if (state.playback.isContinuousPlay) {
+                    state.playback.currentSentenceIndex++;
+                    playCurrentSentence(); 
+                } else {
+                    updatePlayPauseIcon('play');
+                }
+            };
+            
+            utterance.onerror = (e) => {
+                console.error('SpeechSynthesis Error', e);
+                updatePlayPauseIcon('play');
+                state.playback.isContinuousPlay = false;
+            };
+            
+            synth.speak(utterance);
+            updatePlayPauseIcon('pause');
+        }
+        
+        function changeSentence(direction) {
+            state.playback.isContinuousPlay = false;
+            synth.cancel();
+            
+            const newIndex = state.playback.currentSentenceIndex + direction;
+            if (newIndex >= 0 && newIndex < state.playback.sentenceData.length) {
+                state.playback.currentSentenceIndex = newIndex;
+                playCurrentSentence();
+            } else {
+                updatePlayPauseIcon('play');
+            }
+        }
+
+        function handleSpeechBoundary(event, sentenceIndex) {
+            if (event.name === 'word') {
+                const sentenceOffset = state.playback.sentenceOffsets[sentenceIndex];
+                const absoluteCharIndex = sentenceOffset + event.charIndex;
+
+                const allWords = Array.from(DOMElements.ecoute.textDisplay.querySelectorAll('.word'));
+                let currentWordSpan = null;
+
+                for (let i = allWords.length - 1; i >= 0; i--) {
+                    const wordSpan = allWords[i];
+                    const start = parseInt(wordSpan.dataset.charStart, 10);
+                    if (start <= absoluteCharIndex) {
+                        currentWordSpan = wordSpan;
+                        break;
+                    }
+                }
+                
+                if (currentWordSpan) {
+                    document.querySelectorAll('#ecoute-text-display .current-word').forEach(el => el.classList.remove('current-word'));
+                    currentWordSpan.classList.add('current-word');
+                    scrollToWord(currentWordSpan);
+                }
+            }
+        }
+
+        function scrollToWord(wordSpan) {
+            const mainContainer = DOMElements.main;
+            const wordRect = wordSpan.getBoundingClientRect();
+            const mainRect = mainContainer.getBoundingClientRect();
+
+            if (wordRect.top < mainRect.top || wordRect.bottom > mainRect.bottom) {
+                wordSpan.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        function updatePlayPauseIcon(status) {
+            const icon = status === 'play' ? '#icon-play' : '#icon-pause';
+            DOMElements.ecoute.playPauseIcon.setAttribute('href', icon);
+        }
+
+        // --- LOGIQUE DE LA VUE "LIRE" ---
+        function setupLireView() {
+            const podcast = state.currentPodcast;
+            DOMElements.lire.title.textContent = podcast.title;
+            state.practice.sentences = podcast.sentences.map(s => s.fr);
+            state.practice.words = podcast.fullText.split(/\s+/).filter(w => w.length > 0);
+            state.practice.currentIndex = 0;
+            DOMElements.lire.score.textContent = '';
+            renderPracticeUnit();
+        }
+
+        function renderPracticeUnit() {
+            const { mode, currentIndex } = state.practice;
+            let textToShow = '';
+            if (mode === 'word') {
+                const word1 = state.practice.words[currentIndex] || '';
+                const word2 = state.practice.words[currentIndex + 1] || '';
+                textToShow = `${word1} ${word2}`.trim();
+            } else {
+                textToShow = state.practice.sentences[currentIndex] || '';
+            }
+            DOMElements.lire.practiceContainer.innerHTML = `<span>${textToShow}</span>`;
+            DOMElements.lire.status.textContent = "Cliquez sur le micro pour commencer";
+            DOMElements.lire.score.textContent = '';
+        }
+        
+        function startRecognition() {
+            if (!recognition) return;
+            
+            if (recognitionTimer) clearTimeout(recognitionTimer);
+            recognition.stop();
+
+            recognition.lang = state.currentPodcast.lang;
+            
+            DOMElements.lire.status.textContent = "Écoute en cours...";
+            DOMElements.lire.micBtn.style.color = 'var(--error-color)';
+            
+            let finalTranscript = '';
+            recognition.onresult = (event) => {
+                finalTranscript = Array.from(event.results)
+                    .map(result => result[0])
+                    .map(result => result.transcript)
+                    .join('');
+            };
+
+            recognition.onerror = (event) => {
+                DOMElements.lire.status.textContent = `Erreur: ${event.error}`;
+                DOMElements.lire.micBtn.style.color = 'var(--icon-color)';
+            };
+
+            recognition.onend = () => {
+                clearTimeout(recognitionTimer);
+                DOMElements.lire.micBtn.style.color = 'var(--icon-color)';
+                if (finalTranscript) {
+                    DOMElements.lire.status.textContent = 'Analyse terminée.';
+                    checkPronunciation(finalTranscript);
+                } else {
+                    DOMElements.lire.status.textContent = "Je n'ai rien entendu. Réessayez.";
+                }
+            };
+            
+            recognition.start();
+
+            recognitionTimer = setTimeout(() => {
+                recognition.stop();
+            }, 20000);
+        }
+
+        function checkPronunciation(transcript) {
+            const { mode, currentIndex } = state.practice;
+            let originalText = '';
+            if (mode === 'word') {
+                const word1 = state.practice.words[currentIndex] || '';
+                const word2 = state.practice.words[currentIndex + 1] || '';
+                originalText = `${word1} ${word2}`.trim();
+            } else {
+                originalText = state.practice.sentences[currentIndex];
+            }
+            
+            const cleanText = (text) => text.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "").trim();
+
+            const originalWords = originalText.split(/\s+/).filter(Boolean);
+            const spokenWords = cleanText(transcript).split(/\s+/).filter(Boolean);
+            
+            let correctCount = 0;
+            const resultHTML = originalWords.map(originalWord => {
+                if (spokenWords.includes(cleanText(originalWord))) {
+                    correctCount++;
+                    return `<span class="correct">${originalWord}</span>`;
+                } else {
+                    return `<span class="incorrect">${originalWord}</span>`;
+                }
+            }).join(' ');
+
+            DOMElements.lire.practiceContainer.innerHTML = resultHTML;
+            const score = originalWords.length > 0 ? Math.round((correctCount / originalWords.length) * 100) : 0;
+            DOMElements.lire.score.innerHTML = `Note : <span style="color: ${score > 70 ? 'var(--success-color)' : 'var(--error-color)'}">${score}%</span>`;
+        }
+
+        function listenCorrectPronunciation() {
+            const { mode, currentIndex } = state.practice;
+            let textToSpeak = '';
+            if (mode === 'word') {
+                const word1 = state.practice.words[currentIndex] || '';
+                const word2 = state.practice.words[currentIndex + 1] || '';
+                textToSpeak = `${word1} ${word2}`.trim();
+            } else {
+                textToSpeak = state.practice.sentences[currentIndex];
+            }
+            
+            if(textToSpeak) {
+                speakText(textToSpeak, state.currentPodcast.lang);
+            }
+        }
+
+        // --- GESTION DES PARAMÈTRES ---
+        function toggleTheme() {
+            state.isDarkMode = !state.isDarkMode;
+            updateTheme();
+            saveState();
+        }
+
+        function updateTheme() {
+            DOMElements.body.classList.toggle('dark-mode', state.isDarkMode);
+            DOMElements.settings.themeIcon.setAttribute('href', state.isDarkMode ? '#icon-moon' : '#icon-sun');
+        }
+
+        function cycleFontSize() {
+            state.fontSizeLevel = (state.fontSizeLevel + 1) % 4;
+            updateFontSize();
+            saveState();
+        }
+
+        function updateFontSize() {
+            const sizes = ['14px', '16px', '18px', '20px'];
+            document.documentElement.style.setProperty('--font-size', sizes[state.fontSizeLevel]);
+        }
+
+        function updateMainColor(color) {
+            state.mainColor = color;
+            document.documentElement.style.setProperty('--main-color', color);
+            const [r, g, b] = color.match(/\w\w/g).map(x => parseInt(x, 16));
+            document.documentElement.style.setProperty('--main-color-transparent', `rgba(${r}, ${g}, ${b}, 0.15)`);
+            saveState();
+        }
+
+        // --- GESTION DE L'HISTORIQUE/VOCABULAIRE ---
+        function showHistoryModal(show) {
+            if (show) {
+                renderHistory();
+                DOMElements.historyModal.overlay.classList.add('visible');
+            } else {
+                DOMElements.historyModal.overlay.classList.remove('visible');
+            }
+        }
+
+        function addWordToHistory(word) {
+            if (!word || state.vocabulary.some(item => item.word === word)) return;
+            state.vocabulary.push({ word, status: 'review', favorite: false });
+            saveState();
+            DOMElements.settings.historyBtn.style.transform = 'scale(1.2)';
+            setTimeout(() => DOMElements.settings.historyBtn.style.transform = 'scale(1)', 300);
+            showToast(`"${word}" ajouté à votre vocabulaire.`);
+        }
+
+        function renderHistory() {
+            DOMElements.historyModal.list.innerHTML = '';
+            const hasWords = state.vocabulary.length > 0;
+            DOMElements.historyModal.noHistoryMsg.style.display = hasWords ? 'none' : 'block';
+            DOMElements.historyModal.list.style.display = hasWords ? 'block' : 'none';
+            if (!hasWords) return;
+
+            const sortedVocab = [...state.vocabulary].sort((a, b) => {
+                if (a.favorite !== b.favorite) return a.favorite ? -1 : 1;
+                return a.word.localeCompare(b.word);
+            });
+
+            sortedVocab.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'history-item';
+                li.innerHTML = `
+                    <span class="history-word">${item.word}</span>
+                    <div class="history-actions">
+                        <button class="copy-btn" data-word="${item.word}" aria-label="Copier le mot">
+                            <svg class="icon"><use href="#icon-copy"></use></svg>
+                        </button>
+                        <button class="status-btn" data-word="${item.word}" aria-label="Changer le statut">
+                            <svg class="icon"><use href="${item.status === 'learned' ? '#icon-book-open' : '#icon-eye'}"></use></svg>
+                        </button>
+                        <button class="favorite-btn ${item.favorite ? 'favorited' : ''}" data-word="${item.word}" aria-label="Mettre en favori">
+                            <svg class="icon icon-heart"><use href="#icon-heart"></use></svg>
+                        </button>
+                        <button class="delete-btn" data-word="${item.word}" aria-label="Supprimer le mot">
+                            <svg class="icon"><use href="#icon-trash"></use></svg>
+                        </button>
+                    </div>
+                `;
+                DOMElements.historyModal.list.appendChild(li);
+            });
+        }
+        
+        function handleHistoryAction(e) {
+            const button = e.target.closest('button');
+            if (!button) return;
+            
+            const word = button.dataset.word;
+            
+            if (button.classList.contains('delete-btn')) {
+                state.vocabulary = state.vocabulary.filter(i => i.word !== word);
+            } else {
+                const item = state.vocabulary.find(i => i.word === word);
+                if (!item) return;
+
+                if (button.classList.contains('copy-btn')) {
+                    navigator.clipboard.writeText(word).then(() => showToast(`"${word}" copié !`));
+                } else if (button.classList.contains('status-btn')) {
+                    item.status = item.status === 'review' ? 'learned' : 'review';
+                } else if (button.classList.contains('favorite-btn')) {
+                    item.favorite = !item.favorite;
+                }
+            }
+            
+            saveState();
+            renderHistory();
+        }
+
+        // --- GESTION DES MODALES D'INFO ---
+        const infoModalContent = {
+            1: { title: "مرحباً فاطمة", body: "في الأعلى، بالنقر على العدسة المكبرة، يمكنك البحث عن عنوان النص لمزيد من السرعة، يمكن لأيقونة الشمس تنشيط أو إلغاء تنشيط الوضع الداكن لعينيك، يمكن للأيقونة ذات الحرف A الصغير ضبط حجم النص بالنقر، يمكن للأيقونة الدائرية مساعدتك في اختيار لون لصفحتك، والأيقونة الأخيرة تسمح لك برؤية معجم الكلمات الخاص بك... انقر على أيقونة ℹ️ لمراجعة شاشات المساعدة هذه" },
+            2: { title: "لائحة", body: "تتيح لك قائمة القائمة اختيار نص للقراءة أو الاستماع إليه، وهناك ملفات بودكاست ونصوص ومحادثات وأيضًا كلمات للتحدث بها... اختر واحدة واكتشفها بنفسك، ستساعدك الأزرار (التالي، السابق، اختر سرعة الصوت، ابدأ من جديد من البداية وتوقف مؤقتًا)" },
+            3: { title: "يقرأ", body:   "هنا يمكنك التدرب وتدريب نفسك على القراءة، عدة مرات، انقر على الميكروفون وتحدث وسترى، هناك زر التالي، السابق، ابدأ من جديد وزر لي لمساعدتك على قراءة هذه الكلمة... يمكنك اختيار القراءة كلمة بكلمة أو جملة بجملة... إنها هدية صغيرة لك أتمنى أن تنال إعجابك..."}
+        };
+
+        function showInfoModal(step, isFirstTimeSequence = false) {
+            const content = infoModalContent[step];
+            if (!content) return;
+
+            DOMElements.infoModal.title.textContent = content.title;
+            DOMElements.infoModal.body.textContent = content.body;
+            DOMElements.infoModal.overlay.classList.add('visible');
+
+            // Gérer le bouton de fermeture
+            const closeBtn = DOMElements.infoModal.closeBtn;
+            const newCloseBtn = closeBtn.cloneNode(true); // Pour supprimer les anciens listeners
+            closeBtn.parentNode.replaceChild(newCloseBtn, closeBtn);
+            DOMElements.infoModal.closeBtn = newCloseBtn;
+
+            newCloseBtn.addEventListener('click', () => {
+                DOMElements.infoModal.overlay.classList.remove('visible');
+                if (isFirstTimeSequence) {
+                    // Séquence de la première fois
+                    if (step === 1) localStorage.setItem('hasSeenWelcomeModal', 'true');
+                } else {
+                    // Séquence du bouton info (récap)
+                    if (step === 1) showInfoModal(2);
+                    else if (step === 2) showInfoModal(3);
+                }
+            }, { once: true });
+        }
+
+        // --- GESTION DE LA RECHERCHE (MODIFIÉ) ---
+        function handleSearch() {
+            const query = DOMElements.settings.searchInput.value.toLowerCase().trim();
+            const resultsContainer = DOMElements.settings.searchResults;
+            resultsContainer.innerHTML = '';
+
+            if (query.length < 1) {
+                resultsContainer.style.display = 'none';
+                return;
+            }
+
+            const results = state.allData.filter(item => item.title.toLowerCase().includes(query));
+
+            if (results.length > 0) {
+                results.forEach(item => {
+                    const resultEl = document.createElement('div');
+                    resultEl.className = 'search-result-item';
+                    resultEl.textContent = item.title;
+                    resultEl.addEventListener('click', () => {
+                        selectItem(item.id);
+                        closeSearch();
+                    });
+                    resultsContainer.appendChild(resultEl);
+                });
+                resultsContainer.style.display = 'block';
+            } else {
+                resultsContainer.style.display = 'none';
+            }
+        }
+        
+        function toggleSearch() {
+            const isActive = DOMElements.header.classList.toggle('search-active');
+            if (isActive) {
+                DOMElements.settings.searchInput.focus();
+            } else {
+                closeSearch();
+            }
+        }
+
+        function closeSearch() {
+            DOMElements.header.classList.remove('search-active');
+            DOMElements.settings.searchInput.value = '';
+            DOMElements.settings.searchResults.style.display = 'none';
+            DOMElements.settings.searchInput.blur();
+        }
+        
+        // --- UTILITAIRES ---
+        function showToast(message) {
+            DOMElements.toast.textContent = message;
+            DOMElements.toast.classList.add('show');
+            setTimeout(() => {
+                DOMElements.toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function copyContactInfo() {
+            const contact = "+243810692913 / phinazolelo2019@gmail.com";
+            navigator.clipboard.writeText(contact).then(() => {
+                showToast("تم نسخ معلومات الاتصال");
+            }).catch(err => {
+                console.error("Erreur de copie : ", err);
+                showToast("Erreur lors de la copie.");
+            });
+        }
+
+        // --- ÉCOUTEURS D'ÉVÉNEMENTS ---
+        function setupEventListeners() {
+            // Navigation principale
+            DOMElements.navBtns.forEach(btn => {
+                const viewId = btn.dataset.view;
+                btn.addEventListener('click', () => {
+                    if (viewId === 'liste-view' && !localStorage.getItem('hasSeenListModal')) {
+                        showInfoModal(2, true);
+                        localStorage.setItem('hasSeenListModal', 'true');
+                    }
+                    if (viewId === 'lire-view' && !localStorage.getItem('hasSeenReadModal')) {
+                        showInfoModal(3, true);
+                        localStorage.setItem('hasSeenReadModal', 'true');
+                    }
+                    navigateTo(viewId);
+                });
+            });
+
+            DOMElements.listMenu.addEventListener('click', (e) => {
+                if (e.target.matches('.list-menu-btn')) {
+                    loadData(e.target.dataset.mode);
+                }
+            });
+
+            // Paramètres
+            DOMElements.settings.themeToggleBtn.addEventListener('click', toggleTheme);
+            DOMElements.settings.fontSizeBtn.addEventListener('click', cycleFontSize);
+            DOMElements.settings.colorPicker.addEventListener('input', (e) => updateMainColor(e.target.value));
+            
+            // Historique
+            DOMElements.settings.historyBtn.addEventListener('click', () => showHistoryModal(true));
+            DOMElements.historyModal.closeBtn.addEventListener('click', () => showHistoryModal(false));
+            DOMElements.historyModal.overlay.addEventListener('click', (e) => {
+                if (e.target === DOMElements.historyModal.overlay) showHistoryModal(false);
+            });
+            DOMElements.historyModal.list.addEventListener('click', handleHistoryAction);
+            
+            // Recherche (MODIFIÉ)
+            DOMElements.settings.searchBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleSearch();
+            });
+            DOMElements.settings.searchInput.addEventListener('input', handleSearch);
+            document.addEventListener('click', (e) => {
+                // Si on clique en dehors du conteneur de recherche ET que la recherche est active
+                if (!DOMElements.settings.searchContainer.contains(e.target) && DOMElements.header.classList.contains('search-active')) {
+                    closeSearch();
+                }
+            });
+
+            // Modales d'info et Copyright
+            DOMElements.settings.infoRecapBtn.addEventListener('click', () => showInfoModal(1));
+            DOMElements.copyrightLink.addEventListener('click', copyContactInfo);
+
+            // Contrôles Écoute
+            DOMElements.ecoute.playPauseBtn.addEventListener('click', playPause);
+            DOMElements.ecoute.restartBtn.addEventListener('click', restartFullText);
+            DOMElements.ecoute.prevBtn.addEventListener('click', () => changeSentence(-1));
+            DOMElements.ecoute.nextBtn.addEventListener('click', () => changeSentence(1));
+            DOMElements.ecoute.speedBtn.addEventListener('click', () => {
+                DOMElements.ecoute.speedOptions.style.display = DOMElements.ecoute.speedOptions.style.display === 'block' ? 'none' : 'block';
+            });
+            document.addEventListener('click', (e) => {
+                if (!DOMElements.ecoute.speedBtn.contains(e.target) && !DOMElements.ecoute.speedOptions.contains(e.target)) {
+                    DOMElements.ecoute.speedOptions.style.display = 'none';
+                }
+            });
+            DOMElements.ecoute.speedOptions.addEventListener('click', (e) => {
+                if(e.target.tagName === 'BUTTON') {
+                    state.playbackRate = parseFloat(e.target.dataset.speed);
+                    DOMElements.ecoute.speedOptions.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    DOMElements.ecoute.speedOptions.style.display = 'none';
+                    if (synth.speaking && !synth.paused) {
+                        playPause(); // Pause
+                        playPause(); // Reprend avec la nouvelle vitesse
+                    }
+                }
+            });
+
+            // Contrôles Lire
+            if (recognition) {
+                DOMElements.lire.micBtn.addEventListener('click', startRecognition);
+                DOMElements.lire.listenBtn.addEventListener('click', listenCorrectPronunciation);
+                const changePracticeMode = (mode) => {
+                    state.practice.mode = mode;
+                    state.practice.currentIndex = 0;
+                    DOMElements.lire.modeWordBtn.classList.toggle('active', mode === 'word');
+                    DOMElements.lire.modeSentenceBtn.classList.toggle('active', mode === 'sentence');
+                    renderPracticeUnit();
+                };
+                DOMElements.lire.modeWordBtn.addEventListener('click', () => changePracticeMode('word'));
+                DOMElements.lire.modeSentenceBtn.addEventListener('click', () => changePracticeMode('sentence'));
+                
+                const changePracticeItem = (direction) => {
+                    const step = state.practice.mode === 'word' ? 2 : 1;
+                    const maxIndex = state.practice.mode === 'word' ? state.practice.words.length - 1 : state.practice.sentences.length - 1;
+                    let newIndex = state.practice.currentIndex + (direction * step);
+                    
+                    if (newIndex < 0) newIndex = 0;
+                    if (newIndex > maxIndex) newIndex = state.practice.currentIndex;
+                    
+                    state.practice.currentIndex = newIndex;
+                    renderPracticeUnit();
+                };
+                DOMElements.lire.nextBtn.addEventListener('click', () => changePracticeItem(1));
+                DOMElements.lire.prevBtn.addEventListener('click', () => changePracticeItem(-1));
+                DOMElements.lire.restartBtn.addEventListener('click', renderPracticeUnit);
+            }
+        }
+
+        // Démarrer l'application
+        init();
+    });
+    </script>
+</body>
+</html>
