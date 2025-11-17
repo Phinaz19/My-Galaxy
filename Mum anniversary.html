@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bon Anniversaire Maman !</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        /* Styles de base */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            overflow: hidden; /* Empêche le défilement */
+        }
+
+        /* L'écran initial avec le bouton */
+        #initial-screen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100%;
+            color: white;
+        }
+
+        #initial-screen h1 {
+            font-size: 2.5rem;
+        }
+
+        /* Le bouton rouge */
+        #startButton {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 25px 50px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            border-radius: 15px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            transition: all 0.2s ease;
+        }
+
+        #startButton:hover {
+            background-color: #c0392b;
+            transform: scale(1.05);
+        }
+
+        /* Conteneur pour les mots qui tombent */
+        #falling-words-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 500;
+        }
+
+        /* Style pour chaque mot */
+        .falling-word {
+            position: absolute;
+            top: -100px;
+            /* MODIFICATION: Taille des mots qui tombent réduite */
+            font-size: 1.5rem; 
+            font-weight: bold;
+            user-select: none;
+            animation: fall linear;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(110vh) rotate(360deg);
+            }
+        }
+
+        /* L'écran blanc pour le message final */
+        #message-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Le conteneur du texte du message */
+        #message-text {
+            /* MODIFICATION: Taille de police réduite pour la lisibilité */
+            font-size: 1.6rem; 
+            color: #333;
+            text-align: center;
+            /* MODIFICATION: Largeur flexible pour s'adapter à tous les écrans */
+            max-width: 90%; 
+            line-height: 1.6;
+        }
+
+        /* Pour que les feux d'artifice soient TOUJOURS au-dessus */
+        canvas {
+            z-index: 9999 !important;
+            pointer-events: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="initial-screen">
+        <h1>Pour Maman</h1>
+        <button id="startButton">Clique ici !</button>
+    </div>
+
+    <div id="falling-words-container"></div>
+
+    <div id="message-overlay">
+        <div id="message-text"></div>
+    </div>
+
+    <script>
+        // Références aux éléments
+        const startButton = document.getElementById('startButton');
+        const initialScreen = document.getElementById('initial-screen');
+        const wordsContainer = document.getElementById('falling-words-container');
+        const messageOverlay = document.getElementById('message-overlay');
+        const messageText = document.getElementById('message-text');
+
+        // Variables pour les animations
+        let fireworksInterval;
+        let wordsInterval;
+
+        // Quand le bouton est cliqué
+        startButton.addEventListener('click', () => {
+            initialScreen.style.display = 'none';
+            fireworksInterval = setInterval(launchFireworks, 1500);
+            launchFireworks(); 
+            wordsInterval = setInterval(createFallingWord, 300);
+            setTimeout(showFinalMessage, 10000);
+        });
+
+        // Fonction pour lancer un feu d'artifice
+        function launchFireworks() {
+            const duration = 5 * 1000;
+            const animationEnd = Date.now() + duration;
+            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 9999 };
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            const interval = setInterval(function() {
+                const timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+                const particleCount = 50 * (timeLeft / duration);
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
+        }
+
+        // Fonction pour créer un mot qui tombe
+        function createFallingWord() {
+            const words = ['Happy', 'Maman', 'Birthday'];
+            const colors = ['#e74c3c', '#3498db', '#f1c40f', '#2ecc71', '#9b59b6', '#1abc9c'];
+            const wordElement = document.createElement('div');
+            wordElement.classList.add('falling-word');
+            wordElement.innerText = words[Math.floor(Math.random() * words.length)];
+            wordElement.style.color = colors[Math.floor(Math.random() * colors.length)];
+            wordElement.style.left = Math.random() * 95 + 'vw';
+            const duration = Math.random() * 5 + 5;
+            wordElement.style.animationDuration = duration + 's';
+            wordsContainer.appendChild(wordElement);
+            setTimeout(() => {
+                wordElement.remove();
+            }, duration * 1000 + 1000);
+        }
+
+        // Fonction pour afficher le message final
+        function showFinalMessage() {
+            clearInterval(wordsInterval);
+            wordsContainer.innerHTML = '';
+            messageOverlay.style.display = 'flex';
+
+            // Le message (vous pouvez le changer si vous voulez)
+            const message = "Chère Maman, Pour ton anniversaire, je voulais juste te rappeler à quel point tu es incroyable. Tu es un exemple pour moi, mon plus grand soutien et ma source d'inspiration. Merci pour tout l'amour, les sacrifices et les rires. J'espère que ta journée étè aussi lumineuse et merveilleuse que toi....désole pour hier et le retard... Je t'aime plus que les mots ne peuvent le dire. Joyeux Anniversaire maman !";
+            const messageWords = message.split(' ');
+            let wordIndex = 0;
+
+            // Fonction pour afficher les mots un par un
+            function showNextWord() {
+                if (wordIndex < messageWords.length) {
+                    messageText.innerHTML += messageWords[wordIndex] + ' ';
+                    wordIndex++;
+                    // MODIFICATION: Vitesse d'apparition légèrement augmentée
+                    setTimeout(showNextWord, 300);
+                }
+            }
+            showNextWord();
+        }
+    </script>
+
+</body>
+</html>
