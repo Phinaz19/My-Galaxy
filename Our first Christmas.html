@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title> Our first christmas 🎄</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: linear-gradient(180deg, #0b1d3a, #000);
+  height: 100vh;
+  overflow: hidden;
+  color: white;
+}
+
+/* TITRE */
+h1 {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 3em;
+  text-shadow: 0 0 15px gold;
+}
+
+/* BOUTON */
+#openModal {
+  display: block;
+  margin: 40px auto;
+  padding: 15px 40px;
+  font-size: 1.3em;
+  background: crimson;
+  border: none;
+  border-radius: 30px;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 0 20px crimson;
+  transition: transform 0.3s;
+}
+
+#openModal:hover {
+  transform: scale(1.1);
+}
+
+/* MODALE */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.modal-content {
+  background: white;
+  color: #222;
+  max-width: 500px;
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  position: relative;
+  animation: zoom 0.5s ease;
+}
+
+@keyframes zoom {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 25px;
+  cursor: pointer;
+  color: crimson;
+}
+
+/* MESSAGE */
+.modal-content h2 {
+  color: crimson;
+  margin-bottom: 15px;
+}
+
+.modal-content p {
+  font-size: 1.1em;
+  line-height: 1.6;
+}
+
+/* BALLONS */
+.balloon {
+  position: absolute;
+  bottom: -100px;
+  width: 50px;
+  height: 70px;
+  background: red;
+  border-radius: 50%;
+  animation: float 10s linear infinite;
+}
+
+.balloon::after {
+  content: '';
+  width: 2px;
+  height: 30px;
+  background: white;
+  position: absolute;
+  left: 50%;
+  top: 70px;
+}
+
+@keyframes float {
+  from { transform: translateY(0); }
+  to { transform: translateY(-120vh); }
+}
+
+/* SUCRE D'ORGE */
+.candy {
+  position: absolute;
+  top: -50px;
+  font-size: 35px;
+  animation: fall 8s linear infinite;
+}
+
+@keyframes fall {
+  from { transform: translateY(-50px); }
+  to { transform: translateY(110vh); }
+}
+
+/* FEUX D'ARTIFICE */
+.firework {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: gold;
+  border-radius: 50%;
+  animation: explode 1.5s infinite;
+}
+
+@keyframes explode {
+  0% { transform: scale(0); opacity: 1; }
+  100% { transform: scale(20); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎄 Joyeux Noël 🎄</h1>
+
+<button id="openModal">🎁 Cliquer ici 🎁</button>
+
+<!-- MODALE -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <span class="close" id="close">&times;</span>
+    <h2> Merry christmas </h2>
+    <p>
+      Ce n’est peut-être pas encore officiel entre nous,<br>
+      mais c’est déjà un Noël spécial pour nous ✨<br><br>
+
+      J’espère que ce sera le premier Noël<br>
+      d’une longue série à venir toi et Moi🎄<br><br>
+
+      Je te souhaite le meilleur,<br>
+      de la joie, des sourires et de la paix <br><br>
+
+      Et pour être honnête…<br>
+      j’ai déjà reçu mon cadeau du Père Noël<br><br>
+
+      <strong>C’est toi Joyce.</strong> 💖
+    </p>
+  </div>
+</div>
+
+<script>
+// MODALE
+const modal = document.getElementById("modal");
+document.getElementById("openModal").onclick = () => modal.style.display = "flex";
+document.getElementById("close").onclick = () => modal.style.display = "none";
+
+// BALLONS
+for(let i=0;i<15;i++){
+  const b=document.createElement("div");
+  b.className="balloon";
+  b.style.left=Math.random()*100+"%";
+  b.style.animationDuration=(8+Math.random()*5)+"s";
+  b.style.background=["red","green","gold"][Math.floor(Math.random()*3)];
+  document.body.appendChild(b);
+}
+
+// SUCRE D'ORGE
+for(let i=0;i<20;i++){
+  const c=document.createElement("div");
+  c.className="candy";
+  c.innerHTML="🍭";
+  c.style.left=Math.random()*100+"%";
+  c.style.animationDuration=(6+Math.random()*4)+"s";
+  document.body.appendChild(c);
+}
+
+// FEUX D'ARTIFICE
+setInterval(()=>{
+  const f=document.createElement("div");
+  f.className="firework";
+  f.style.left=Math.random()*100+"%";
+  f.style.top=Math.random()*100+"%";
+  document.body.appendChild(f);
+  setTimeout(()=>f.remove(),1500);
+},800);
+</script>
+
+</body>
+</html>
