@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer Philippe</title>
+    <style>
+        :root {
+            --primary: #00ffaa;
+            --bg: #0a0a0a;
+            --circle-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg);
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        /* Conteneur du Timer */
+        .timer-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .timer-container:hover {
+            transform: scale(1.03);
+        }
+
+        /* Cercles SVG */
+        svg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        circle {
+            fill: none;
+            stroke-width: 10;
+            stroke-linecap: round;
+        }
+
+        .bg-circle {
+            stroke: var(--circle-bg);
+        }
+
+        .progress-circle {
+            stroke: var(--primary);
+            stroke-dasharray: 879.64; /* 2 * PI * 140 (rayon) */
+            stroke-dashoffset: 0;
+            transition: stroke-dashoffset 0.1s linear;
+            filter: drop-shadow(0 0 8px var(--primary));
+        }
+
+        /* Chiffres du Timer */
+        .timer-display {
+            font-size: 3.5rem;
+            font-weight: bold;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 2px;
+            z-index: 10;
+        }
+
+        /* Message */
+        #message {
+            margin-top: 30px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            min-height: 1.5em;
+            letter-spacing: 0.5px;
+        }
+
+        /* Canards qui tombent */
+        .duck {
+            position: absolute;
+            font-size: 2rem;
+            top: -50px;
+            animation: fall linear forwards;
+            z-index: 100;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(105vh) rotate(360deg);
+            }
+        }
+
+        /* Animation de fin du timer */
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .finished .timer-container {
+            animation: pulse 1s infinite ease-in-out;
+        }
+
+        .finished .timer-display {
+            color: #ff0055;
+        }
+
+        .finished .progress-circle {
+            stroke: #ff0055;
+            filter: drop-shadow(0 0 12px #ff0055);
+        }
+    </style>
+    <!-- Script pour les feux d'artifice -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+    <div class="timer-container" id="timerClickArea">
+        <svg viewBox="0 0 300 300">
+            <circle class="bg-circle" cx="150" cy="150" r="140"></circle>
+            <circle class="progress-circle" id="progress" cx="150" cy="150" r="140"></circle>
+        </svg>
+        <div class="timer-display" id="timeDisplay">10:00</div>
+    </div>
+
+    <div id="message">Click me</div>
+
+    <!-- Audio pour le son en boucle -->
+    <audio id="bgMusic" src="Timer.mp3" loop></audio>
+
+    <script>
+        const TOTAL_TIME = 10 * 60; // 10 minutes en secondes
+        const circle = document.getElementById('progress');
+        const radius = circle.r.baseVal.value;
+        const circumference = 2 * Math.PI * radius;
+        
+        circle.style.strokeDasharray = `${circumference} ${circumference}`;
+
+        const timeDisplay = document.getElementById('timeDisplay');
+        const messageDisplay = document.getElementById('message');
+        const timerClickArea = document.getElementById('timerClickArea');
+        const audio = document.getElementById('bgMusic');
+
+        let interval = null;
+        let isStarted = localStorage.getItem('timerStarted') === 'true';
+
+        // Initialisation ou récupération de l'heure cible de fin
+        let endTime = localStorage.getItem('timerEndTime');
+        if (!endTime) {
+            endTime = Date.now() + (TOTAL_TIME * 1000);
+            localStorage.setItem('timerEndTime', endTime);
+        } else {
+            endTime = parseInt(endTime, 10);
+        }
+
+        function updateTimer() {
+            const now = Date.now();
+            const timeLeft = Math.max(0, Math.floor((endTime - now) / 1000));
+
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            
+            // Affichage 00:00
+            timeDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+            // Animation CSS du cercle dynamique
+            const offset = circumference - (timeLeft / TOTAL_TIME) * circumference;
+            circle.style.strokeDashoffset = offset;
+
+            // Fin du timer
+            if (timeLeft <= 0) {
+                clearInterval(interval);
+                document.body.classList.add('finished');
+                messageDisplay.textContent = "Philip is there";
+                messageDisplay.style.color = "#ff0055";
+                audio.pause();
+                
+                // Déclencher les effets visuels de fin une seule fois
+                if (!window.celebrated) {
+                    window.celebrated = true;
+                    launchFireworks();
+                    setInterval(createDuck, 150); // Génération continue de canards
+                }
+            }
+        }
+
+        function startTimer() {
+            if (!isStarted) {
+                isStarted = true;
+                localStorage.setItem('timerStarted', 'true');
+            }
+            
+            messageDisplay.textContent = "Waiting Philippe to come";
+            
+            // Joue la musique (se heurte parfois aux politiques de blocage auto des navigateurs sans clic)
+            audio.play().catch(err => console.log("L'audio nécessite une interaction :", err));
+            
+            if (!interval) {
+                interval = setInterval(updateTimer, 1000);
+                updateTimer();
+            }
+        }
+
+        // Action au clic sur le cercle
+        timerClickArea.addEventListener('click', () => {
+            startTimer();
+        });
+
+        // Reprise automatique s'il était déjà en cours avant un rafraîchissement
+        if (isStarted) {
+            startTimer();
+        }
+
+        // Rerégler le calcul quand l'utilisateur revient de l'arrière-plan
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden && isStarted) {
+                updateTimer();
+            }
+        });
+
+        // Fonction d'explosion de feux d'artifice
+        function launchFireworks() {
+            const duration = 15 * 1000;
+            const animationEnd = Date.now() + duration;
+            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            const intervalFx = setInterval(function() {
+                const timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(intervalFx);
+                }
+
+                const particleCount = 50 * (timeLeft / duration);
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
+        }
+
+        // Fonction de pluie d'émojis canard 🦆
+        function createDuck() {
+            const duck = document.createElement('div');
+            duck.classList.add('duck');
+            duck.textContent = '🦆';
+            duck.style.left = Math.random() * 100 + 'vw';
+            
+            const duration = Math.random() * 2 + 2;
+            duck.style.animationDuration = duration + 's';
+            duck.style.fontSize = Math.random() * 1.5 + 1.5 + 'rem';
+            
+            document.body.appendChild(duck);
+
+            setTimeout(() => {
+                duck.remove();
+            }, duration * 1000);
+        }
+    </script>
+</body>
+</html>
+    
