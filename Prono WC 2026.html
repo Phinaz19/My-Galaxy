@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pronostics WC 2026</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: linear-gradient(145deg, #2a2a2a, #1e1e1e);
+            --card-border: #3a3a3a;
+            --text-color: #ffffff;
+            --text-muted: #a0a0a0;
+            --accent: #4CAF50;
+            --purple: #9C27B0;
+            --danger: #ff4d4d;
+            --border-radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 15px;
+            overflow-x: hidden;
+        }
+
+        /* --- EN-TÊTE COMPACT --- */
+        header {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 12px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 22px;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .trophy-icon {
+            width: 26px;
+            height: 26px;
+            object-fit: contain;
+        }
+
+        .user-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        button.icon-btn {
+            background-color: #242424;
+            color: white;
+            border: 1px solid var(--card-border);
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            width: 42px;
+            height: 42px;
+        }
+
+        button.icon-btn:active { background-color: #333; }
+        button.icon-btn svg { width: 22px; height: 22px; fill: none; }
+        
+        .user-info {
+            font-size: 14px;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 4px 0;
+        }
+        
+        .user-info strong {
+            color: var(--accent);
+            font-size: 15px;
+            text-decoration: underline;
+        }
+
+        /* --- NAVIGATION ENTRE LES TOURS --- */
+        .round-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1e1e1e;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid var(--card-border);
+        }
+
+        .nav-arrow {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px 15px;
+        }
+        .nav-arrow:disabled {
+            color: #444;
+            cursor: not-allowed;
+        }
+
+        .round-title-display {
+            font-size: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        /* --- BRACKET --- */
+        .bracket {
+            display: block;
+            width: 100%;
+        }
+
+        .round {
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .round.active {
+            display: flex;
+        }
+
+        /* --- CARTES DE MATCH --- */
+        .match {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 14px 16px;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            position: relative;
+            width: 100%;
+        }
+
+        .match:active { transform: scale(0.98); }
+
+        .team {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+        }
+
+        .team-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-weight: 500;
+        }
+
+        .score {
+            font-weight: 700;
+            background-color: #111;
+            padding: 4px 12px;
+            border-radius: 6px;
+            min-width: 35px;
+            text-align: center;
+        }
+
+        .match-divider {
+            height: 1px;
+            background-color: #333;
+            width: 100%;
+        }
+
+        .badge-container {
+            position: absolute;
+            top: -9px;
+            right: 12px;
+            display: flex;
+            gap: 5px;
+        }
+
+        .match-info {
+            background-color: var(--accent);
+            color: #fff;
+            font-size: 10px;
+            padding: 2px 7px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .match-probability {
+            background-color: var(--purple);
+            color: #fff;
+            font-size: 10px;
+            padding: 2px 7px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        /* --- MODALES --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+
+        .modal {
+            background: var(--card-bg);
+            padding: 22px;
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 330px;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            position: relative; 
+        }
+
+        .modal h3 { margin-top: 0; margin-bottom: 20px; font-size: 17px; text-align: center; }
+
+        .score-input-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 15px;
+        }
+
+        .score-input-group input {
+            width: 55px;
+            padding: 8px;
+            background: #111;
+            color: white;
+            border: 1px solid #444;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            background: #111;
+            color: white;
+            border: 1px solid #444;
+            border-radius: 6px;
+            margin-bottom: 18px;
+            font-size: 14px;
+        }
+
+        #penalties-section { display: none; background: #1a1a1a; padding: 12px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #333;}
+        
+        .modal-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        
+        .modal-actions button { 
+            flex: 1; 
+            padding: 12px; 
+            background-color: #242424; 
+            color: white; 
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .modal-actions button.btn-primary { 
+            background-color: var(--accent); 
+            border-color: var(--accent); 
+            font-weight: bold;
+        }
+
+        /* Liste Utilisateurs */
+        .user-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 250px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+        }
+
+        .user-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: #242424;
+            border: 1px solid var(--card-border);
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .user-item.active {
+            border-color: var(--accent);
+        }
+
+        .user-item-name {
+            flex: 1;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 5px 0;
+        }
+        .user-item.active .user-item-name {
+            color: var(--accent);
+        }
+
+        .delete-user-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .delete-user-btn:hover { background: rgba(255, 77, 77, 0.2); }
+        .delete-user-btn svg { width: 18px; height: 18px; stroke: var(--danger); fill: none; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-top">
+            <h2>
+                <img src="Wc.png" alt="Trophy" class="trophy-icon" onerror="this.style.display='none'"> 
+                Prono WC 2026
+            </h2>
+            <div class="user-controls">
+                <button class="icon-btn" onclick="addUser()" aria-label="Nouvel Utilisateur">
+                    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5c-2.2 0-4 1.8-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                </button>
+                <button class="icon-btn" onclick="exportDataJson()" aria-label="Télécharger le fichier JSON de mes pronostics">
+                    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                </button>
+                <button class="icon-btn" onclick="triggerJsonImport()" aria-label="Importer un fichier JSON de pronostics">
+                    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                </button>
+                <input type="file" id="json-file-input" accept=".json" style="display: none;" onchange="importDataJson(event)">
+            </div>
+        </div>
+        <div class="user-info" onclick="openUserModal()">
+            Utilisateur Actuel : <strong id="current-user-display">Aucun</strong>
+        </div>
+    </header>
+
+    <div class="round-navigation">
+        <button class="nav-arrow" id="prev-round-btn" onclick="changeRound(-1)">&lt;</button>
+        <div class="round-title-display" id="round-title-display">16e de finale</div>
+        <button class="nav-arrow" id="next-round-btn" onclick="changeRound(1)">&gt;</button>
+    </div>
+
+    <div class="bracket" id="bracket-container"></div>
+
+    <div class="modal-overlay" id="score-modal">
+        <div class="modal">
+            <h3>Saisir le score</h3>
+            
+            <div class="score-input-group">
+                <span id="modal-t1-name">Équipe 1</span>
+                <input type="number" id="modal-t1-score" min="0" inputmode="numeric">
+            </div>
+            
+            <div class="score-input-group">
+                <span id="modal-t2-name">Équipe 2</span>
+                <input type="number" id="modal-t2-score" min="0" inputmode="numeric">
+            </div>
+
+            <select id="modal-period" onchange="togglePenalties()">
+                <option value="FT">Temps Réglementaire (FT)</option>
+                <option value="ET">Prolongation (ET)</option>
+                <option value="TAB">Tirs au But (TAB)</option>
+            </select>
+
+            <div id="penalties-section">
+                <h4 style="font-size: 11px; margin-top: 0; margin-bottom: 10px; color: var(--text-muted); text-transform: uppercase;">Score Tirs au but</h4>
+                <div class="score-input-group">
+                    <span>TAB Eq 1</span>
+                    <input type="number" id="modal-t1-pen" min="0" inputmode="numeric">
+                </div>
+                <div class="score-input-group">
+                    <span>TAB Eq 2</span>
+                    <input type="number" id="modal-t2-pen" min="0" inputmode="numeric">
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button onclick="closeModal()">Annuler</button>
+                <button class="btn-primary" onclick="saveScore()">Valider</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="user-modal">
+        <div class="modal">
+            <h3>Changer d'utilisateur</h3>
+            <div class="user-list" id="user-list-container"></div>
+            <div class="modal-actions">
+                <button onclick="closeUserModal()">Fermer</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const teamStrengths = {
+            "🇫🇷 France": 92, "🇦🇷 Argentine": 91, "🇧🇷 Brésil": 89, "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Angleterre": 90,
+            "🇪🇸 Espagne": 88, "🇵🇹 Portugal": 87, "🇳🇱 Pays-Bas": 84, "🇩🇪 Allemagne": 85,
+            "🇧🇪 Belgique": 82, "🇭🇷 Croatie": 80, "🇲🇦 Maroc": 81, "🇺🇸 États-Unis": 76,
+            "🇨🇭 Suisse": 77, "🇨🇴 Colombie": 79, "🇺🇾 Uruguay": 83, "🇮🇹 Italie": 84,
+            "🇲🇽 Mexique": 74, "🇸🇳 Sénégal": 75, "🇯🇵 Japon": 78, "🇦🇺 Australie": 70,
+            "🇪🇬 Égypte": 72, "🇰🇷 Corée du Sud": 71, "🇨🇦 Canada": 72, "🇪🇨 Équateur": 73,
+            "🇩🇿 Algérie": 71, "🇨🇮 Côte d'Ivoire": 73, "🇳🇬 Nigeria": 74, "🇹 Tunis": 66,
+            "🇨🇩 RD Congo": 65, "🇬🇭 Ghana": 69, "🇿🇦 Afrique du Sud": 63, "🇵🇾 Paraguay": 72,
+            "🇸🇪 Suède": 75, "🇧🇦 Bosnie-Herzégovine": 68, "🇦🇹 Autriche": 76, "🇳🇴 Norvège": 75,
+            "🇨🇻 Cap-Vert": 62
+        };
+
+        const initialTeams = [
+            "🇿🇦 Afrique du Sud", "🇨🇦 Canada", "🇳🇱 Pays-Bas", "🇲🇦 Maroc",
+            "🇩🇪 Allemagne", "🇵🇾 Paraguay", "🇫🇷 France", "🇸🇪 Suède",
+            "🇧🇪 Belgique", "🇸🇳 Sénégal", "🇺🇸 États-Unis", "🇧🇦 Bosnie-Herzégovine",
+            "🇪🇸 Espagne", "🇦🇹 Autriche", "🇵🇹 Portugal", "🇭🇷 Croatie",
+            "🇧🇷 Brésil", "🇯🇵 Japon", "🇨🇮 Côte d'Ivoire", "🇳🇴 Norvège",
+            "🇲🇽 Mexique", "🇪🇨 Équateur", "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Angleterre", "🇨🇩 RD Congo",
+            "🇨🇭 Suisse", "🇩🇿 Algérie", "🇨🇴 Colombie", "🇬🇭 Ghana",
+            "🇦🇺 Australie", "🇪🇬 Égypte", "🇦🇷 Argentine", "🇨🇻 Cap-Vert"
+        ];
+
+        const roundsStructure = [
+            { name: '16e de finale', ids: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16] },
+            { name: 'Huitièmes', ids: [17,18,19,20,21,22,23,24] },
+            { name: 'Quarts de finale', ids: [25,26,27,28] },
+            { name: 'Demi-finales', ids: [29,30] },
+            { name: 'Finale', ids: [31] }
+        ];
+
+        let currentRoundIndex = 0;
+        let currentUser = localStorage.getItem('wc_current_user') || null;
+        let pronosticsData = JSON.parse(localStorage.getItem('wc_pronostics')) || {};
+        let currentMatchId = null;
+
+        if (currentUser && !pronosticsData[currentUser]) {
+            initUserData(currentUser);
+        }
+
+        function initUserData(username) {
+            let matches = {};
+            for (let i = 1; i <= 16; i++) {
+                matches[i] = {
+                    id: i, t1: initialTeams[(i-1)*2], t2: initialTeams[(i-1)*2 + 1],
+                    s1: null, s2: null, p1: null, p2: null, period: 'FT', winner: null
+                };
+            }
+            for (let i = 17; i <= 31; i++) {
+                matches[i] = {
+                    id: i, t1: 'À définir', t2: 'À définir',
+                    s1: null, s2: null, p1: null, p2: null, period: 'FT', winner: null
+                };
+            }
+            pronosticsData[username] = matches;
+            saveToLocal();
+        }
+
+        function saveToLocal() {
+            localStorage.setItem('wc_pronostics', JSON.stringify(pronosticsData));
+            localStorage.setItem('wc_current_user', currentUser);
+            renderBracket();
+        }
+
+        function addUser() {
+            const name = prompt("Quel est ton nom/pseudo ?");
+            if (name && name.trim() !== "") {
+                currentUser = name.trim();
+                if (!pronosticsData[currentUser]) {
+                    initUserData(currentUser);
+                } else {
+                    saveToLocal();
+                }
+            }
+        }
+
+        function changeRound(direction) {
+            let newIndex = currentRoundIndex + direction;
+            if (newIndex >= 0 && newIndex < roundsStructure.length) {
+                currentRoundIndex = newIndex;
+                renderBracket();
+                window.scrollTo(0, 0);
+            }
+        }
+
+        function calculateRealisticProbability(t1, t2, s1, s2, period, p1, p2) {
+            if (s1 === null || s2 === null) return null;
+
+            const f1 = teamStrengths[t1] || 70;
+            const f2 = teamStrengths[t2] || 70;
+
+            const expectedWin1 = 1 / (1 + Math.pow(10, (f2 - f1) / 40)); 
+            
+            let userWinner = 1;
+            if (s2 > s1) userWinner = 2;
+            else if (s1 === s2 && p2 > p1) userWinner = 2;
+
+            let baseProb = userWinner === 1 ? expectedWin1 : (1 - expectedWin1);
+
+            const totalGoals = s1 + s2;
+            const goalDiff = Math.abs(s1 - s2);
+            let scoreRealism = 1.0;
+
+            if (totalGoals > 5) scoreRealism *= Math.pow(0.5, totalGoals - 5); 
+            if (goalDiff > 4) scoreRealism *= Math.pow(0.4, goalDiff - 4);   
+
+            if (userWinner === 1 && f2 > f1 + 10 && goalDiff > 2) scoreRealism *= 0.3;
+            if (userWinner === 2 && f1 > f2 + 10 && goalDiff > 2) scoreRealism *= 0.3;
+
+            let finalProb = Math.round(baseProb * scoreRealism * 100);
+            
+            if (finalProb < 1) finalProb = 1;
+            if (finalProb > 99) finalProb = 99;
+
+            return finalProb;
+        }
+
+        function renderBracket() {
+            document.getElementById('current-user-display').innerText = currentUser || "Clique sur l'icône +";
+            document.getElementById('round-title-display').innerText = roundsStructure[currentRoundIndex].name;
+            document.getElementById('prev-round-btn').disabled = (currentRoundIndex === 0);
+            document.getElementById('next-round-btn').disabled = (currentRoundIndex === roundsStructure.length - 1);
+
+            const container = document.getElementById('bracket-container');
+            container.innerHTML = '';
+
+            if (!currentUser) return; 
+
+            const matches = pronosticsData[currentUser];
+
+            roundsStructure.forEach((round, index) => {
+                const roundDiv = document.createElement('div');
+                roundDiv.className = 'round' + (index === currentRoundIndex ? ' active' : '');
+                
+                round.ids.forEach(id => {
+                    const m = matches[id];
+                    const matchDiv = document.createElement('div');
+                    matchDiv.className = 'match';
+                    matchDiv.onclick = () => openModal(id);
+
+                    let infoStr = "";
+                    if (m.s1 !== null && m.period !== 'FT') {
+                        infoStr = m.period === 'TAB' ? `TAB (${m.p1}-${m.p2})` : 'AP';
+                    }
+
+                    const prob = calculateRealisticProbability(m.t1, m.t2, m.s1, m.s2, m.period, m.p1, m.p2);
+
+                    matchDiv.innerHTML = `
+                        <div class="team">
+                            <span class="team-name">${m.t1}</span>
+                            <span class="score">${m.s1 !== null ? m.s1 : '-'}</span>
+                        </div>
+                        <div class="match-divider"></div>
+                        <div class="team">
+                            <span class="team-name">${m.t2}</span>
+                            <span class="score">${m.s2 !== null ? m.s2 : '-'}</span>
+                        </div>
+                        <div class="badge-container">
+                            ${infoStr ? `<div class="match-info">${infoStr}</div>` : ''}
+                            ${prob !== null ? `<div class="match-probability">${prob}% Sûreté</div>` : ''}
+                        </div>
+                    `;
+                    roundDiv.appendChild(matchDiv);
+                });
+                container.appendChild(roundDiv);
+            });
+        }
+
+        function openModal(matchId) {
+            if (!currentUser) { alert("Crée un utilisateur (icône +) d'abord !"); return; }
+            const match = pronosticsData[currentUser][matchId];
+            if (match.t1 === 'À définir' || match.t2 === 'À définir') { alert("Joue d'abord les matchs du tour précédent !"); return; }
+
+            currentMatchId = matchId;
+            document.getElementById('modal-t1-name').innerText = match.t1;
+            document.getElementById('modal-t2-name').innerText = match.t2;
+            
+            document.getElementById('modal-t1-score').value = match.s1 !== null ? match.s1 : '';
+            document.getElementById('modal-t2-score').value = match.s2 !== null ? match.s2 : '';
+            document.getElementById('modal-period').value = match.period || 'FT';
+            document.getElementById('modal-t1-pen').value = match.p1 !== null ? match.p1 : '';
+            document.getElementById('modal-t2-pen').value = match.p2 !== null ? match.p2 : '';
+
+            togglePenalties();
+            document.getElementById('score-modal').style.display = 'flex';
+        }
+
+        function closeModal() { document.getElementById('score-modal').style.display = 'none'; }
+
+        function togglePenalties() {
+            const period = document.getElementById('modal-period').value;
+            document.getElementById('penalties-section').style.display = (period === 'TAB') ? 'block' : 'none';
+        }
+
+        function saveScore() {
+            const s1 = parseInt(document.getElementById('modal-t1-score').value);
+            const s2 = parseInt(document.getElementById('modal-t2-score').value);
+            const period = document.getElementById('modal-period').value;
+            const p1 = parseInt(document.getElementById('modal-t1-pen').value);
+            const p2 = parseInt(document.getElementById('modal-t2-pen').value);
+
+            if (isNaN(s1) || isNaN(s2)) { alert("Veuillez saisir des scores valides."); return; }
+            
+            // Correction de la logique de vérification :
+            // Seuls les TAB exigent absolument un match nul final. La Prolongation (ET) peut se solder par une victoire.
+            if (period === 'TAB' && s1 !== s2) { 
+                alert("Erreur : Impossible d'aller aux tirs au but (TAB) si le score de fin n'est pas un match nul !"); 
+                return; 
+            }
+            if (period === 'TAB' && (isNaN(p1) || isNaN(p2) || p1 === p2)) { 
+                alert("Un gagnant clair aux Tirs au But est obligatoire !"); 
+                return; 
+            }
+            if (period === 'FT' && s1 === s2) { 
+                alert("Pas de match nul final possible en phase éliminatoire. Choisissez Prolongation ou TAB."); 
+                return; 
+            }
+            if (period === 'ET' && s1 === s2) {
+                alert("Si la prolongation se termine par un nul, choisissez l'option TAB (Tirs au but).");
+                return;
+            }
+
+            let winnerTeam = "";
+            if (s1 > s2) winnerTeam = pronosticsData[currentUser][currentMatchId].t1;
+            else if (s2 > s1) winnerTeam = pronosticsData[currentUser][currentMatchId].t2;
+            else if (p1 > p2) winnerTeam = pronosticsData[currentUser][currentMatchId].t1;
+            else winnerTeam = pronosticsData[currentUser][currentMatchId].t2;
+
+            const match = pronosticsData[currentUser][currentMatchId];
+            match.s1 = s1; match.s2 = s2; match.period = period;
+            match.p1 = period === 'TAB' ? p1 : null;
+            match.p2 = period === 'TAB' ? p2 : null;
+            match.winner = winnerTeam;
+
+            advanceTeam(currentMatchId, winnerTeam);
+            saveToLocal();
+            closeModal();
+        }
+
+        function advanceTeam(matchId, teamName) {
+            if (matchId === 31) return; 
+
+            let nextMatchId;
+            let isTeam1 = (matchId % 2 !== 0); 
+
+            if (matchId >= 1 && matchId <= 16) nextMatchId = Math.floor((matchId - 1) / 2) + 17;
+            else if (matchId >= 17 && matchId <= 24) nextMatchId = Math.floor((matchId - 17) / 2) + 25;
+            else if (matchId >= 25 && matchId <= 28) nextMatchId = Math.floor((matchId - 25) / 2) + 29;
+            else if (matchId >= 29 && matchId <= 30) nextMatchId = Math.floor((matchId - 29) / 2) + 31;
+
+            if (isTeam1) pronosticsData[currentUser][nextMatchId].t1 = teamName;
+            else pronosticsData[currentUser][nextMatchId].t2 = teamName;
+            
+            pronosticsData[currentUser][nextMatchId].s1 = null;
+            pronosticsData[currentUser][nextMatchId].s2 = null;
+            pronosticsData[currentUser][nextMatchId].winner = null;
+        }
+
+        function exportDataJson() {
+            if (!currentUser) return alert("Créez un profil d'abord !");
+            
+            const userData = pronosticsData[currentUser];
+            const dataStr = JSON.stringify(userData, null, 2);
+            const blob = new Blob([dataStr], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            
+            const downloadLink = document.createElement("a");
+            downloadLink.href = url;
+            downloadLink.download = `prono_wc2026_${currentUser}.json`;
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+            URL.revokeObjectURL(url);
+        }
+
+        function triggerJsonImport() {
+            document.getElementById('json-file-input').click();
+        }
+
+        function importDataJson(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const parsedData = JSON.parse(e.target.result);
+                    
+                    if (!parsedData["1"] || !parsedData["1"].t1) {
+                        alert("Le fichier JSON n'est pas un fichier de pronostic valide.");
+                        return;
+                    }
+
+                    const friendName = prompt("Quel est le nom du propriétaire de ce pronostic ?");
+                    if (friendName && friendName.trim() !== "") {
+                        pronosticsData[friendName.trim()] = parsedData;
+                        currentUser = friendName.trim(); 
+                        saveToLocal();
+                        alert("Pronostic de " + friendName + " importé avec succès !");
+                    }
+                } catch (err) {
+                    alert("Erreur lors de la lecture du fichier JSON.");
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = "";
+        }
+
+        function openUserModal() {
+            const container = document.getElementById('user-list-container');
+            container.innerHTML = '';
+            
+            const allUsers = Object.keys(pronosticsData);
+            if(allUsers.length === 0) {
+                container.innerHTML = `<div style="text-align:center;color:var(--text-muted);">Aucun utilisateur créé.</div>`;
+            } else {
+                allUsers.forEach(user => {
+                    const div = document.createElement('div');
+                    div.className = 'user-item' + (user === currentUser ? ' active' : '');
+                    
+                    // Zone cliquable pour changer d'utilisateur
+                    const nameSpan = document.createElement('div');
+                    nameSpan.className = 'user-item-name';
+                    nameSpan.innerText = user;
+                    nameSpan.onclick = () => {
+                        currentUser = user;
+                        saveToLocal();
+                        closeUserModal();
+                    };
+
+                    // Bouton Corbeille
+                    const delBtn = document.createElement('button');
+                    delBtn.className = 'delete-user-btn';
+                    delBtn.innerHTML = '<svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>';
+                    delBtn.onclick = (e) => {
+                        e.stopPropagation(); // Évite de sélectionner l'utilisateur en le supprimant
+                        if(confirm(`Voulez-vous vraiment supprimer le pronostic de ${user} ?`)) {
+                            delete pronosticsData[user];
+                            if(currentUser === user) {
+                                const remaining = Object.keys(pronosticsData);
+                                currentUser = remaining.length > 0 ? remaining[0] : null;
+                            }
+                            saveToLocal();
+                            openUserModal(); // Rafraîchit la liste
+                        }
+                    };
+
+                    div.appendChild(nameSpan);
+                    div.appendChild(delBtn);
+                    container.appendChild(div);
+                });
+            }
+            document.getElementById('user-modal').style.display = 'flex';
+        }
+
+        function closeUserModal() { document.getElementById('user-modal').style.display = 'none'; }
+
+        renderBracket();
+    </script>
+</body>
+</html>
