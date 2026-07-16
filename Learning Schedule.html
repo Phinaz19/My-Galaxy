@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحدي اللغة الفرنسية اليومي</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --header-bg: #1e293b;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --primary: #3b82f6;
+            --success: #10b981;
+            --success-bg: rgba(16, 185, 129, 0.15);
+            --danger: #ef4444;
+            --danger-bg: rgba(239, 68, 68, 0.2);
+            --lock-bg: rgba(30, 41, 59, 0.5);
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f8fafc;
+            --header-bg: #ffffff;
+            --text-color: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --primary: #2563eb;
+            --success: #16a34a;
+            --success-bg: rgba(22, 163, 74, 0.1);
+            --danger: #dc2626;
+            --danger-bg: rgba(220, 38, 38, 0.15);
+            --lock-bg: rgba(241, 245, 249, 0.8);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 0;
+            margin: 0;
+            width: 100vw;
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background-color 0.3s;
+        }
+
+        /* هيدر ممتد بالكامل */
+        header {
+            width: 100%;
+            background-color: var(--header-bg);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .theme-btn {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        /* جدول ممتد على كامل الشاشة بدون صندوق حوايا */
+        .main-wrapper {
+            width: 100%;
+            padding: 10px;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            text-align: right;
+            min-width: 750px;
+        }
+
+        th, td {
+            padding: 18px 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: var(--header-bg);
+            font-weight: 700;
+            color: var(--text-color);
+            font-size: 15px;
+            position: sticky;
+            top: 0;
+        }
+
+        /* حالة اليوم الحالي القابل للضغط */
+        .today-row {
+            background-color: rgba(59, 130, 246, 0.08) !important;
+            box-shadow: inset 5px 0 0 0 var(--primary);
+        }
+
+        .today-row .clickable-cell {
+            cursor: pointer;
+        }
+
+        /* حالة الأيام المستقبلية - مقفلة */
+        .future-row {
+            opacity: 0.5;
+            background-color: var(--lock-bg);
+        }
+        .future-row .clickable-cell {
+            pointer-events: none;
+            cursor: not-allowed;
+        }
+
+        /* حالة الفشل والأيام الفائتة غير المكتملة - مقفلة باللون الأحمر */
+        .missed-row {
+            background-color: var(--danger-bg) !important;
+        }
+        .missed-row td {
+            color: var(--danger);
+            border-bottom: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        .missed-row .clickable-cell {
+            pointer-events: none;
+            cursor: not-allowed;
+        }
+        .missed-badge {
+            background-color: var(--danger);
+            color: white;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-right: 8px;
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        /* حالة الأيام الفائتة الناجحة بالكامل */
+        .past-success-row {
+            background-color: rgba(16, 185, 129, 0.05);
+        }
+        .past-success-row .clickable-cell {
+            pointer-events: none; /* قفل التعديل أيضاً */
+        }
+
+        .day-cell {
+            font-weight: 700;
+        }
+
+        .date-sub {
+            display: block;
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 400;
+            margin-top: 4px;
+        }
+
+        .cell-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .checkbox-custom {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--text-muted);
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        /* الخانة المكتملة */
+        .completed {
+            background-color: var(--success-bg);
+        }
+        .completed .checkbox-custom {
+            border-color: var(--success);
+            background-color: var(--success);
+        }
+        .completed .checkbox-custom::after {
+            content: "✓";
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        /* نظام الإشعارات المنبثقة (Pop-up Toast) في الأعلى */
+        .toast {
+            position: fixed;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 16px 28px;
+            border-radius: 12px;
+            color: white;
+            font-weight: 700;
+            font-size: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            z-index: 1000;
+            transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            text-align: center;
+            min-width: 320px;
+            max-width: 90%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .toast::after {
+            content: "✕";
+            font-size: 12px;
+            opacity: 0.7;
+            margin-right: 15px;
+            background: rgba(0,0,0,0.2);
+            padding: 2px 6px;
+            border-radius: 50%;
+        }
+
+        .toast.show {
+            top: 30px;
+        }
+
+        .toast.success {
+            background: linear-gradient(135deg, #10b981, #059669);
+            border: 1px solid #34d399;
+        }
+
+        .toast.danger {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            border: 1px solid #f87171;
+        }
+
+        @media (max-width: 600px) {
+            th, td { padding: 14px 10px; font-size: 14px; }
+            h1 { font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="toast" class="toast"></div>
+
+<header>
+    <h1>📊 نظام تتبع تحدي الفرنسية اليومي</h1>
+    <button class="theme-btn" id="themeToggle">الوضع المضيء ☀️</button>
+</header>
+
+<div class="main-wrapper">
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 25%;">اليوم والتاريخ</th>
+                    <th style="text-align: center;">🎬 مشاهدة فيديو قصير</th>
+                    <th style="text-align: center;">📖 قراءة صفحة من نص</th>
+                    <th style="text-align: center;">🧠 حفظ 5 كلمات</th>
+                </tr>
+            </thead>
+            <tbody id="tracker-body">
+                </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // النطاق الزمني لعام 2026 كما هو مطلوب
+    const startDate = new Date('2026-07-16');
+    const endDate = new Date('2026-12-31');
+    const daysOfWeek = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+
+    // عبارات التهنئة عند إتمام المهام الـ 3 لليوم الحالي
+    const successMessages = [
+        "تهانينا يا فتاة، واصلي العمل بجد! 💪",
+        "لقد تعلمتِ المزيد اليوم مجدداً، تشجعي يا حبيبتي! ❤️",
+        "خذي الأمر ببساطة، كل يوم تتطورين! ✨",
+        "كان الأمر صعباً ولكنكِ فعلتها مجدداً، برافو! 👏",
+        "أنتِ تتطورين كل يوم، كل شيء سيكون على ما يرام! 🌟"
+    ];
+
+    // عبارات التشجيع عند وجود أيام فائتة غير مكتملة
+    const missedMessages = [
+        "حاولي بشكل أفضل في المرة القادمة يا حبيبتي، لا تستسلمي! 💪❤️",
+        "تشجعي، خطأ واحد أمر مفهوم! 🌸",
+        "افعلي ما هو أفضل اليوم، لا تدعي الخطأ يتكرر! 🚀",
+        "سيكون كل شيء بخير، ابذلي المزيد من الجهد اليوم يا حبيبتي! 🥰",
+        "اليوم مختلف يا حبيبتي، يمكنكِ فعلها! 🔥"
+    ];
+
+    // جلب البيانات المخزنة
+    let trackerData = JSON.parse(localStorage.getItem('french_tracker_v2')) || {};
+    let hasShownMissedNotice = sessionStorage.getItem('missed_notice_shown') || false;
+
+    // إعدادات المظهر والوضع الداكن
+    const themeToggle = document.getElementById('themeToggle');
+    let currentTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    updateThemeButtonText();
+
+    themeToggle.addEventListener('click', () => {
+        currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        localStorage.setItem('theme', currentTheme);
+        updateThemeButtonText();
+    });
+
+    function updateThemeButtonText() {
+        themeToggle.innerText = currentTheme === 'dark' ? 'الوضع المضيء ☀️' : 'الوضع الداكن 🌙';
+    }
+
+    // نظام تشغيل الإشعارات المنبثقة
+    let toastTimeout;
+    const toastElement = document.getElementById('toast');
+
+    function showPopup(message, type = 'success') {
+        clearTimeout(toastTimeout);
+        toastElement.innerText = message;
+        toastElement.className = `toast show ${type}`;
+        
+        toastTimeout = setTimeout(() => {
+            toastElement.className = 'toast';
+        }, 5000);
+    }
+
+    // إغلاق الإشعار فوراً عند الضغط عليه
+    toastElement.addEventListener('click', () => {
+        toastElement.className = 'toast';
+        clearTimeout(toastTimeout);
+    });
+
+    // توليد وإعداد الجدول بالكامل بناءً على الوقت الحالي للهاتف
+    function initTracker() {
+        const tbody = document.getElementById('tracker-body');
+        tbody.innerHTML = '';
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        let currentDate = new Date(startDate);
+        let anyMissedDaysFound = false;
+
+        while (currentDate <= endDate) {
+            const dateString = currentDate.toISOString().split('T')[0];
+            const dayName = daysOfWeek[currentDate.getDay()];
+            const formattedDate = `${currentDate.getDate()} / ${currentDate.getMonth() + 1}`;
+
+            if (!trackerData[dateString]) {
+                trackerData[dateString] = { video: false, read: false, words: false };
+            }
+
+            const dayData = trackerData[dateString];
+            const compareDate = new Date(currentDate);
+            compareDate.setHours(0, 0, 0, 0);
+
+            let rowClass = '';
+            let isMissed = false;
+
+            // فحص وتصنيف حالة اليوم الحالي والمستقبلي والفائت
+            if (compareDate.getTime() === today.getTime()) {
+                rowClass = 'today-row';
+            } else if (compareDate > today) {
+                rowClass = 'future-row';
+            } else {
+                // الأيام الفائتة
+                if (dayData.video && dayData.read && dayData.words) {
+                    rowClass = 'past-success-row';
+                } else {
+                    rowClass = 'missed-row';
+                    isMissed = true;
+                    anyMissedDaysFound = true;
+                }
+            }
+
+            const tr = document.createElement('tr');
+            if (rowClass) tr.className = rowClass;
+
+            tr.innerHTML = `
+                <td class="day-cell">
+                    ${dayName}
+                    ${isMissed ? '<span class="missed-badge">فائت ومغلق!</span>' : ''}
+                    <span class="date-sub">${formattedDate}</span>
+                </td>
+                <td class="clickable-cell ${dayData.video ? 'completed' : ''}" data-date="${dateString}" data-task="video">
+                    <div class="cell-content"><span class="checkbox-custom"></span></div>
+                </td>
+                <td class="clickable-cell ${dayData.read ? 'completed' : ''}" data-date="${dateString}" data-task="read">
+                    <div class="cell-content"><span class="checkbox-custom"></span></div>
+                </td>
+                <td class="clickable-cell ${dayData.words ? 'completed' : ''}" data-date="${dateString}" data-task="words">
+                    <div class="cell-content"><span class="checkbox-custom"></span></div>
+                </td>
+            `;
+
+            tbody.appendChild(tr);
+            currentDate.setDate(currentDate.getDate() + 1);
+        }
+
+        // إظهار رسالة التشجيع للأيام الفائتة المفقودة عند تحميل الصفحة لأول مرة في الجلسة
+        if (anyMissedDaysFound && !hasShownMissedNotice) {
+            setTimeout(() => {
+                const randomMissedMsg = missedMessages[Math.floor(Math.random() * missedMessages.length)];
+                showPopup(randomMissedMsg, 'danger');
+                sessionStorage.setItem('missed_notice_shown', 'true');
+            }, 600);
+        }
+    }
+
+    // إدارة عمليات الضغط على المربعات
+    document.getElementById('tracker-body').addEventListener('click', function(e) {
+        const cell = e.target.closest('.today-row .clickable-cell');
+        if (!cell) return; // منع الضغط تماماً على أي خانة خارج نطاق اليوم الحالي
+
+        const date = cell.getAttribute('data-date');
+        const task = cell.getAttribute('data-task');
+
+        // تبديل الحالة
+        trackerData[date][task] = !trackerData[date][task];
+        localStorage.setItem('french_tracker_v2', JSON.stringify(trackerData));
+
+        // تحديث المظهر الخارجي للخانة فوراً
+        if (trackerData[date][task]) {
+            cell.classList.add('completed');
+        } else {
+            cell.classList.remove('completed');
+        }
+
+        // التحقق مما إذا كانت قد أكملت المهام الثلاث كاملة لليوم لإطلاق إشعار التهنئة
+        const currentDayData = trackerData[date];
+        if (currentDayData.video && currentDayData.read && currentDayData.words) {
+            const randomSuccessMsg = successMessages[Math.floor(Math.random() * successMessages.length)];
+            showPopup(randomSuccessMsg, 'success');
+        }
+    });
+
+    // التشغيل المبدئي للنظام
+    initTracker();
+</script>
+
+</body>
+</html>
