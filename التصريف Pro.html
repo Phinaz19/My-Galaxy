@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="fr" class="antialiased">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conjugaison Pro | Interface Avancée</title>
+    
+    <!-- Google Fonts: Inter & Cairo (for Arabic) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        arabic: ['Cairo', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: { 50: '#eff6ff', 100: '#dbeafe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 900: '#1e3a8a' }
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                        'card': '0 1px 3px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.04)',
+                        'card-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .dark ::-webkit-scrollbar-thumb { background: #475569; }
+        .dark ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+
+        .verb-card { transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease, border-color 0.2s ease; overflow: hidden; }
+        .verb-card:hover { transform: translateY(-2px); }
+        
+        .watermark { font-size: 5.5rem; line-height: 1; position: absolute; right: -0.5rem; bottom: -1rem; font-weight: 900; opacity: 0.04; user-select: none; pointer-events: none; }
+        .dark .watermark { opacity: 0.06; color: #ffffff; }
+
+        #slideOver { transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+        #slideOverBackdrop, #calendarModalBackdrop, #welcomeModalBackdrop { transition: opacity 0.25s ease; }
+        
+        body.modal-open { overflow: hidden; }
+        
+        .translation-text { transition: opacity 0.4s ease; }
+        .opacity-0 { opacity: 0 !important; }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-200">
+
+    <!-- MISSED DAYS NOTIFICATION TOAST -->
+    <div id="missedNotif" class="fixed top-0 left-1/2 -translate-x-1/2 z-[100] transform -translate-y-full opacity-0 transition-all duration-700 ease-in-out pointer-events-none mt-4 max-w-md w-full px-4">
+        <div class="bg-brand-50 dark:bg-slate-800 border-2 border-brand-200 dark:border-brand-700/50 shadow-2xl rounded-2xl p-4 flex items-center justify-between gap-4">
+            <div class="text-3xl">⚠️</div>
+            <p id="missedNotifText" class="text-[15px] font-bold text-slate-800 dark:text-slate-200 font-arabic text-right w-full leading-snug" dir="rtl"></p>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700/80 sticky top-0 z-20 shadow-sm transition-colors duration-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Title & Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="bg-brand-600 text-white p-2 rounded-lg shadow-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
+                        </svg>
+                    </div>
+                    <h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">التصريف  <span class="text-brand-600 dark:text-brand-400">Pro</span></h1>
+                </div>
+
+                <!-- Action Controls -->
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <div class="hidden md:flex items-center px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-700/60 text-xs font-semibold text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-600">
+                        <span id="verbCountBadge" class="mr-1 text-slate-900 dark:text-white font-bold">300</span> verbes
+                    </div>
+
+                    <!-- Global Filter Mastered Verbs -->
+                    <button id="filterMasteredBtn" class="p-2.5 rounded-xl text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 bg-slate-100 dark:bg-slate-700/60 hover:bg-slate-200/80 dark:hover:bg-slate-600 transition-colors" title="Voir les verbes appris">
+                        <svg id="filterEyeIcon" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                    </button>
+
+                    <button id="calendarBtn" class="p-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 bg-slate-100 dark:bg-slate-700/60 hover:bg-slate-200/80 dark:hover:bg-slate-600 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                    </button>
+
+                    <button id="themeToggleBtn" class="p-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 bg-slate-100 dark:bg-slate-700/60 hover:bg-slate-200/80 dark:hover:bg-slate-600 transition-colors">
+                        <svg id="sunIcon" class="h-5 w-5 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <svg id="moonIcon" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        <!-- Search bar -->
+        <div class="mb-8">
+            <div class="relative max-w-xl">
+                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                    <svg class="h-5 w-5 text-slate-400 dark:text-slate-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <input type="text" id="searchInput" 
+                    class="block w-full pl-10 pr-4 py-3 border border-slate-300 dark:border-slate-700/80 rounded-xl leading-5 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500 sm:text-sm shadow-sm transition-colors duration-200" 
+                    placeholder="ابحث عن فعل...">
+            </div>
+        </div>
+
+        <!-- Verbs Grid -->
+        <div id="verbGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 lg:gap-5 pb-10">
+            <!-- Dynamically loaded -->
+        </div>
+
+        <!-- Empty state -->
+        <div id="emptyState" class="hidden flex-col items-center justify-center py-20 text-center">
+            <div class="bg-slate-100 dark:bg-slate-800 p-4 rounded-full mb-4">
+                <svg class="h-8 w-8 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+            </div>
+            <h3 class="text-lg font-medium text-slate-900 dark:text-white">Aucun verbe trouvé</h3>
+        </div>
+    </main>
+
+    <!-- WELCOME MODAL -->
+    <div id="welcomeModalBackdrop" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-[70] hidden items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl max-w-2xl w-full p-6 border border-slate-100 dark:border-slate-700">
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2" dir="ltr">
+                <span>⚠️ Read this first</span>
+            </h2>
+            <div class="space-y-4 text-sm sm:text-[15px] text-slate-700 dark:text-slate-300 font-arabic leading-relaxed h-[60vh] overflow-y-auto pr-3 custom-scrollbar" dir="rtl">
+                <p>1. اضغط على أيقونة القمر/الشمس لتغيير مظهر الصفحة إلى الوضع الداكن أو الوضع الفاتح.</p>
+                <p>2. اضغط على أيقونة التقويم وسترى تقويمًا لكل يوم. عليك تعلّم فعل واحد بالضغط على الزر الموجود أسفل التقويم "تعلّم". في كل مرة تفعل ذلك، سيُعتبر ذلك يومًا متعلَّمًا مع خط أخضر تحت اليوم. ولكن عندما تفوّت يومًا دون تعلّم، سيظهر خط أحمر تحت ذلك اليوم، لذا من الأفضل أن تتعلّم كل يوم وأن تزور التقويم...</p>
+                <p>3. يمكنك الضغط على زر العيون، بجانب زر التقويم، لرؤية قائمة الأفعال التي تعلّمتها. اضغط مرة أخرى على زر العيون للعودة إلى قائمة الأفعال الكاملة المكوّنة من 300 فعل.</p>
+                <p>4. يمكنك استخدام أيقونة البحث للعثور على فعل بسرعة أكبر.</p>
+                <p>5. هناك ترجمة تلقائية كل 10 ثوانٍ، بالإنجليزية وبالعربية لجميع الأفعال.</p>
+                <p>6. عندما تختار فعلًا لعرضه، يمكنك الضغط على المضارع أو الماضي أو المستقبل لرؤية تصريفه.</p>
+                <p>7. يسمح لك زر الصليب بالعودة إلى قائمة الأفعال الكاملة المكوّنة من 300 فعل.</p>
+                <p>8. الزر المجاور للصليب يُستخدم للتأكيد على أنك تعلّمت ذلك الفعل بالكامل وحفظته. سيظهر علامة في قائمة الـ 300 فعل بجانب كل فعل ضغطت على ذلك الزر من أجله.</p>
+                <p>9. يمكنك الضغط على زر الصوت في كل سطر لسماع كيفية نطق الفعل.</p>
+            </div>
+            <div class="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-100 dark:border-slate-700" dir="rtl">
+                <label class="flex items-center gap-2 text-sm font-bold text-slate-600 dark:text-slate-400 cursor-pointer font-arabic">
+                    <input type="checkbox" id="dontShowWelcomeAgain" class="rounded w-4 h-4 border-slate-300 text-brand-600 focus:ring-brand-500">
+                    <span>لا تظهر هذه الرسالة مرة أخرى</span>
+                </label>
+                <button id="closeWelcomeBtn" class="w-full sm:w-auto px-6 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold font-arabic rounded-xl shadow-sm transition-all focus:outline-none">
+                    فهمت، شكراً
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE-OVER DRAWER -->
+    <div id="slideOverBackdrop" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-40 opacity-0 pointer-events-none" aria-hidden="true"></div>
+
+    <div id="slideOver" class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-white dark:bg-slate-800 shadow-2xl transform translate-x-full flex flex-col transition-colors duration-200 border-l border-slate-200 dark:border-slate-700">
+        <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-700/60 flex items-center justify-between">
+            <div>
+                <div class="flex items-center gap-2 mb-1">
+                    <span id="modalVerbGroup" class="px-2 py-0.5 rounded text-xs font-semibold bg-brand-50 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300"></span>
+                </div>
+                <h2 id="modalVerbTitle" class="text-3xl font-bold text-slate-900 dark:text-white capitalize tracking-tight"></h2>
+                <p id="modalVerbTranslation" class="translation-text text-sm font-bold text-red-600 dark:text-red-400 mt-0.5" data-en="" data-ar=""></p>
+            </div>
+            <div class="flex items-center gap-2">
+                <button id="masteryToggleBtn" class="p-2.5 rounded-full text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 bg-slate-50 dark:bg-slate-700/60 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors focus:outline-none" title="Marquer comme appris">
+                    <svg id="eyeOpenIcon" class="h-6 w-6 hidden text-emerald-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                    <svg id="eyeClosedIcon" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858-5.908a10.043 10.043 0 013.682-.763c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21f-9-9m-1.414 0L3 3" /></svg>
+                </button>
+                <button id="closeModalBtn" class="p-2.5 rounded-full text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 bg-slate-50 dark:bg-slate-700/60 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors focus:outline-none" title="Fermer">
+                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="px-6 py-4 bg-slate-50 dark:bg-slate-900/40 border-b border-slate-100 dark:border-slate-700/60">
+            <div id="tensesTabs" class="flex p-1 space-x-1 bg-slate-200/70 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+                <button class="tense-tab flex-1 py-2 text-sm font-semibold rounded-lg text-slate-900 dark:text-white bg-white dark:bg-slate-700 shadow-sm transition-all focus:outline-none" data-tense="present">المضارع</button>
+                <button class="tense-tab flex-1 py-2 text-sm font-semibold rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all focus:outline-none" data-tense="passe">الماضي المركّب</button>
+                <button class="tense-tab flex-1 py-2 text-sm font-semibold rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all focus:outline-none" data-tense="futur">المستقبل البسيط</button>
+            </div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto p-6 bg-white dark:bg-slate-800">
+            <div id="conjugationPanel" class="space-y-3"></div>
+        </div>
+    </div>
+
+    <!-- CALENDAR MODAL -->
+    <div id="calendarModalBackdrop" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[60] opacity-0 pointer-events-none flex items-center justify-center p-4">
+        <div id="calendarModal" class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-100 dark:border-slate-700 transform scale-95 transition-all">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h3 id="calendarMonthYear" class="text-xl font-bold text-slate-900 dark:text-white capitalize"></h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">الهدف: فعل واحد في اليوم</p>
+                </div>
+                <div class="flex items-center gap-1">
+                    <button id="prevMonthBtn" class="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg></button>
+                    <button id="nextMonthBtn" class="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></button>
+                    <button id="closeCalendarBtn" class="p-2 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 bg-slate-50 dark:bg-slate-700/50 ml-3"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
+                </div>
+            </div>
+            <div class="grid grid-cols-7 gap-1 text-center text-xs font-bold text-slate-400 dark:text-slate-500 mb-2">
+                <span>Lun</span><span>Mar</span><span>Mer</span><span>Jeu</span><span>Ven</span><span>Sam</span><span>Dim</span>
+            </div>
+            <div id="calendarDaysGrid" class="grid grid-cols-7 gap-y-2 gap-x-1 text-center mb-6"></div>
+            <button id="dailyLearnBtn" class="w-full py-3.5 px-4 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl flex items-center justify-center gap-2 shadow-sm transition-all focus:outline-none">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                <span id="dailyLearnBtnText">تعلّم فعل اليوم</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * 300 VERBES AVEC GROUPES (1er, 2e, 3e) ET TRADUCTIONS EN / AR
+         */
+        const erList = "Aimer:to love:يحب,Parler:to speak:يتحدث,Chanter:to sing:يغني,Danser:to dance:يرقص,Jouer:to play:يلعب,Manger:to eat:يأكل,Regarder:to watch:يشاهد,Écouter:to listen:يستمع,Travailler:to work:يعمل,Étudier:to study:يدرس,Habiter:to live:يسكن,Marcher:to walk:يمشي,Sauter:to jump:يقفز,Nager:to swim:يسبح,Voler:to fly:يطير,Dessiner:to draw:يرسم,Pleurer:to cry:يبكي,Crier:to shout:يصرخ,Rêver:to dream:يحلم,Penser:to think:يفكر,Trouver:to find:يجد,Chercher:to search:يبحث,Donner:to give:يعطي,Prêter:to lend:يعير,Emprunter:to borrow:يستعير,Acheter:to buy:يشتري,Payer:to pay:يدفع,Coûter:to cost:يكلف,Gagner:to win:يربح,Garder:to keep:يحتفظ,Laisser:to leave:يترك,Poser:to put:يضع,Lever:to raise:يرفع,Porter:to wear:يرتدي,Tirer:to pull:يسحب,Pousser:to push:يدفع,Tourner:to turn:يدور,Arrêter:to stop:يوقف,Commencer:to begin:يبدأ,Terminer:to end:ينهي,Continuer:to continue:يستمر,Arriver:to arrive:يصل,Entrer:to enter:يدخل,Rentrer:to return:يعود,Monter:to climb:يصعد,Tomber:to fall:يقع,Rester:to stay:يبقى,Passer:to pass:يمر,Retourner:to return:يعود,Appeler:to call:يتصل,Rappeler:to call back:يعاود الاتصال,Oublier:to forget:ينسى,Expliquer:to explain:يشرح,Demander:to ask:يطلب,Remercier:to thank:يشكر,Inviter:to invite:يدعو,Présenter:to present:يقدم,Rencontrer:to meet:يلتقي,Visiter:to visit:يزور,Adorer:to adore:يعشق,Détester:to hate:يكره,Préférer:to prefer:يفضل,Espérer:to hope:يأمل,Souhaiter:to wish:يتمنى,Désirer:to desire:يرغب,Imaginer:to imagine:يتخيل,Créer:to create:يبتكر,Inventer:to invent:يخترع,Organiser:to organize:ينظم,Préparer:to prepare:يعد,Cuisiner:to cook:يطبخ,Goûter:to taste:يتذوق,Déjeuner:to lunch:يتغدى,Dîner:to dine:يتعشى,Ranger:to tidy:يرتب,Nettoyer:to clean:ينظف,Laver:to wash:يغسل,Sécher:to dry:يجفف,Repasser:to iron:يكوي,Bricoler:to tinker:يصلح,Jardiner:to garden:يعتني بالحديقة,Planter:to plant:يزرع,Arroser:to water:يسقي,Couper:to cut:يقطع,Coller:to stick:يلصق,Colorier:to color:يلون,Photographier:to photograph:يصور,Filmer:to film:يصور فيديو,Enregistrer:to record:يسجل,Discuter:to discuss:يناقش,Bavarder:to chat:يدردش,Raconter:to tell:يحكي,Répéter:to repeat:يكرر,Corriger:to correct:يصحح,Noter:to note:يدون,Calculer:to calculate:يحسب,Mesurer:to measure:يقيس,Comparer:to compare:يقارن,Vérifier:to check:يتحقق,Chuchoter:to whisper:يهمس,Voyager:to travel:يسافر,Fêter:to celebrate:يحتفل,Épouser:to marry:يتزوج,Soigner:to treat:يعالج,Sembler:to seem:يبدو,Toucher:to touch:يلمس,Cacher:to hide:يخفي,Pêcher:to fish:يصطاد,Dépenser:to spend:ينفق,Gaspiller:to waste:يبذر,Sauver:to save:ينقذ,Protéger:to protect:يحمي,Respecter:to respect:يحترم,Accepter:to accept:يقبل,Refuser:to refuse:يرفض,Annuler:to cancel:يلغي,Valider:to validate:يعتمد,Confirmer:to confirm:يؤكد,Ajouter:to add:يضيف,Enlever:to remove:يزيل,Remplacer:to replace:يستبدل";
+        const ir2List = "Finir:to finish:ينهي,Choisir:to choose:يختار,Grandir:to grow:يكبر,Rougir:to blush:يحمر,Maigrir:to lose weight:ينحف,Grossir:to gain weight:يسمن,Réfléchir:to reflect:يفكر,Agir:to act:يتصرف,Bâtir:to build:يبني,Remplir:to fill:يملأ,Punir:to punish:يعاقب,Obéir:to obey:يطيع,Réussir:to succeed:ينجح,Guérir:to cure:يشفي,Nourrir:to feed:يطعم,Fournir:to provide:يزود,Investir:to invest:يستثمر,Applaudir:to applaud:يصفق,Ralentir:to slow down:يبطئ,Avertir:to warn:يحذر,Blanchir:to whiten:يبيض,Brunir:to brown:يسمر,Chérir:to cherish:يعتز,Définir:to define:يعرف,Éblouir:to dazzle:يبهر,Envahir:to invade:يغزو,Établir:to establish:يؤسس,Franchir:to cross:يتجاوز,Gémir:to moan:يئن,Jaunir:to yellow:يصفر,Pâlir:to pale:يشحب,Pourrir:to rot:يتعفن,Rafraîchir:to refresh:ينعش,Rajeunir:to rejuvenate:يصغر,Salir:to dirty:يلطخ,Subir:to undergo:يخضع,Trahir:to betray:يخون,Vieillir:to age:يهرم,Amortir:to cushion:يخمد,Approfondir:to deepen:يعمق,Arrondir:to round:يدور,Assombrir:to darken:يعتم,Assouplir:to soften:يلين,Assourdir:to deafen:يصم,Attendrir:to soften:يرقق,Bannir:to banish:ينفي,Bénir:to bless:يبارك,Bondir:to bound:يقفز,Compatir:to sympathize:يتعاطف,Convertir:to convert:يحول,Démolir:to demolish:يهدم,Désinvestir:to disinvest:يسحب الاستثمار,Divertir:to entertain:يسلي,Durcir:to harden:يقسي,Élargir:to widen:يوسع,Embellir:to embellish:يجمل,Endurcir:to harden:يصلب,Enfouir:to bury:يدفن,Engloutir:to swallow up:يبتلع,Engourdir:to numb:يخدر,Enlaidir:to ugly:يقبح,Enrichir:to enrich:يثري,Ensevelir:to bury:يطمر,Épaissir:to thicken:يسمك,Épanouir:to bloom:يزدهر,Étourdir:to stun:يذهل,Faiblir:to weaken:يضعف,Farcir:to stuff:يحشو,Fleurir:to bloom:يزهر,Frémir:to shudder:يرتجف,Garantir:to guarantee:يضمن,Garnir:to garnish:يزين,Glapir:to yelp:ينبح,Gravir:to climb:يتسلق,Hennir:to neigh:يصهل,Intervertir:to invert:يعكس,Languir:to languish:يذبل,Lotir:to divide:يقسم,Mincir:to slim:ينحف,Moisir:to mold:يتعفن,Mugir:to roar:يخور,Munir:to equip:يزود,Noircir:to blacken:يسود,Ourdir:to warp:يحيك,Périr:to perish:يهلك,Polir:to polish:يصقل,Prémunir:to protect:يقي,Raccourcir:to shorten:يقصر,Radoucir:to soften:يلطف,Raffermir:to firm:يشد,Raidir:to stiffen:يصلب,Réagir:to react:يتفاعل,Réassortir:to restock:يعيد الترتيب,Rebâtir:to rebuild:يعيد البناء,Refroidir:to cool:يبرد,Régir:to govern:يحكم,Réjouir:to rejoice:يبهج,Rembrunir:to darken:يقطب,Renchérir:to outbid:يزايد,Répartir:to distribute:يوزع,Ressaisir:to regain:يستعيد,Rétablir:to restore:يستعيد,Retentir:to resound:يدوي,Rétrécir:to shrink:يضيق,Réunir:to unite:يجمع,Roussir:to scorch:يشيط,Rugir:to roar:يزأر,Saisir:to seize:يمسك,Sertir:to set:يرصع,Subvertir:to subvert:يخرب,Surgir:to arise:ينبثق,Ternir:to tarnish:يشوه,Tiédir:to warm:يفتر,Verdir:to turn green:يخضر,Vernir:to varnish:يلمع,Vomir:to vomit:يتقيأ";
+        const ir3List = "Partir:to leave:يغادر,Sortir:to go out:يخرج,Dormir:to sleep:ينام,Mentir:to lie:يكذب,Sentir:to feel:يشعر,Servir:to serve:يخدم,Courir:to run:يركض,Mourir:to die:يموت,Ouvrir:to open:يفتح,Couvrir:to cover:يغطي,Découvrir:to discover:يكتشف,Offrir:to offer:يقدم,Souffrir:to suffer:يعاني,Venir:to come:يأتي,Tenir:to hold:يمسك,Devenir:to become:يصبح,Revenir:to come back:يعود,Obtenir:to obtain:يحصل على,Maintenir:to maintain:يحافظ,Retenir:to retain:يحتجز,Soutenir:to support:يدعم,Intervenir:to intervene:يتدخل,Appartenir:to belong:ينتمي,Parvenir:to reach:يتوصل,Prévenir:to prevent:يحذر,Souvenir:to remember:يتذكر,Convenir:to suit:يناسب,Cueillir:to gather:يقطف,Accueillir:to welcome:يستقبل,Recueillir:to collect:يجمع,Tressaillir:to shudder:يجفل,Bouillir:to boil:يغلي,Acquérir:to acquire:يكتسب,Conquérir:to conquer:يغزو,Fuir:to flee:يهرب,Enfuir:to run away:يفر,Ressortir:to stand out:يبرز";
+        const oirList = "Voir:to see:يرى,Pouvoir:to be able to:يستطيع,Vouloir:to want:يريد,Devoir:to have to:يجب,Savoir:to know:يعرف,Recevoir:to receive:يستلم,Apercevoir:to catch sight of:يلمح,Concevoir:to conceive:يدرك,Décevoir:to disappoint:يخيب الأمل,Percevoir:to perceive:يتقاضى,Pleuvoir:to rain:يمطر,Falloir:to be necessary:يلزم,Valoir:to be worth:يساوي,Asseoir:to sit:يُجلس,Émouvoir:to move:يؤثر,Promouvoir:to promote:يروج,Pourvoir:to provide:يزود,Prévoir:to foresee:يتوقع,Revoir:to see again:يرى مجددا,Avoir:to have:يملك,Échoir:to fall due:يؤول,Déchoir:to decline:يسقط,Mouvoir:to move:يحرك,Entrevoir:to glimpse:يلمح,Surseoir:to postpone:يؤجل,Messeoir:to be unbecoming:لا يليق,Seoir:to suit:يليق,Équivaloir:to be equivalent:يعادل,Prévaloir:to prevail:يسود,Comparoir:to appear:يمثل";
+
+        let db = [];
+        erList.split(',').forEach(v => { const [i,e,a] = v.split(':'); db.push({i, e, a, g:1}); });
+        ir2List.split(',').forEach(v => { const [i,e,a] = v.split(':'); db.push({i, e, a, g:2}); });
+        ir3List.split(',').forEach(v => { const [i,e,a] = v.split(':'); db.push({i, e, a, g:3}); });
+        oirList.split(',').forEach(v => { const [i,e,a] = v.split(':'); db.push({i, e, a, g:3}); });
+        db.sort((a, b) => a.i.localeCompare(b.i));
+
+        /** 
+         * MOTEUR DE CONJUGAISON HAUTE PRÉCISION 
+         */
+        const pronouns = ["Je", "Tu", "Il/Elle", "Nous", "Vous", "Ils/Elles"];
+        const pronounsAudio = ["Je", "Tu", "Il", "Nous", "Vous", "Ils"];
+
+        const rulesDB = {
+            "er_reg": [ ["e", "es", "e", "ons", "ez", "ent"], ["erai", "eras", "era", "erons", "erez", "eront"], "é", "avoir" ],
+            "er_ger": [ ["e", "es", "e", "eons", "ez", "ent"], ["erai", "eras", "era", "erons", "erez", "eront"], "é", "avoir" ],
+            "er_cer": [ ["ce", "ces", "ce", "çons", "cez", "cent"], ["cerai", "ceras", "cera", "cerons", "cerez", "ceront"], "cé", "avoir" ],
+            "ir_reg": [ ["is", "is", "it", "issons", "issez", "issent"], ["irai", "iras", "ira", "irons", "irez", "iront"], "i", "avoir" ],
+            "ir_ouvrir": [ ["e", "es", "e", "ons", "ez", "ent"], ["rirai", "riras", "rira", "rirons", "rirez", "riront"], "ert", "avoir" ], 
+            "ir_partir": [ ["s", "s", "t", "tons", "tez", "tent"], ["tirai", "tiras", "tira", "tirons", "tirez", "tiront"], "ti", "être" ],
+            "ir_dormir": [ ["s", "s", "t", "mons", "mez", "ment"], ["mirai", "miras", "mira", "mirons", "mirez", "miront"], "mi", "avoir" ],
+            "ir_sentir": [ ["s", "s", "t", "tons", "tez", "tent"], ["tirai", "tiras", "tira", "tirons", "tirez", "tiront"], "ti", "avoir" ],
+            "ir_servir": [ ["s", "s", "t", "vons", "vez", "vent"], ["virai", "viras", "vira", "virons", "virez", "viront"], "vi", "avoir" ],
+            "ir_venir": [ ["iens", "iens", "ient", "enons", "enez", "iennent"], ["iendrai", "iendras", "iendra", "iendrons", "iendrez", "iendront"], "enu", "être" ],
+            "ir_tenir": [ ["iens", "iens", "ient", "enons", "enez", "iennent"], ["iendrai", "iendras", "iendra", "iendrons", "iendrez", "iendront"], "enu", "avoir" ],
+            "ir_courir": [ ["cours", "cours", "court", "courons", "courez", "courent"], ["courrai", "courras", "courra", "courrons", "courrez", "courront"], "couru", "avoir" ],
+            "ir_mourir": [ ["meurs", "meurs", "meurt", "mourons", "mourez", "meurent"], ["mourrai", "mourras", "mourra", "mourrons", "mourrez", "mourront"], "mort", "être" ],
+            "ir_fuir": [ ["fuis", "fuis", "fuit", "fuyons", "fuyez", "fuient"], ["fuirai", "fuiras", "fuira", "fuirons", "fuirez", "fuiront"], "fui", "avoir" ],
+            "ir_cueillir": [ ["cueille", "cueilles", "cueille", "cueillons", "cueillez", "cueillent"], ["cueillerai", "cueilleras", "cueillera", "cueillerons", "cueillerez", "cueilleront"], "cueilli", "avoir"],
+            "ir_bouillir": [ ["bous", "bous", "bout", "bouillons", "bouillez", "bouillent"], ["bouillirai", "bouilliras", "bouillira", "bouillirons", "bouillirez", "bouilliront"], "bouilli", "avoir"],
+            "ir_acquerir": [ ["acquiers", "acquiers", "acquiert", "acquérons", "acquérez", "acquièrent"], ["acquerrai", "acquerras", "acquerra", "acquerrons", "acquerrez", "acquerront"], "acquis", "avoir"],
+            "oir_voir": [ ["vois", "vois", "voit", "voyons", "voyez", "voient"], ["verrai", "verras", "verra", "verrons", "verrez", "verront"], "vu", "avoir"],
+            "oir_pouvoir": [ ["peux", "peux", "peut", "pouvons", "pouvez", "peuvent"], ["pourrai", "pourras", "pourra", "pourrons", "pourrez", "pourront"], "pu", "avoir"],
+            "oir_vouloir": [ ["veux", "veux", "veut", "voulons", "voulez", "veulent"], ["voudrai", "voudras", "voudra", "voudrons", "voudrez", "voudront"], "voulu", "avoir"],
+            "oir_devoir": [ ["dois", "dois", "doit", "devons", "devez", "doivent"], ["devrai", "devras", "devra", "devrons", "devrez", "devront"], "dû", "avoir"],
+            "oir_savoir": [ ["sais", "sais", "sait", "savons", "savez", "savent"], ["saurai", "sauras", "saura", "saurons", "saurez", "sauront"], "su", "avoir"],
+            "oir_recevoir": [ ["reçois", "reçois", "reçoit", "recevons", "recevez", "reçoivent"], ["recevrai", "recevras", "recevra", "recevrons", "recevrez", "recevront"], "reçu", "avoir"],
+            "oir_pleuvoir": [ ["pleut"], ["pleuvra"], "plu", "avoir"],
+            "oir_falloir": [ ["faut"], ["faudra"], "fallu", "avoir"],
+            "oir_valoir": [ ["vaux", "vaux", "vaut", "valons", "valez", "valent"], ["vaudrai", "vaudras", "vaudra", "vaudrons", "vaudrez", "vaudront"], "valu", "avoir"],
+            "oir_asseoir": [ ["assois", "assois", "assoit", "assoyons", "assoyez", "assoient"], ["assoirai", "assoiras", "assoira", "assoirons", "assoirez", "assoiront"], "assis", "avoir"],
+            "oir_avoir": [ ["ai", "as", "a", "avons", "avez", "ont"], ["aurai", "auras", "aura", "aurons", "aurez", "auront"], "eu", "avoir"],
+            "oir_mouvoir": [ ["meus", "meus", "meut", "mouvons", "mouvez", "meuvent"], ["mouvrai", "mouvras", "mouvra", "mouvrons", "mouvrez", "mouvront"], "mû", "avoir"]
+        };
+
+        const getVerbRules = (v) => {
+            if (['couvrir', 'ouvrir', 'découvrir', 'offrir', 'souffrir'].includes(v)) return { p: 'ir_ouvrir', r: 2 };
+            if (['partir', 'repartir', 'sortir', 'ressortir'].includes(v)) return { p: 'ir_partir', r: 3 };
+            if (['dormir', 'endormir'].includes(v)) return { p: 'ir_dormir', r: 3 };
+            if (['mentir', 'démentir', 'sentir', 'ressentir'].includes(v)) return { p: 'ir_sentir', r: 3 };
+            if (['servir', 'desservir'].includes(v)) return { p: 'ir_servir', r: 3 };
+            if (v.endsWith('venir')) return { p: 'ir_venir', r: 4 };
+            if (v.endsWith('tenir')) return { p: 'ir_tenir', r: 4 };
+            if (v.endsWith('courir')) return { p: 'ir_courir', r: 6 };
+            if (v.endsWith('mourir')) return { p: 'ir_mourir', r: 6 };
+            if (v.endsWith('fuir')) return { p: 'ir_fuir', r: 4 };
+            if (v.endsWith('cueillir')) return { p: 'ir_cueillir', r: 8 };
+            if (v.endsWith('bouillir')) return { p: 'ir_bouillir', r: 8 };
+            if (v.endsWith('quérir')) return { p: 'ir_acquerir', r: 6 };
+            
+            if (v.endsWith('voir') && !v.endsWith('cevoir') && !v.endsWith('pleuvoir') && !v.endsWith('mouvoir') && !v.endsWith('pouvoir') && !v.endsWith('vouloir') && !v.endsWith('devoir') && !v.endsWith('savoir') && !v.endsWith('falloir') && !v.endsWith('valoir')) return { p: 'oir_voir', r: 4 };
+            if (v.endsWith('cevoir')) return { p: 'oir_recevoir', r: 6 };
+            if (v === 'pouvoir') return { p: 'oir_pouvoir', r: 7 };
+            if (v === 'vouloir') return { p: 'oir_vouloir', r: 7 };
+            if (v === 'devoir') return { p: 'oir_devoir', r: 6 };
+            if (v === 'savoir') return { p: 'oir_savoir', r: 6 };
+            if (v === 'pleuvoir') return { p: 'oir_pleuvoir', r: 8 };
+            if (v === 'falloir') return { p: 'oir_falloir', r: 7 };
+            if (v.endsWith('valoir')) return { p: 'oir_valoir', r: 6 };
+            if (v.endsWith('seoir')) return { p: 'oir_asseoir', r: 5 };
+            if (v === 'avoir') return { p: 'oir_avoir', r: 5 };
+            if (v.endsWith('mouvoir')) return { p: 'oir_mouvoir', r: 7 };
+            
+            if (v.endsWith('ger')) return { p: 'er_ger', r: 2 };
+            if (v.endsWith('cer')) return { p: 'er_cer', r: 3 };
+            if (v.endsWith('ir') && !['partir','sortir','dormir','mentir','sentir','servir','courir','mourir','ouvrir','couvrir','découvrir','offrir','souffrir','venir','tenir','fuir','cueillir','bouillir','quérir'].some(irr => v.endsWith(irr))) return { p: 'ir_reg', r: 2 };
+            
+            return { p: 'er_reg', r: 2 };
+        };
+
+        function conjugateVerb(verbObj) {
+            const inf = verbObj.i.toLowerCase();
+            const rules = getVerbRules(inf);
+            const pat = rulesDB[rules.p] || rulesDB['er_reg'];
+            const root = inf.slice(0, -rules.r);
+
+            const isEtre = ['arriver', 'entrer', 'rentrer', 'tomber', 'rester', 'retourner', 'monter', 'partir', 'sortir', 'mourir', 'venir', 'devenir', 'revenir', 'intervenir', 'parvenir', 'choir'].includes(inf);
+            const auxArr = isEtre ? ["suis", "es", "est", "sommes", "êtes", "sont"] : ["ai", "as", "a", "avons", "avez", "ont"];
+
+            let p = [], pc = [], f = [];
+            const isImpersonal = pat[0].length === 1;
+
+            for(let i=0; i<6; i++) {
+                if (isImpersonal && i !== 2) {
+                    p.push("-"); f.push("-"); pc.push("-");
+                } else {
+                    const idx = isImpersonal ? 0 : i;
+                    p.push({ html: `${root}<span class="text-red-600 dark:text-red-400 font-bold">${pat[0][idx]}</span>`, char: (root || pat[0][idx]).charAt(0) });
+                    f.push({ html: `${root}<span class="text-red-600 dark:text-red-400 font-bold">${pat[1][idx]}</span>`, char: (root || pat[1][idx]).charAt(0) });
+                    pc.push({ html: `<span class="text-blue-600 dark:text-blue-400 font-semibold">${auxArr[i]}</span>${root}<span class="text-red-600 dark:text-red-400 font-bold">${pat[2]}</span>`, char: auxArr[i].charAt(0) });
+                }
+            }
+
+            return {
+                present: p.map((w, idx) => formatLine(pronouns[idx], pronounsAudio[idx], w)),
+                passe: pc.map((w, idx) => formatLine(pronouns[idx], pronounsAudio[idx], w)),
+                futur: f.map((w, idx) => formatLine(pronouns[idx], pronounsAudio[idx], w))
+            };
+        }
+
+        function formatLine(displayPronoun, audioPronoun, wordObj) {
+            if (wordObj === "-") return ``;
+
+            const isV = 'aeiouhéèêàâîïôûyh'.includes(wordObj.char.toLowerCase());
+            let pDisp = (displayPronoun === "Je" && isV) ? "J'" : displayPronoun + " ";
+            let pAudio = (audioPronoun === "Je" && isV) ? "J'" : audioPronoun + " ";
+            
+            const rawWord = wordObj.html.replace(/<[^>]*>/g, '');
+            const speakText = (pAudio + rawWord).replace(/'/g, "\\'");
+
+            return `
+                <div class="flex items-center justify-between py-2.5 px-4 rounded-xl bg-slate-50 dark:bg-slate-700/30 border border-slate-100 dark:border-slate-700/50 hover:border-brand-200 dark:hover:border-brand-800 transition-colors">
+                    <div class="text-lg text-slate-800 dark:text-slate-200">
+                        <span class="font-medium text-slate-500 dark:text-slate-400">${pDisp}</span>${wordObj.html}
+                    </div>
+                    <button onclick="speakPhrase('${speakText}')" class="p-2 rounded-full text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-white dark:hover:bg-slate-700 shadow-sm transition-all focus:outline-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z" clip-rule="evenodd" /></svg>
+                    </button>
+                </div>`;
+        }
+
+        function speakPhrase(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const msg = new SpeechSynthesisUtterance(text);
+                msg.lang = 'fr-FR';
+                msg.rate = 0.9;
+                window.speechSynthesis.speak(msg);
+            }
+        }
+
+        // GLOBALS
+        let masteredVerbs = JSON.parse(localStorage.getItem('masteredVerbs') || '[]');
+        let currentActiveVerb = null;
+        let currentTense = 'present';
+        let globalLang = 'en';
+        let showOnlyMastered = false;
+
+        // DOM Elements
+        const grid = document.getElementById('verbGrid');
+        const emptyState = document.getElementById('emptyState');
+        const searchInput = document.getElementById('searchInput');
+        const slideOver = document.getElementById('slideOver');
+        const backdrop = document.getElementById('slideOverBackdrop');
+        const conjPanel = document.getElementById('conjugationPanel');
+        const filterMasteredBtn = document.getElementById('filterMasteredBtn');
+        const filterEyeIcon = document.getElementById('filterEyeIcon');
+        
+        // TRANSLATION TOGGLER (10 seconds)
+        setInterval(() => {
+            globalLang = globalLang === 'en' ? 'ar' : 'en';
+            document.querySelectorAll('.translation-text').forEach(el => {
+                el.classList.add('opacity-0');
+                setTimeout(() => {
+                    el.textContent = globalLang === 'en' ? el.dataset.en : el.dataset.ar;
+                    el.dir = globalLang === 'ar' ? 'rtl' : 'ltr';
+                    el.style.fontFamily = globalLang === 'ar' ? "'Cairo', sans-serif" : "'Inter', sans-serif";
+                    el.classList.remove('opacity-0');
+                }, 400);
+            });
+        }, 10000);
+
+        // FILTER MASTERED LOGIC
+        filterMasteredBtn.addEventListener('click', () => {
+            showOnlyMastered = !showOnlyMastered;
+            if (showOnlyMastered) {
+                filterEyeIcon.classList.replace('text-slate-400', 'text-emerald-500');
+                filterMasteredBtn.classList.add('bg-emerald-50', 'dark:bg-emerald-900/30');
+            } else {
+                filterEyeIcon.classList.replace('text-emerald-500', 'text-slate-400');
+                filterMasteredBtn.classList.remove('bg-emerald-50', 'dark:bg-emerald-900/30');
+            }
+            renderGrid(searchInput.value);
+        });
+
+        function renderGrid(filter = '') {
+            grid.innerHTML = '';
+            
+            let filtered = db.filter(v => v.i.toLowerCase().includes(filter.toLowerCase()) || v.e.toLowerCase().includes(filter.toLowerCase()) || v.a.includes(filter));
+            
+            if (showOnlyMastered) {
+                filtered = filtered.filter(v => masteredVerbs.includes(v.i));
+            }
+
+            if (filtered.length === 0) {
+                grid.classList.add('hidden');
+                emptyState.classList.remove('hidden'); emptyState.classList.add('flex');
+            } else {
+                grid.classList.remove('hidden');
+                emptyState.classList.add('hidden'); emptyState.classList.remove('flex');
+
+                filtered.forEach((verb) => {
+                    const originalIndex = db.findIndex(v => v.i === verb.i) + 1;
+                    const isMastered = masteredVerbs.includes(verb.i);
+                    const groupText = verb.g === 1 ? '1er Groupe' : verb.g === 2 ? '2e Groupe' : '3e Groupe';
+                    const activeText = globalLang === 'en' ? verb.e : verb.a;
+                    const activeDir = globalLang === 'ar' ? 'rtl' : 'ltr';
+                    const activeFont = globalLang === 'ar' ? "'Cairo', sans-serif" : "'Inter', sans-serif";
+                    
+                    const card = document.createElement('div');
+                    card.className = "verb-card relative bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700/80 rounded-2xl p-5 cursor-pointer shadow-sm hover:shadow-card-hover group";
+                    card.onclick = () => openVerb(verb);
+
+                    card.innerHTML = `
+                        <div class="watermark">${originalIndex}</div>
+                        <div class="relative z-10 flex justify-between items-start mb-3">
+                            <span class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-brand-900/30 rounded-md border border-brand-100 dark:border-brand-800/50">${groupText}</span>
+                            ${isMastered ? `<span class="text-emerald-500 bg-emerald-50 dark:bg-emerald-900/30 p-1 rounded-full"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg></span>` : ''}
+                        </div>
+                        <h3 class="relative z-10 text-xl font-bold text-slate-900 dark:text-white mb-1 group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">${verb.i}</h3>
+                        <p class="relative z-10 text-sm font-bold text-red-600 dark:text-red-400 translation-text" data-en="${verb.e}" data-ar="${verb.a}" dir="${activeDir}" style="font-family: ${activeFont}">${activeText}</p>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+        }
+
+        function openVerb(verb) {
+            currentActiveVerb = verb;
+            const conj = conjugateVerb(verb);
+            
+            document.getElementById('modalVerbTitle').textContent = verb.i;
+            const transEl = document.getElementById('modalVerbTranslation');
+            transEl.dataset.en = verb.e; transEl.dataset.ar = verb.a;
+            transEl.textContent = globalLang === 'en' ? verb.e : verb.a;
+            transEl.dir = globalLang === 'ar' ? 'rtl' : 'ltr';
+            transEl.style.fontFamily = globalLang === 'ar' ? "'Cairo', sans-serif" : "'Inter', sans-serif";
+            
+            document.getElementById('modalVerbGroup').textContent = verb.g === 1 ? '1er Groupe' : verb.g === 2 ? '2e Groupe' : '3e Groupe';
+            
+            updateMasteryIcon();
+            conjPanel.dataset.present = conj.present.join('');
+            conjPanel.dataset.passe = conj.passe.join('');
+            conjPanel.dataset.futur = conj.futur.join('');
+            setTense(currentTense);
+
+            backdrop.classList.remove('opacity-0', 'pointer-events-none');
+            slideOver.classList.remove('translate-x-full');
+            document.body.classList.add('modal-open');
+        }
+
+        function setTense(tense) {
+            currentTense = tense;
+            conjPanel.innerHTML = conjPanel.dataset[tense];
+            document.querySelectorAll('.tense-tab').forEach(tab => {
+                tab.className = tab.dataset.tense === tense 
+                    ? "tense-tab flex-1 py-2 text-sm font-semibold rounded-lg text-slate-900 dark:text-white bg-white dark:bg-slate-700 shadow-sm transition-all focus:outline-none" 
+                    : "tense-tab flex-1 py-2 text-sm font-semibold rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all focus:outline-none";
+            });
+        }
+
+        function updateMasteryIcon() {
+            const isMastered = masteredVerbs.includes(currentActiveVerb.i);
+            document.getElementById('eyeOpenIcon').classList.toggle('hidden', !isMastered);
+            document.getElementById('eyeClosedIcon').classList.toggle('hidden', isMastered);
+        }
+
+        document.getElementById('masteryToggleBtn').addEventListener('click', () => {
+            if (!currentActiveVerb) return;
+            const idx = masteredVerbs.indexOf(currentActiveVerb.i);
+            if (idx > -1) masteredVerbs.splice(idx, 1);
+            else masteredVerbs.push(currentActiveVerb.i);
+            localStorage.setItem('masteredVerbs', JSON.stringify(masteredVerbs));
+            updateMasteryIcon(); renderGrid(searchInput.value);
+        });
+
+        const closeDrawer = () => {
+            backdrop.classList.add('opacity-0', 'pointer-events-none');
+            slideOver.classList.add('translate-x-full');
+            document.body.classList.remove('modal-open');
+        };
+
+        searchInput.addEventListener('input', (e) => renderGrid(e.target.value));
+        document.getElementById('closeModalBtn').addEventListener('click', closeDrawer);
+        backdrop.addEventListener('click', closeDrawer);
+        document.querySelectorAll('.tense-tab').forEach(tab => tab.addEventListener('click', (e) => setTense(e.target.dataset.tense)));
+
+        // THEME
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const sunIcon = document.getElementById('sunIcon'), moonIcon = document.getElementById('moonIcon');
+        const updateThemeUI = (isDark) => {
+            document.documentElement.classList.toggle('dark', isDark);
+            sunIcon.classList.toggle('hidden', !isDark);
+            moonIcon.classList.toggle('hidden', isDark);
+        };
+        updateThemeUI(localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches));
+        themeToggleBtn.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.contains('dark');
+            localStorage.theme = isDark ? 'light' : 'dark';
+            updateThemeUI(!isDark);
+        });
+
+        // CALENDAR AND STUDY LOGIC
+        const calBackdrop = document.getElementById('calendarModalBackdrop');
+        const calModal = document.getElementById('calendarModal');
+        let displayDate = new Date();
+        let studyData = JSON.parse(localStorage.getItem('studyData')) || { firstDate: null, learned: [] };
+        const todayStr = `${new Date().getFullYear()}-${String(new Date().getMonth()+1).padStart(2,'0')}-${String(new Date().getDate()).padStart(2,'0')}`;
+        
+        if (!studyData.firstDate) { studyData.firstDate = todayStr; localStorage.setItem('studyData', JSON.stringify(studyData)); }
+
+        function renderCalendar() {
+            const year = displayDate.getFullYear(), month = displayDate.getMonth();
+            document.getElementById('calendarMonthYear').textContent = `${['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'][month]} ${year}`;
+            
+            const daysGrid = document.getElementById('calendarDaysGrid');
+            daysGrid.innerHTML = '';
+            
+            let startDay = new Date(year, month, 1).getDay(); startDay = startDay === 0 ? 6 : startDay - 1;
+            for(let i=0; i<startDay; i++) daysGrid.innerHTML += `<div></div>`;
+
+            const firstDateObj = new Date(studyData.firstDate); firstDateObj.setHours(0,0,0,0);
+            const todayObj = new Date(); todayObj.setHours(0,0,0,0);
+
+            for(let i=1; i<=new Date(year, month + 1, 0).getDate(); i++) {
+                const iterDate = new Date(year, month, i);
+                const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`;
+                
+                let isPast = iterDate < firstDateObj, isFuture = iterDate > todayObj, isToday = dateStr === todayStr;
+                let hasLearned = studyData.learned.includes(dateStr), missed = !hasLearned && !isPast && !isFuture && !isToday;
+                
+                let textClass = (isPast || isFuture) ? "text-slate-300 dark:text-slate-600" : "text-slate-700 dark:text-slate-300";
+                let bgClass = isToday ? "bg-brand-100 dark:bg-brand-900/50 text-brand-700 dark:text-brand-300 font-bold rounded-lg" : "";
+                let indicator = hasLearned ? `<div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-1 rounded-full bg-emerald-500"></div>` : (missed ? `<div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-1 rounded-full bg-red-500"></div>` : "");
+
+                daysGrid.innerHTML += `<div class="relative py-2 flex justify-center items-center ${bgClass}"><span class="z-10 relative text-sm ${textClass}">${i}</span>${indicator}</div>`;
+            }
+
+            const learnBtn = document.getElementById('dailyLearnBtn');
+            if (studyData.learned.includes(todayStr)) {
+                learnBtn.className = "w-full py-3.5 px-4 bg-emerald-500 text-white font-bold rounded-xl flex items-center justify-center gap-2 shadow-sm cursor-default";
+                learnBtn.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>تمّ لهذا اليوم</span>`;
+                learnBtn.disabled = true;
+            } else {
+                learnBtn.className = "w-full py-3.5 px-4 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl flex items-center justify-center gap-2 shadow-sm transition-all focus:outline-none";
+                learnBtn.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg><span>Apprendre le verbe du jour</span>`;
+                learnBtn.disabled = false;
+            }
+        }
+
+        document.getElementById('calendarBtn').addEventListener('click', () => {
+            renderCalendar(); calBackdrop.classList.remove('opacity-0', 'pointer-events-none'); calModal.classList.remove('scale-95');
+        });
+        const closeCalendar = () => { calBackdrop.classList.add('opacity-0', 'pointer-events-none'); calModal.classList.add('scale-95'); };
+        document.getElementById('closeCalendarBtn').addEventListener('click', closeCalendar);
+        calBackdrop.addEventListener('click', (e) => { if(e.target === calBackdrop) closeCalendar(); });
+        document.getElementById('prevMonthBtn').addEventListener('click', () => { displayDate.setMonth(displayDate.getMonth() - 1); renderCalendar(); });
+        document.getElementById('nextMonthBtn').addEventListener('click', () => { displayDate.setMonth(displayDate.getMonth() + 1); renderCalendar(); });
+
+        document.getElementById('dailyLearnBtn').addEventListener('click', () => {
+            if (studyData.learned.includes(todayStr)) return;
+            let available = db.filter(v => !masteredVerbs.includes(v.i));
+            if (available.length === 0) available = db;
+            const randomVerb = available[Math.floor(Math.random() * available.length)];
+            
+            studyData.learned.push(todayStr); localStorage.setItem('studyData', JSON.stringify(studyData));
+            closeCalendar(); openVerb(randomVerb);
+        });
+
+        // ----------------------------------------
+        // STARTUP LOGIC: MODALS & NOTIFICATIONS
+        // ----------------------------------------
+        window.addEventListener('DOMContentLoaded', () => {
+            // 1. Welcome Modal Logic
+            const hideWelcomeModal = localStorage.getItem('hideWelcomeModal');
+            const welcomeModal = document.getElementById('welcomeModalBackdrop');
+            if (!hideWelcomeModal) {
+                welcomeModal.classList.remove('hidden');
+                welcomeModal.classList.add('flex');
+                setTimeout(() => welcomeModal.classList.remove('opacity-0'), 100);
+            }
+
+            document.getElementById('closeWelcomeBtn').addEventListener('click', () => {
+                if (document.getElementById('dontShowWelcomeAgain').checked) {
+                    localStorage.setItem('hideWelcomeModal', 'true');
+                }
+                welcomeModal.classList.add('opacity-0');
+                setTimeout(() => {
+                    welcomeModal.classList.add('hidden');
+                    welcomeModal.classList.remove('flex');
+                }, 300);
+            });
+
+            // 2. Missed Days Notification Logic
+            const lastMissedCheck = localStorage.getItem('lastMissedCheck');
+            if (lastMissedCheck !== todayStr) {
+                const firstDateObj = new Date(studyData.firstDate);
+                firstDateObj.setHours(0,0,0,0);
+                const todayObj = new Date();
+                todayObj.setHours(0,0,0,0);
+                
+                let missedCount = 0;
+                let lastMissedDateStr = null;
+
+                for (let d = new Date(firstDateObj); d < todayObj; d.setDate(d.getDate() + 1)) {
+                    const dStr = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+                    if (!studyData.learned.includes(dStr)) {
+                        missedCount++;
+                        lastMissedDateStr = dStr; // keep track of the most recent missed date
+                    }
+                }
+
+                if (missedCount > 0) {
+                    showMissedNotification(missedCount, lastMissedDateStr);
+                }
+                localStorage.setItem('lastMissedCheck', todayStr);
+            }
+        });
+
+        function showMissedNotification(count, dateStr) {
+            const singleMessages = [
+                "ركّز يا عزيزي، لم تتعلّم [VAR] 🙃",
+                "حاول بشكل أفضل في المرة القادمة، لقد فوّتت تعلّم [VAR] 🤭",
+                "لا يوجد تعلّم في [VAR]، ما رأيك أن تتعلّم اليوم؟ 😅",
+                "واصل التعلّم يا حبيبي، لقد فوّتت [VAR] 😶",
+                "لم تتعلّم [VAR]، يمكنك أن تفعل أفضل اليوم 🫠"
+            ];
+            const multiMessages = [
+                "ركّز يا عزيزي، لم تتعلّم [VAR] أيام 🙃",
+                "حاول بشكل أفضل في المرة القادمة، لقد فوّتت تعلّم [VAR] أيام 🤭",
+                "لا يوجد تعلّم في [VAR] أيام، ما رأيك أن تتعلّم اليوم؟ 😅",
+                "واصل التعلّم يا حبيبي، لقد فوّتت [VAR] أيام 😶",
+                "لم تتعلّم [VAR] أيام، يمكنك أن تفعل أفضل اليوم 🫠"
+            ];
+
+            let msgTemplate = "";
+            let varText = "";
+            const randIdx = Math.floor(Math.random() * 5);
+
+            if (count === 1) {
+                msgTemplate = singleMessages[randIdx];
+                varText = dateStr; 
+            } else {
+                msgTemplate = multiMessages[randIdx];
+                varText = count;
+            }
+
+            const finalMsg = msgTemplate.replace("[VAR]", varText);
+            
+            const notif = document.getElementById('missedNotif');
+            document.getElementById('missedNotifText').textContent = finalMsg;
+            
+            // Allow initial render then animate in
+            setTimeout(() => {
+                notif.classList.remove('-translate-y-full', 'opacity-0');
+                notif.classList.add('translate-y-4', 'opacity-100');
+                
+                // Animate out after 6 seconds
+                setTimeout(() => {
+                    notif.classList.remove('translate-y-4', 'opacity-100');
+                    notif.classList.add('-translate-y-full', 'opacity-0');
+                }, 6000);
+            }, 500);
+        }
+
+        renderGrid();
+    </script>
+</body>
+</html>
