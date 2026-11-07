@@ -184,15 +184,18 @@
     <!-- TOP HEADER -->
     <header class="px-5 py-3 glass-panel z-20 flex justify-between items-center border-b border-slate-800">
         <div class="flex items-center space-x-2">
-            <span class="text-rose-500 text-xl"><i class="fa-solid fa-heart animate-pulse"></i></span>
+            <span id="owner-toggle-heart" class="text-rose-500 text-xl cursor-pointer" title="Tap 5 times to toggle Owner Mode"><i class="fa-solid fa-heart animate-pulse"></i></span>
             <h1 class="font-serif text-lg font-bold tracking-wide bg-gradient-to-r from-rose-400 to-pink-300 bg-clip-text text-transparent">
                Buku kita
             </h1>
         </div>
-        <button id="theme-toggle-btn" class="theme-toggle-btn text-xs text-slate-300 bg-slate-800/80 px-3 py-1.5 rounded-full border border-slate-700 flex items-center gap-2 hover:bg-slate-700 transition-colors">
-            <i id="theme-icon" class="fa-solid fa-moon text-rose-400"></i>
-            <span id="theme-text">Dark</span>
-        </button>
+        <div class="flex items-center space-x-2">
+            <span id="owner-badge" class="hidden text-[10px] bg-rose-600 text-white px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">Owner Mode</span>
+            <button id="theme-toggle-btn" class="theme-toggle-btn text-xs text-slate-300 bg-slate-800/80 px-3 py-1.5 rounded-full border border-slate-700 flex items-center gap-2 hover:bg-slate-700 transition-colors">
+                <i id="theme-icon" class="fa-solid fa-moon text-rose-400"></i>
+                <span id="theme-text">Dark</span>
+            </button>
+        </div>
     </header>
 
     <!-- MAIN VIEW CONTAINERS -->
@@ -205,6 +208,17 @@
                     <h2 class="font-serif text-2xl text-rose-400 font-semibold">Pesan Bulanan</h2>
                     <p class="text-xs text-slate-400 mt-1">Ditulis pada tanggal 7 setiap bulan dengan cinta</p>
                 </div>
+
+                <!-- Owner Add Message Button & Form (Hidden by default for viewers) -->
+                <div id="owner-add-msg-container" class="hidden glass-panel p-4 rounded-2xl border border-rose-500/40 bg-rose-950/20 space-y-3">
+                    <h3 class="text-xs font-bold text-rose-400 uppercase tracking-wider">✨ Add New Message (Owner Only)</h3>
+                    <input type="text" id="new-msg-title" placeholder="Title (e.g. Happy 2nd Month!)" class="w-full bg-slate-800 text-xs text-white p-2 rounded-lg border border-slate-700 focus:outline-none focus:border-rose-400">
+                    <input type="text" id="new-msg-date" placeholder="Date (e.g. 7 Dec 2026)" class="w-full bg-slate-800 text-xs text-white p-2 rounded-lg border border-slate-700 focus:outline-none focus:border-rose-400">
+                    <textarea id="new-msg-preview" placeholder="Short preview text..." rows="2" class="w-full bg-slate-800 text-xs text-white p-2 rounded-lg border border-slate-700 focus:outline-none focus:border-rose-400"></textarea>
+                    <textarea id="new-msg-body" placeholder="Full romantic message..." rows="3" class="w-full bg-slate-800 text-xs text-white p-2 rounded-lg border border-slate-700 focus:outline-none focus:border-rose-400"></textarea>
+                    <button id="btn-submit-new-msg" class="w-full py-2 bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold rounded-xl shadow-md">Publish Message</button>
+                </div>
+
                 <div id="messages-list-container" class="space-y-3.5"></div>
             </div>
         </section>
@@ -344,7 +358,7 @@
                         <div id="mode-color-container" class="hidden flex items-center justify-around py-2">
                             <div class="flex flex-col items-center space-y-1">
                                 <span class="text-[10px] text-slate-400 uppercase font-semibold">Sayang him</span>
-                                <div id="color-circle-him" class="w-14 h-14 rounded-full border-2 border-slate-600 shadow-lg cursor-pointer flex items-center justify-center transition-transform hover:scale-105" style="background-color: #f43f5e;">
+                                <div id="color-circle-him" class="w-14 h-14 rounded-full border-2 border-slate-600 shadow-lg flex items-center justify-center transition-transform" style="background-color: #f43f5e;">
                                     <i class="fa-solid fa-palette text-white text-xs opacity-70"></i>
                                 </div>
                                 <input type="color" id="color-picker-him" class="hidden" value="#f43f5e">
@@ -352,7 +366,7 @@
 
                             <div class="flex flex-col items-center space-y-1">
                                 <span class="text-[10px] text-slate-400 uppercase font-semibold">Sayang her</span>
-                                <div id="color-circle-her" class="w-14 h-14 rounded-full border-2 border-slate-600 shadow-lg cursor-pointer flex items-center justify-center transition-transform hover:scale-105" style="background-color: #ec4899;">
+                                <div id="color-circle-her" class="w-14 h-14 rounded-full border-2 border-slate-600 shadow-lg flex items-center justify-center transition-transform" style="background-color: #ec4899;">
                                     <i class="fa-solid fa-palette text-white text-xs opacity-70"></i>
                                 </div>
                                 <input type="color" id="color-picker-her" class="hidden" value="#ec4899">
@@ -376,7 +390,7 @@
         </section>
     </main>
 
-    <!-- CALENDAR MODAL -->
+    <!-- CALENDAR MODAL (Owner Only) -->
     <div id="calendar-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-end justify-center hidden transition-opacity duration-300">
         <div class="w-full max-w-md glass-modal rounded-t-3xl p-5 space-y-4 border-t border-rose-500/30 transform transition-transform duration-300 translate-y-0">
             <div class="flex justify-between items-center border-b border-slate-700 pb-3">
@@ -532,7 +546,10 @@
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        const MONTHLY_MESSAGES = [
+        // Owner Mode State (Default false for everyone else, tap heart 5 times to enable on your phone)
+        let isOwner = localStorage.getItem('is_owner_mode') === 'true';
+
+        let defaultMessages = [
             {
                 id: 1,
                 title: "Semoga kamu bermimpi indah malam ini.",
@@ -542,8 +559,8 @@
             }
         ];
 
-        // CONFIGURATION FIREBASE OPERATIONNELLE POUR GITHUB PAGES
-        // (Assurez-vous d'avoir créé un projet gratuit sur firebase.google.com si vous souhaitez un backend dédié, ou utilisez celui par défaut)
+        let monthlyMessages = JSON.parse(localStorage.getItem('monthly_messages_list') || JSON.stringify(defaultMessages));
+
         const firebaseConfig = typeof __firebase_config !== 'undefined' 
             ? JSON.parse(__firebase_config) 
             : {
@@ -575,15 +592,12 @@
         let specialNoteAnimationInterval = null;
         let profileRotationInterval = null;
 
-        // Synchronized Wishes Data Arrays
         let wishesDataHim = JSON.parse(localStorage.getItem('wishes_him') || '["Take airplane", "???", "???", "???", "???", "???", "???", "???", "???", "???"]');
         let wishesDataHer = JSON.parse(localStorage.getItem('wishes_her') || '["???", "???", "???", "???", "???", "???", "???", "???", "???", "???"]');
 
-        // Synchronized Colors
         let colorHim = localStorage.getItem('color_him') || '#f43f5e';
         let colorHer = localStorage.getItem('color_her') || '#ec4899';
 
-        // Dynamic Modes Array for Card 3
         const cardModes = ["Clock", "Birthday", "Couple Profil", "Wishes", "Color"];
         let currentModeIndex = 0;
         let profilePairIndex = 1;
@@ -593,6 +607,32 @@
         const screen3 = document.getElementById('screen-3');
         const tabBtns = [document.getElementById('tab-btn-1'), document.getElementById('tab-btn-2'), document.getElementById('tab-btn-3')];
         const unreadBadge = document.getElementById('unread-badge');
+
+        // Owner Toggle Listener (Tap heart 5 times)
+        let heartTapCount = 0;
+        document.getElementById('owner-toggle-heart').addEventListener('click', () => {
+            heartTapCount++;
+            if (heartTapCount >= 5) {
+                isOwner = !isOwner;
+                localStorage.setItem('is_owner_mode', isOwner);
+                heartTapCount = 0;
+                applyOwnerModeUI();
+                alert(isOwner ? "✨ Owner Mode Enabled! You can now edit/add." : "🔒 Viewer Mode Enabled (Read-only).");
+            }
+            setTimeout(() => { heartTapCount = 0; }, 3000);
+        });
+
+        function applyOwnerModeUI() {
+            const badge = document.getElementById('owner-badge');
+            const addMsgContainer = document.getElementById('owner-add-msg-container');
+            if (isOwner) {
+                badge.classList.remove('hidden');
+                addMsgContainer.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+                addMsgContainer.classList.add('hidden');
+            }
+        }
 
         // Theme Toggle Setup
         const themeToggleBtn = document.getElementById('theme-toggle-btn');
@@ -622,6 +662,7 @@
         });
 
         window.addEventListener('load', async () => {
+            applyOwnerModeUI();
             await initFirebase();
             renderMessages();
             renderCalendar();
@@ -658,6 +699,10 @@
                             calendarData = data.records;
                             localStorage.setItem('couple_calendar_data', JSON.stringify(calendarData));
                         }
+                        if (data.messages) {
+                            monthlyMessages = data.messages;
+                            localStorage.setItem('monthly_messages_list', JSON.stringify(monthlyMessages));
+                        }
                         if (data.wishes_him) {
                             wishesDataHim = data.wishes_him;
                             localStorage.setItem('wishes_him', JSON.stringify(wishesDataHim));
@@ -674,6 +719,7 @@
                             colorHer = data.color_her;
                             localStorage.setItem('color_her', colorHer);
                         }
+                        renderMessages();
                         updateCalendarUI();
                         renderWishesLists();
                         applyColorsUI();
@@ -694,6 +740,7 @@
 
         async function saveSharedData() {
             localStorage.setItem('couple_calendar_data', JSON.stringify(calendarData));
+            localStorage.setItem('monthly_messages_list', JSON.stringify(monthlyMessages));
             localStorage.setItem('wishes_him', JSON.stringify(wishesDataHim));
             localStorage.setItem('wishes_her', JSON.stringify(wishesDataHer));
             localStorage.setItem('color_him', colorHim);
@@ -704,6 +751,7 @@
                     const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'calendar_records', 'couple_data');
                     await setDoc(docRef, { 
                         records: calendarData,
+                        messages: monthlyMessages,
                         wishes_him: wishesDataHim,
                         wishes_her: wishesDataHer,
                         color_him: colorHim,
@@ -713,7 +761,39 @@
             }
         }
 
-        // Tab Switching & Audio Control for Screen 3
+        // Add Message Submit (Owner Only)
+        document.getElementById('btn-submit-new-msg')?.addEventListener('click', () => {
+            if (!isOwner) return;
+            const title = document.getElementById('new-msg-title').value.trim();
+            const date = document.getElementById('new-msg-date').value.trim();
+            const preview = document.getElementById('new-msg-preview').value.trim();
+            const message = document.getElementById('new-msg-body').value.trim();
+
+            if (!title || !date || !message) {
+                alert("Please fill in title, date, and message!");
+                return;
+            }
+
+            const newMsg = {
+                id: Date.now(),
+                title,
+                date,
+                preview: preview || message.substring(0, 60) + '...',
+                message
+            };
+
+            monthlyMessages.unshift(newMsg);
+            saveSharedData();
+            renderMessages();
+            updateUnreadBadge();
+
+            document.getElementById('new-msg-title').value = '';
+            document.getElementById('new-msg-date').value = '';
+            document.getElementById('new-msg-preview').value = '';
+            document.getElementById('new-msg-body').value = '';
+            alert("Message published successfully!");
+        });
+
         window.switchTab = function(tabIndex) {
             [screen1, screen2, screen3].forEach((scr, idx) => {
                 if (idx === tabIndex - 1) scr.classList.remove('hidden');
@@ -744,7 +824,7 @@
             const container = document.getElementById('messages-list-container');
             container.innerHTML = '';
 
-            MONTHLY_MESSAGES.forEach(msg => {
+            monthlyMessages.forEach(msg => {
                 const isRead = readMessageIds.includes(msg.id);
                 const card = document.createElement('div');
                 card.className = `glass-panel p-4 rounded-2xl border transition-all cursor-pointer relative overflow-hidden ${
@@ -820,7 +900,7 @@
         }
 
         function updateUnreadBadge() {
-            const unreadCount = MONTHLY_MESSAGES.filter(m => !readMessageIds.includes(m.id)).length;
+            const unreadCount = monthlyMessages.filter(m => !readMessageIds.includes(m.id)).length;
             if (unreadCount > 0) {
                 unreadBadge.innerText = unreadCount;
                 unreadBadge.classList.remove('hidden');
@@ -878,7 +958,11 @@
                         dayCell.classList.add('opacity-40', 'cursor-not-allowed');
                     } else {
                         dayCell.classList.add('cursor-pointer', 'active:scale-95');
-                        dayCell.addEventListener('click', () => handleDayClick(dateStr));
+                        // Viewers cannot click to edit calendar days
+                        dayCell.addEventListener('click', () => {
+                            if (!isOwner) return; // Read-only for viewers
+                            handleDayClick(dateStr);
+                        });
                     }
 
                     grid.appendChild(dayCell);
@@ -1055,6 +1139,8 @@
         }
 
         function handleDayClick(dateStr) {
+            if (!isOwner) return; // Prevent viewers from opening modal
+
             if (periodRangeStartDate) {
                 completePeriodRangeSelection(periodRangeStartDate, dateStr);
                 periodRangeStartDate = null;
@@ -1117,31 +1203,37 @@
         }
 
         document.getElementById('btn-toggle-vc').addEventListener('click', () => {
+            if (!isOwner) return;
             tempDayState.vc = !tempDayState.vc;
             updateModalUI();
         });
 
         document.getElementById('btn-toggle-enjoy').addEventListener('click', () => {
+            if (!isOwner) return;
             tempDayState.enjoy = !tempDayState.enjoy;
             updateModalUI();
         });
 
         document.getElementById('btn-toggle-watch').addEventListener('click', () => {
+            if (!isOwner) return;
             tempDayState.watch = !tempDayState.watch;
             updateModalUI();
         });
 
         document.getElementById('btn-toggle-sleep').addEventListener('click', () => {
+            if (!isOwner) return;
             tempDayState.sleep = !tempDayState.sleep;
             updateModalUI();
         });
 
         document.getElementById('btn-toggle-special').addEventListener('click', () => {
+            if (!isOwner) return;
             tempDayState.special = !tempDayState.special;
             updateModalUI();
         });
 
         document.getElementById('btn-toggle-period').addEventListener('click', () => {
+            if (!isOwner) return;
             document.getElementById('calendar-modal').classList.add('hidden');
             periodRangeStartDate = selectedDateStr;
             document.getElementById('range-picker-bar').classList.remove('hidden');
@@ -1168,6 +1260,7 @@
         }
 
         document.getElementById('cum-him-inc').addEventListener('click', () => {
+            if (!isOwner) return;
             if (tempDayState.cumHim < 10) {
                 tempDayState.cumHim++;
                 tempDayState.vc = true;
@@ -1176,6 +1269,7 @@
             }
         });
         document.getElementById('cum-him-dec').addEventListener('click', () => {
+            if (!isOwner) return;
             if (tempDayState.cumHim > 0) {
                 tempDayState.cumHim--;
                 updateModalUI();
@@ -1183,6 +1277,7 @@
         });
 
         document.getElementById('cum-her-inc').addEventListener('click', () => {
+            if (!isOwner) return;
             if (tempDayState.cumHer < 10) {
                 tempDayState.cumHer++;
                 tempDayState.vc = true;
@@ -1191,6 +1286,7 @@
             }
         });
         document.getElementById('cum-her-dec').addEventListener('click', () => {
+            if (!isOwner) return;
             if (tempDayState.cumHer > 0) {
                 tempDayState.cumHer--;
                 updateModalUI();
@@ -1198,7 +1294,7 @@
         });
 
         document.getElementById('btn-save-day-status').addEventListener('click', () => {
-            if (!selectedDateStr) return;
+            if (!isOwner || !selectedDateStr) return;
             tempDayState.note = document.getElementById('special-note-input').value;
             calendarData[selectedDateStr] = { ...tempDayState };
             saveSharedData();
@@ -1207,7 +1303,7 @@
         });
 
         document.getElementById('btn-unnotify-all').addEventListener('click', () => {
-            if (!selectedDateStr) return;
+            if (!isOwner || !selectedDateStr) return;
             delete calendarData[selectedDateStr];
             saveSharedData();
             updateCalendarUI();
@@ -1303,9 +1399,6 @@
             document.getElementById('photo-modal').classList.add('hidden');
         });
 
-        // ----------------------------------------------------
-        // SCREEN 3 DYNAMIC CARD MODES SETUP
-        // ----------------------------------------------------
         function initCardModes() {
             const prevBtn = document.getElementById('card-nav-prev');
             const nextBtn = document.getElementById('card-nav-next');
@@ -1323,7 +1416,6 @@
 
         function switchCardMode() {
             const modeName = cardModes[currentModeIndex];
-            const cardBox = document.getElementById('screen3-dynamic-card');
             const modeTitle = document.getElementById('card-mode-title');
 
             const containers = {
@@ -1355,7 +1447,6 @@
             }
         }
 
-        // Birthday Logic
         function updateBirthdayCountdown() {
             const now = new Date();
             const year = now.getFullYear();
@@ -1406,7 +1497,6 @@
             }
         }
 
-        // Couple Profil Auto Carousel
         function startProfileRotation() {
             const himImg = document.getElementById('profile-him-img');
             const herImg = document.getElementById('profile-her-img');
@@ -1434,7 +1524,6 @@
             profileRotationInterval = setInterval(updateProfilePair, 3000);
         }
 
-        // Synchronized Wishes Editable Lists
         function renderWishesLists() {
             const listHim = document.getElementById('wishes-list-him');
             const listHer = document.getElementById('wishes-list-her');
@@ -1444,36 +1533,39 @@
 
             wishesDataHim.forEach((item, idx) => {
                 const li = document.createElement('li');
-                li.className = 'cursor-pointer hover:text-rose-400 truncate';
+                li.className = isOwner ? 'cursor-pointer hover:text-rose-400 truncate' : 'truncate';
                 li.innerText = `${idx + 1}. ${item}`;
-                li.addEventListener('click', () => {
-                    const val = prompt(`Edit Philippe Wish #${idx + 1}:`, item);
-                    if (val !== null && val.trim() !== '') {
-                        wishesDataHim[idx] = val.trim();
-                        saveSharedData();
-                        renderWishesLists();
-                    }
-                });
+                if (isOwner) {
+                    li.addEventListener('click', () => {
+                        const val = prompt(`Edit Philippe Wish #${idx + 1}:`, item);
+                        if (val !== null && val.trim() !== '') {
+                            wishesDataHim[idx] = val.trim();
+                            saveSharedData();
+                            renderWishesLists();
+                        }
+                    });
+                }
                 listHim.appendChild(li);
             });
 
             wishesDataHer.forEach((item, idx) => {
                 const li = document.createElement('li');
-                li.className = 'cursor-pointer hover:text-pink-400 truncate';
+                li.className = isOwner ? 'cursor-pointer hover:text-pink-400 truncate' : 'truncate';
                 li.innerText = `${idx + 1}. ${item}`;
-                li.addEventListener('click', () => {
-                    const val = prompt(`Edit Diva Wish #${idx + 1}:`, item);
-                    if (val !== null && val.trim() !== '') {
-                        wishesDataHer[idx] = val.trim();
-                        saveSharedData();
-                        renderWishesLists();
-                    }
-                });
+                if (isOwner) {
+                    li.addEventListener('click', () => {
+                        const val = prompt(`Edit Diva Wish #${idx + 1}:`, item);
+                        if (val !== null && val.trim() !== '') {
+                            wishesDataHer[idx] = val.trim();
+                            saveSharedData();
+                            renderWishesLists();
+                        }
+                    });
+                }
                 listHer.appendChild(li);
             });
         }
 
-        // Synchronized Colors Setup
         function initColors() {
             const circleHim = document.getElementById('color-circle-him');
             const circleHer = document.getElementById('color-circle-her');
@@ -1482,20 +1574,27 @@
 
             applyColorsUI();
 
-            circleHim.addEventListener('click', () => pickerHim.click());
-            circleHer.addEventListener('click', () => pickerHer.click());
+            if (isOwner) {
+                circleHim.style.cursor = 'pointer';
+                circleHer.style.cursor = 'pointer';
+                circleHim.addEventListener('click', () => pickerHim.click());
+                circleHer.addEventListener('click', () => pickerHer.click());
 
-            pickerHim.addEventListener('input', (e) => {
-                colorHim = e.target.value;
-                applyColorsUI();
-                saveSharedData();
-            });
+                pickerHim.addEventListener('input', (e) => {
+                    colorHim = e.target.value;
+                    applyColorsUI();
+                    saveSharedData();
+                });
 
-            pickerHer.addEventListener('input', (e) => {
-                colorHer = e.target.value;
-                applyColorsUI();
-                saveSharedData();
-            });
+                pickerHer.addEventListener('input', (e) => {
+                    colorHer = e.target.value;
+                    applyColorsUI();
+                    saveSharedData();
+                });
+            } else {
+                circleHim.style.cursor = 'default';
+                circleHer.style.cursor = 'default';
+            }
         }
 
         function applyColorsUI() {
