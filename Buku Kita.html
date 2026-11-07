@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+l<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -99,12 +99,6 @@
         body.light-mode .theme-toggle-btn span {
             color: #ffffff !important;
         }
-        body.light-mode input,
-        body.light-mode textarea {
-            background-color: #f8fafc !important;
-            color: #0f172a !important;
-            border-color: #cbd5e1 !important;
-        }
 
         .no-scrollbar::-webkit-scrollbar {
             display: none;
@@ -133,7 +127,6 @@
             animation: heartbeat 1.6s infinite ease-in-out;
         }
 
-        /* Wave Animation for Card */
         .wave-box {
             position: relative;
             overflow: hidden;
@@ -159,7 +152,6 @@
             100% { transform: translateX(-50%) rotate(360deg); }
         }
 
-        /* Fireworks Animation Effect for Birthday */
         .fireworks-box {
             position: relative;
             overflow: hidden;
@@ -177,103 +169,68 @@
             0% { transform: scale(1) translate(0, 0); opacity: 1; }
             100% { transform: scale(0.2) translate(var(--tx), var(--ty)); opacity: 0; }
         }
+
+        @keyframes floatingHeart {
+            0% { transform: translateY(0) scale(0.8); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 0.8; }
+            100% { transform: translateY(-40px) scale(1.2); opacity: 0; }
+        }
+        .floating-heart {
+            position: fixed;
+            pointer-events: none;
+            z-index: 100;
+            animation: floatingHeart 3s ease-out forwards;
+        }
     </style>
 </head>
 <body class="h-screen w-screen overflow-hidden flex flex-col justify-between">
 
-    <!-- TOP HEADER -->
-    <header class="px-5 py-3 glass-panel z-20 flex justify-between items-center border-b border-slate-800">
+    <!-- TOP HEADER (ALWAYS VISIBLE & STICKY TOP) -->
+    <header class="fixed top-0 left-0 right-0 h-14 px-5 glass-panel z-50 flex justify-between items-center border-b border-slate-800 shadow-md">
         <div class="flex items-center space-x-2">
-            <span id="owner-toggle-heart" class="text-rose-500 text-xl cursor-pointer" title="Tap 5 times to toggle Owner Mode"><i class="fa-solid fa-heart animate-pulse"></i></span>
+            <span id="secret-heart" class="text-rose-500 text-xl cursor-pointer active:scale-95 transition-transform"><i class="fa-solid fa-heart animate-pulse"></i></span>
             <h1 class="font-serif text-lg font-bold tracking-wide bg-gradient-to-r from-rose-400 to-pink-300 bg-clip-text text-transparent">
                Buku kita
             </h1>
         </div>
-        <div class="flex items-center space-x-2">
-            <span id="owner-badge" class="hidden text-[10px] bg-rose-600 text-white px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">Owner Mode</span>
-            <button id="theme-toggle-btn" class="theme-toggle-btn text-xs text-slate-300 bg-slate-800/80 px-3 py-1.5 rounded-full border border-slate-700 flex items-center gap-2 hover:bg-slate-700 transition-colors">
-                <i id="theme-icon" class="fa-solid fa-moon text-rose-400"></i>
-                <span id="theme-text">Dark</span>
-            </button>
-        </div>
+        <button id="theme-toggle-btn" class="theme-toggle-btn text-xs text-slate-300 bg-slate-800/80 px-3 py-1.5 rounded-full border border-slate-700 flex items-center gap-2 hover:bg-slate-700 transition-colors">
+            <i id="theme-icon" class="fa-solid fa-moon text-rose-400"></i>
+            <span id="theme-text">Dark</span>
+        </button>
     </header>
 
-    <!-- MAIN VIEW CONTAINERS -->
-    <main class="flex-1 relative overflow-hidden">
+    <!-- MAIN VIEW CONTAINERS (PT-16 GAP TO PREVENT HEADER COVERAGE) -->
+    <main class="flex-1 relative overflow-hidden pt-16">
         
         <!-- SCREEN 1: MONTHLY MESSAGES -->
-        <section id="screen-1" class="absolute inset-0 p-4 overflow-y-auto no-scrollbar pb-24 transition-opacity duration-300">
-            <div class="max-w-md mx-auto space-y-4">
-                <div class="text-center my-3">
-                    <h2 class="font-serif text-2xl text-rose-400 font-semibold">Pesan Bulanan</h2>
-                    <p class="text-xs text-slate-400 mt-1">Ditulis pada tanggal 7 setiap bulan dengan cinta</p>
+        <section id="screen-1" class="absolute inset-0 p-4 pt-16 overflow-y-auto no-scrollbar pb-24 transition-opacity duration-300">
+            <div id="screen1-top-anchor" class="max-w-md mx-auto space-y-3">
+                <div class="text-center my-2">
+                    <h2 class="font-serif text-xl text-rose-400 font-semibold">Pesan Bulanan</h2>
                 </div>
-
-                <!-- Owner Add Message Button & Form (Hidden by default for viewers) -->
-                <div id="owner-add-msg-container" class="hidden glass-panel p-4 rounded-2xl border border-rose-500/40 bg-rose-950/20 space-y-3">
-                    <h3 class="text-xs font-bold text-rose-400 uppercase tracking-wider">✨ Add New Message (Owner Only)</h3>
-                    <input type="text" id="new-msg-title" placeholder="Title (e.g. Happy 2nd Month!)" class="w-full bg-slate-800 text-xs text-white p-2 rounded-lg border border-slate-700 focus:outline-none focus:border-rose-400">
-                    <input type="text" id="new-msg-date" placeholder="Date (e.g. 7 Dec 2026)" class="w-full bg-slate-800 text-xs text-white p-2 rounded-lg border border-slate-700 focus:outline-none focus:border-rose-400">
-                    <textarea id="new-msg-preview" placeholder="Short preview text..." rows="2" class="w-full bg-slate-800 text-xs text-white p-2 rounded-lg border border-slate-700 focus:outline-none focus:border-rose-400"></textarea>
-                    <textarea id="new-msg-body" placeholder="Full romantic message..." rows="3" class="w-full bg-slate-800 text-xs text-white p-2 rounded-lg border border-slate-700 focus:outline-none focus:border-rose-400"></textarea>
-                    <button id="btn-submit-new-msg" class="w-full py-2 bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold rounded-xl shadow-md">Publish Message</button>
-                </div>
-
-                <div id="messages-list-container" class="space-y-3.5"></div>
+                <div id="messages-list-container" class="space-y-3"></div>
             </div>
         </section>
 
-        <!-- SCREEN 2: INTERACTIVE CALENDAR -->
-        <section id="screen-2" class="absolute inset-0 flex flex-col p-3 pb-24 hidden transition-opacity duration-300 overflow-hidden">
-            <div class="max-w-md w-full mx-auto flex flex-col h-full space-y-3">
-                <!-- Swapping Legend Header -->
-                <div id="calendar-legend-bar" class="flex-shrink-0 glass-panel p-2 rounded-2xl flex items-center justify-between text-[9px] gap-1 border border-slate-800 font-medium transition-all duration-300">
-                    <!-- Standard Legend View -->
-                    <div id="legend-default" class="w-full flex items-center justify-between">
-                        <div class="flex items-center gap-0.5"><span>🩸</span><span>Period</span></div>
-                        <div class="flex items-center gap-0.5"><span>😜</span><span>Enjoy</span></div>
-                        <div class="flex items-center gap-0.5"><span>📲</span><span>VC</span></div>
-                        <div class="flex items-center gap-0.5"><span>🎬</span><span>Watch</span></div>
-                        <div class="flex items-center gap-0.5"><span>😴</span><span>Sleep</span></div>
-                        <div class="flex items-center gap-0.5"><span>🎉</span><span>Special</span></div>
-                        <div class="flex items-center gap-0.5"><span>💦💧</span><span>Cum</span></div>
-                    </div>
-                    <!-- Calculated Stats View (Shown every 10s for 3s) -->
-                    <div id="legend-stats" class="w-full flex items-center justify-between hidden text-rose-400 font-semibold">
-                        <div class="flex items-center gap-0.5"><span>🩸</span><span id="stat-period">0</span></div>
-                        <div class="flex items-center gap-0.5"><span>😜</span><span id="stat-enjoy">0</span></div>
-                        <div class="flex items-center gap-0.5"><span>📲</span><span id="stat-vc">0</span></div>
-                        <div class="flex items-center gap-0.5"><span>🎬</span><span id="stat-watch">0</span></div>
-                        <div class="flex items-center gap-0.5"><span>😴</span><span id="stat-sleep">0</span></div>
-                        <div class="flex items-center gap-0.5"><span>🎉</span><span id="stat-special">0</span></div>
-                        <div class="flex items-center gap-0.5"><span id="stat-cum">💦⁰💧⁰</span></div>
-                    </div>
+        <!-- SCREEN 2: CALENDAR LIST (HIDDEN BY DEFAULT) -->
+        <section id="screen-2" class="absolute inset-0 p-4 pt-16 overflow-y-auto no-scrollbar pb-24 hidden transition-opacity duration-300">
+            <div id="screen2-top-anchor" class="max-w-md mx-auto space-y-3">
+                <div class="text-center my-2">
+                    <h2 class="font-serif text-xl text-rose-400 font-semibold">Kalender</h2>
                 </div>
-
-                <div id="range-picker-bar" class="hidden flex-shrink-0 glass-panel p-2.5 rounded-xl border-rose-500/40 bg-rose-950/40 flex justify-between items-center text-xs">
-                    <span class="text-rose-400 font-medium animate-pulse">Pilih tanggal AKHIR untuk rentang Periode...</span>
-                    <button id="cancel-range-btn" class="px-2 py-1 bg-slate-800 rounded text-slate-300">Cancel</button>
-                </div>
-
-                <!-- Fixed Days Header -->
-                <div class="flex-shrink-0 grid grid-cols-7 gap-1 text-center text-xs font-semibold py-1.5 bg-slate-800 text-slate-200 rounded-lg shadow-md border border-slate-700">
-                    <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
-                </div>
-
-                <!-- Scrollable Months Container -->
-                <div id="calendar-months-container" class="flex-1 overflow-y-auto no-scrollbar space-y-6 pr-1"></div>
+                <div id="calendar-list-container" class="space-y-3"></div>
             </div>
         </section>
 
-        <!-- SCREEN 3: 100-MILESTONE JOURNEY & INTERACTIVE CAROUSEL -->
-        <section id="screen-3" class="absolute inset-0 p-4 overflow-y-auto no-scrollbar pb-24 hidden transition-opacity duration-300">
-            <div class="max-w-md mx-auto space-y-6">
-                <!-- Interactive Dynamic Card (Clock, Birthday, Couple Profil, Wishes, Color) -->
-                <div id="screen3-dynamic-card" class="glass-panel p-5 rounded-3xl text-center border border-rose-500/20 shadow-lg relative overflow-hidden wave-box min-h-[190px] flex flex-col justify-between">
+        <!-- SCREEN 3: JOURNEY -->
+        <section id="screen-3" class="absolute inset-0 p-4 pt-16 overflow-y-auto no-scrollbar pb-24 hidden transition-opacity duration-300">
+            <div id="screen3-top-anchor" class="max-w-md mx-auto space-y-6">
+                <!-- Dynamic Card / Clock Display -->
+                <div id="screen3-dynamic-card" class="glass-panel p-4 rounded-3xl text-center border border-rose-500/20 shadow-lg relative overflow-hidden wave-box min-h-[180px] flex flex-col justify-between mt-1">
                     <div class="wave"></div>
                     <div class="wave"></div>
 
-                    <!-- Header with Left/Right Navigation Buttons around title -->
                     <div class="relative z-10 flex items-center justify-between mb-2">
                         <button id="card-nav-prev" class="w-7 h-7 rounded-lg bg-slate-700/80 hover:bg-slate-600 text-rose-400 flex items-center justify-center text-xs border border-slate-600 active:scale-95 transition-transform">
                             <i class="fa-solid fa-chevron-left"></i>
@@ -288,36 +245,35 @@
                         </button>
                     </div>
 
-                    <!-- DYNAMIC CONTAINER CONTENT -->
                     <div id="card-content-area" class="relative z-10 my-auto">
                         <!-- MODE 0: CLOCK -->
-                        <div id="mode-clock-container" class="space-y-3">
-                            <div id="timer-display" class="grid grid-cols-4 gap-2 text-center my-1">
-                                <div class="bg-slate-800/80 p-2.5 rounded-xl border border-slate-700 backdrop-blur-sm">
-                                    <span id="timer-days" class="text-2xl font-extrabold text-white block">00</span>
-                                    <span class="text-[10px] text-slate-400 uppercase">Days</span>
+                        <div id="mode-clock-container" class="space-y-2">
+                            <div id="timer-display" class="grid grid-cols-4 gap-1.5 text-center my-1">
+                                <div class="bg-slate-800/80 p-2 rounded-xl border border-slate-700 backdrop-blur-sm">
+                                    <span id="timer-days" class="text-xl font-extrabold text-white block">00</span>
+                                    <span class="text-[9px] text-slate-400 uppercase">Days</span>
                                 </div>
-                                <div class="bg-slate-800/80 p-2.5 rounded-xl border border-slate-700 backdrop-blur-sm">
-                                    <span id="timer-hours" class="text-2xl font-extrabold text-rose-400 block">00</span>
-                                    <span class="text-[10px] text-slate-400 uppercase">Hours</span>
+                                <div class="bg-slate-800/80 p-2 rounded-xl border border-slate-700 backdrop-blur-sm">
+                                    <span id="timer-hours" class="text-xl font-extrabold text-rose-400 block">00</span>
+                                    <span class="text-[9px] text-slate-400 uppercase">Hours</span>
                                 </div>
-                                <div class="bg-slate-800/80 p-2.5 rounded-xl border border-slate-700 backdrop-blur-sm">
-                                    <span id="timer-minutes" class="text-2xl font-extrabold text-white block">00</span>
-                                    <span class="text-[10px] text-slate-400 uppercase">Mins</span>
+                                <div class="bg-slate-800/80 p-2 rounded-xl border border-slate-700 backdrop-blur-sm">
+                                    <span id="timer-minutes" class="text-xl font-extrabold text-white block">00</span>
+                                    <span class="text-[9px] text-slate-400 uppercase">Mins</span>
                                 </div>
-                                <div class="bg-slate-800/80 p-2.5 rounded-xl border border-slate-700 backdrop-blur-sm">
-                                    <span id="timer-seconds" class="text-2xl font-extrabold text-rose-400 block">00</span>
-                                    <span class="text-[10px] text-slate-400 uppercase">Secs</span>
+                                <div class="bg-slate-800/80 p-2 rounded-xl border border-slate-700 backdrop-blur-sm">
+                                    <span id="timer-seconds" class="text-xl font-extrabold text-rose-400 block">00</span>
+                                    <span class="text-[9px] text-slate-400 uppercase">Secs</span>
                                 </div>
                             </div>
-                            <p class="text-[11px] text-slate-400">Sejak 7 Oktober 2026.</p>
+                            <p id="timer-start-label" class="text-[10px] text-slate-400">Sejak 7 Oktober 2026.</p>
                         </div>
 
                         <!-- MODE 1: BIRTHDAY -->
                         <div id="mode-birthday-container" class="hidden flex items-center justify-around py-2">
                             <div class="text-center">
                                 <span class="text-[10px] text-slate-400 uppercase block font-semibold">15 March</span>
-                                <span id="bday-days-him" class="text-3xl font-extrabold text-rose-400">00</span>
+                                <span id="bday-days-him" class="text-2xl font-extrabold text-rose-400">00</span>
                             </div>
                             <div class="text-center">
                                 <span class="text-xs font-serif font-bold text-slate-300 block">Hari</span>
@@ -325,64 +281,31 @@
                             </div>
                             <div class="text-center">
                                 <span class="text-[10px] text-slate-400 uppercase block font-semibold">2 May</span>
-                                <span id="bday-days-her" class="text-3xl font-extrabold text-pink-400">00</span>
+                                <span id="bday-days-her" class="text-2xl font-extrabold text-pink-400">00</span>
                             </div>
                         </div>
 
                         <!-- MODE 2: COUPLE PROFIL -->
                         <div id="mode-profile-container" class="hidden flex items-center justify-center space-x-6 py-2">
-                            <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-rose-500 shadow-md bg-slate-800">
+                            <div class="w-14 h-14 rounded-full overflow-hidden border-2 border-rose-500 shadow-md bg-slate-800">
                                 <img id="profile-him-img" src="Coupleprofil1.png" alt="Him" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/150x150/1e293b/f43f5e?text=Philippe'">
                             </div>
                             <i class="fa-solid fa-heart text-rose-500 text-lg animate-pulse"></i>
-                            <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-pink-500 shadow-md bg-slate-800">
+                            <div class="w-14 h-14 rounded-full overflow-hidden border-2 border-pink-500 shadow-md bg-slate-800">
                                 <img id="profile-her-img" src="Coupleprofil2.png" alt="Her" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/150x150/1e293b/ec4899?text=Diva'">
-                            </div>
-                        </div>
-
-                        <!-- MODE 3: WISHES -->
-                        <div id="mode-wishes-container" class="hidden space-y-2 py-1 max-h-40 overflow-y-auto no-scrollbar">
-                            <div class="grid grid-cols-2 gap-2 text-left text-xs">
-                                <div class="bg-slate-800/80 p-2 rounded-xl border border-slate-700">
-                                    <h5 class="text-[10px] font-bold text-rose-400 uppercase mb-1 border-b border-slate-700 pb-0.5">Sayang him</h5>
-                                    <ul id="wishes-list-him" class="space-y-1 text-[11px] text-slate-300"></ul>
-                                </div>
-                                <div class="bg-slate-800/80 p-2 rounded-xl border border-slate-700">
-                                    <h5 class="text-[10px] font-bold text-pink-400 uppercase mb-1 border-b border-slate-700 pb-0.5">Sayang her</h5>
-                                    <ul id="wishes-list-her" class="space-y-1 text-[11px] text-slate-300"></ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- MODE 4: COLOR -->
-                        <div id="mode-color-container" class="hidden flex items-center justify-around py-2">
-                            <div class="flex flex-col items-center space-y-1">
-                                <span class="text-[10px] text-slate-400 uppercase font-semibold">Sayang him</span>
-                                <div id="color-circle-him" class="w-14 h-14 rounded-full border-2 border-slate-600 shadow-lg flex items-center justify-center transition-transform" style="background-color: #f43f5e;">
-                                    <i class="fa-solid fa-palette text-white text-xs opacity-70"></i>
-                                </div>
-                                <input type="color" id="color-picker-him" class="hidden" value="#f43f5e">
-                            </div>
-
-                            <div class="flex flex-col items-center space-y-1">
-                                <span class="text-[10px] text-slate-400 uppercase font-semibold">Sayang her</span>
-                                <div id="color-circle-her" class="w-14 h-14 rounded-full border-2 border-slate-600 shadow-lg flex items-center justify-center transition-transform" style="background-color: #ec4899;">
-                                    <i class="fa-solid fa-palette text-white text-xs opacity-70"></i>
-                                </div>
-                                <input type="color" id="color-picker-her" class="hidden" value="#ec4899">
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="py-2">
-                    <h3 class="text-center text-sm font-serif text-slate-300 mb-6 flex items-center justify-center gap-2">
+                    <h3 class="text-center text-xs font-serif text-slate-300 mb-5 flex items-center justify-center gap-2">
                         <span class="h-px bg-slate-700 flex-1"></span>
-                        Our 100 Period Promise Path
+                        Our 100 period trip
                         <span class="h-px bg-slate-700 flex-1"></span>
                     </h3>
 
-                    <div id="milestones-path-container" class="relative space-y-8 flex flex-col items-center">
+                    <div id="milestones-path-container" class="relative space-y-6 flex flex-col items-center">
                         <div class="absolute top-4 bottom-4 w-1 bg-gradient-to-b from-rose-500 via-rose-900 to-slate-800 z-0"></div>
                     </div>
                 </div>
@@ -390,107 +313,10 @@
         </section>
     </main>
 
-    <!-- CALENDAR MODAL (Owner Only) -->
-    <div id="calendar-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-end justify-center hidden transition-opacity duration-300">
-        <div class="w-full max-w-md glass-modal rounded-t-3xl p-5 space-y-4 border-t border-rose-500/30 transform transition-transform duration-300 translate-y-0">
-            <div class="flex justify-between items-center border-b border-slate-700 pb-3">
-                <div>
-                    <h3 id="modal-date-title" class="font-serif font-bold text-lg text-rose-400">Select Options</h3>
-                    <p id="modal-date-subtitle" class="text-xs text-slate-400">Kelola status untuk hari ini</p>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <button id="modal-back-btn" class="w-8 h-8 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center hover:text-white hidden">
-                        <i class="fa-solid fa-arrow-left text-sm"></i>
-                    </button>
-                    <button id="close-calendar-modal" class="w-8 h-8 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center hover:text-white">
-                        <i class="fa-solid fa-xmark text-sm"></i>
-                    </button>
-                </div>
-            </div>
-
-            <div class="space-y-2.5 max-h-[65vh] overflow-y-auto no-scrollbar pr-1">
-                <div class="grid grid-cols-2 gap-2">
-                    <button id="btn-toggle-vc" class="p-3 rounded-xl border border-emerald-500/30 bg-emerald-950/20 text-emerald-400 flex items-center justify-between text-xs font-medium hover:bg-emerald-900/30">
-                        <span>📲 VC Time</span>
-                        <span id="vc-badge" class="text-[10px] px-2 py-0.5 rounded-full bg-slate-800 text-slate-400">OFF</span>
-                    </button>
-
-                    <button id="btn-toggle-enjoy" class="p-3 rounded-xl border border-yellow-500/30 bg-yellow-950/20 text-yellow-400 flex items-center justify-between text-xs font-medium hover:bg-yellow-900/30">
-                        <span>😜 Enjoy Time</span>
-                        <span id="enjoy-badge" class="text-[10px] px-2 py-0.5 rounded-full bg-slate-800 text-slate-400">OFF</span>
-                    </button>
-
-                    <button id="btn-toggle-watch" class="p-3 rounded-xl border border-purple-500/30 bg-purple-950/20 text-purple-400 flex items-center justify-between text-xs font-medium hover:bg-purple-900/30">
-                        <span>🎬 Watching</span>
-                        <span id="watch-badge" class="text-[10px] px-2 py-0.5 rounded-full bg-slate-800 text-slate-400">OFF</span>
-                    </button>
-
-                    <button id="btn-toggle-sleep" class="p-3 rounded-xl border border-indigo-500/30 bg-indigo-950/20 text-indigo-400 flex items-center justify-between text-xs font-medium hover:bg-indigo-900/30">
-                        <span>😴 Sleeping</span>
-                        <span id="sleep-badge" class="text-[10px] px-2 py-0.5 rounded-full bg-slate-800 text-slate-400">OFF</span>
-                    </button>
-
-                    <button id="btn-toggle-period" class="p-3 rounded-xl border border-red-500/30 bg-red-950/20 text-red-400 flex items-center justify-between text-xs font-medium hover:bg-red-900/30">
-                        <span>🩸 Period Time</span>
-                        <span id="period-badge" class="text-[10px] px-2 py-0.5 rounded-full bg-slate-800 text-slate-400">OFF</span>
-                    </button>
-
-                    <button id="btn-toggle-special" class="p-3 rounded-xl border border-blue-500/30 bg-blue-950/20 text-blue-400 flex items-center justify-between text-xs font-medium hover:bg-blue-900/30">
-                        <span>🎉 Special Time</span>
-                        <span id="special-badge" class="text-[10px] px-2 py-0.5 rounded-full bg-slate-800 text-slate-400">OFF</span>
-                    </button>
-                </div>
-
-                <!-- Cum Time Counter Box -->
-                <div id="cum-time-box" class="p-3 rounded-xl bg-slate-800 border border-slate-700 space-y-2 hidden">
-                    <div class="flex justify-between items-center">
-                        <span class="text-xs font-semibold text-rose-400">Cum Time Counter (💦💧)</span>
-                    </div>
-
-                    <div class="flex items-center justify-between bg-slate-700/60 p-2 rounded-lg">
-                        <span class="text-xs text-slate-200">💦 Sayang him</span>
-                        <div class="flex items-center space-x-2">
-                            <button id="cum-him-dec" class="w-7 h-7 rounded-lg bg-slate-600 text-white text-xs flex items-center justify-center border border-slate-500 active:scale-95"><i class="fa-solid fa-chevron-left text-xs"></i></button>
-                            <span id="cum-him-count" class="w-6 text-center text-sm font-bold text-rose-400">0</span>
-                            <button id="cum-him-inc" class="w-7 h-7 rounded-lg bg-slate-600 text-white text-xs flex items-center justify-center border border-slate-500 active:scale-95"><i class="fa-solid fa-chevron-right text-xs"></i></button>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center justify-between bg-slate-700/60 p-2 rounded-lg">
-                        <span class="text-xs text-slate-200">💧 Sayang her</span>
-                        <div class="flex items-center space-x-2">
-                            <button id="cum-her-dec" class="w-7 h-7 rounded-lg bg-slate-600 text-white text-xs flex items-center justify-center border border-slate-500 active:scale-95"><i class="fa-solid fa-chevron-left text-xs"></i></button>
-                            <span id="cum-her-count" class="w-6 text-center text-sm font-bold text-pink-400">0</span>
-                            <button id="cum-her-inc" class="w-7 h-7 rounded-lg bg-slate-600 text-white text-xs flex items-center justify-center border border-slate-500 active:scale-95"><i class="fa-solid fa-chevron-right text-xs"></i></button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Special Note Input -->
-                <div id="special-note-box" class="p-3 rounded-xl bg-slate-800 border border-blue-500/30 space-y-2 hidden">
-                    <label class="text-xs text-blue-400 font-semibold block">🎉 Special Memory Note</label>
-                    <textarea id="special-note-input" rows="2" class="w-full bg-slate-700 text-xs text-white p-2 rounded-lg border border-slate-600 focus:outline-none focus:border-blue-400" placeholder="Write a memory or note..."></textarea>
-                </div>
-
-                <div class="pt-2 space-y-2">
-                    <button id="btn-save-day-status" class="w-full py-2.5 bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold rounded-xl shadow-lg shadow-rose-600/30">
-                        Simpan Status Pembaruan
-                    </button>
-                    <button id="btn-unnotify-all" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-red-400 text-xs font-medium rounded-xl border border-red-500/20">
-                        Batalkan Notifikasi / Hapus Status Hari
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- MESSAGE DISPLAY MODAL -->
     <div id="message-modal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-center justify-center p-4 hidden">
         <div class="w-full max-w-sm glass-modal rounded-3xl p-6 space-y-4 border border-rose-500/30 shadow-2xl relative">
             <div class="absolute top-4 right-4 flex items-center space-x-2">
-                <button id="msg-back-btn" class="w-8 h-8 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center hover:text-white hidden">
-                    <i class="fa-solid fa-arrow-left text-sm"></i>
-                </button>
                 <button id="close-msg-modal" class="w-8 h-8 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center hover:text-white">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
@@ -498,7 +324,7 @@
 
             <div class="space-y-1">
                 <span id="msg-modal-date" class="text-[10px] uppercase font-bold tracking-widest text-rose-400 block">7 Nov 2026</span>
-                <h3 id="msg-modal-title" class="font-serif text-xl font-bold text-rose-500">Happy 1st Month Anniversary!</h3>
+                <h3 id="msg-modal-title" class="font-serif text-lg font-bold text-rose-500">Title</h3>
             </div>
 
             <div id="msg-modal-body" class="text-xs text-slate-200 leading-relaxed whitespace-pre-wrap pt-2 border-t border-slate-700"></div>
@@ -521,15 +347,21 @@
             <button id="tab-btn-1" onclick="switchTab(1)" class="flex flex-col items-center relative p-2 text-rose-500 transition-colors">
                 <div class="relative">
                     <i class="fa-solid fa-envelope text-xl"></i>
-                    <span id="unread-badge" class="absolute -top-1.5 -right-2.5 bg-rose-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-slate-900 hidden animate-bounce">
+                    <span id="unread-badge-msg" class="absolute -top-1.5 -right-2.5 bg-rose-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-slate-900 hidden">
                         0
                     </span>
                 </div>
                 <span class="text-[10px] font-medium mt-1">Pesan</span>
             </button>
 
-            <button id="tab-btn-2" onclick="switchTab(2)" class="flex flex-col items-center p-2 text-slate-400 hover:text-rose-500 transition-colors">
-                <i class="fa-solid fa-calendar-days text-xl"></i>
+            <!-- CALENDAR TAB (HIDDEN BY DEFAULT UNTIL UNLOCKED) -->
+            <button id="tab-btn-2" onclick="switchTab(2)" class="flex flex-col items-center relative p-2 text-slate-400 hover:text-rose-500 transition-colors hidden">
+                <div class="relative">
+                    <i class="fa-solid fa-calendar-days text-xl"></i>
+                    <span id="unread-badge-cal" class="absolute -top-1.5 -right-2.5 bg-rose-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-slate-900 hidden">
+                        0
+                    </span>
+                </div>
                 <span class="text-[10px] font-medium mt-1">Kalender</span>
             </button>
 
@@ -540,101 +372,128 @@
         </div>
     </nav>
 
-    <!-- FIREBASE & APP SCRIPT -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // Owner Mode State (Default false for everyone else, tap heart 5 times to enable on your phone)
-        let isOwner = localStorage.getItem('is_owner_mode') === 'true';
-
-        let defaultMessages = [
+    <!-- SCRIPT DATA & LOGIC -->
+    <script>
+        const MONTHLY_MESSAGES = [
             {
                 id: 1,
                 title: "Semoga kamu bermimpi indah malam ini.",
                 date: "7 Nov 2026",
                 preview: "Hari ini menandai satu bulan pertama kita bersama, sayang...",
-                message: "Kita masih muda, kita membuat kesalahan, dan kita punya masalah-masalah kecil kita. Tapi kita selalu memperbaikinya bersama-sama, dan itu yang paling penting. Kita sedang membangun sesuatu yang kuat untuk masa depan.Hari ini adalah hari yang menyenangkan. Dan melihatmu tidur adalah hal baru favoritku, kamu sangat menggemaskan. Aku sangat bangga menjadi laki-lakimu. And kuharap kamu merasakan hal yang sama padaku, gadis baikku (good girl). Kita akan mencoba melakukan yang terbaik dan membimbing satu sama lain pelan-pelan (slowly slowly) sampai hari itu tiba. Aku mencintaimu, hari ini, besok, dan selamanya."
+                message: "Kita masih muda, kita membuat kesalahan, dan kita punya masalah-masalah kecil kita. Tapi kita selalu memperbaikinya bersama-sama, dan itu yang paling penting. Kita sedang membangun sesuatu yang kuat untuk masa depan. Hari ini adalah hari yang menyenangkan. Dan melihatmu tidur adalah hal baru favoritku, kamu sangat menggemaskan. Aku sangat bangga menjadi laki-lakimu. And kuharap kamu merasakan hal yang sama padaku, gadis baikku (good girl). Kita akan mencoba melakukan yang terbaik dan membimbing satu sama lain pelan-pelan (slowly slowly) sampai hari itu tiba. Aku mencintaimu, hari ini, besok, dan selamanya."
             }
         ];
 
-        let monthlyMessages = JSON.parse(localStorage.getItem('monthly_messages_list') || JSON.stringify(defaultMessages));
+        const CALENDAR_LIST = [
+            {
+                id: 1,
+                year: "2026",
+                month: "October",
+                date: "7 Oct 2026",
+                title: "🎉 Our Forever Beginning",
+                preview: "The magical first day we started dating and intertwined our hearts forever."
+            },
+            {
+                id: 2,
+                year: "2026",
+                month: "October",
+                date: "22 Oct 2026",
+                title: "📲 First Video Call Connection",
+                preview: "We made a video call together, seeing each other's glowing smiles for the very first time."
+            },
+            {
+                id: 3,
+                year: "2026",
+                month: "October",
+                date: "26 Oct 2026",
+                title: "🎉 Triumph in Exams",
+                preview: "A monumental and stressful day for your exam, conquered brilliantly with my full support."
+            },
+            {
+                id: 4,
+                year: "2026",
+                month: "October",
+                date: "27 Oct 2026",
+                title: "😜 Passionate Ecstasy",
+                preview: "We enjoyed ourselves intensely together: 💦 sayang him cum 2 times, 💧 sayang her cum 1 time."
+            },
+            {
+                id: 5,
+                year: "2026",
+                month: "October",
+                date: "28 Oct 2026",
+                title: "😜 Unforgettable Intimate Night",
+                preview: "Deep romantic connection and heat: 💦 sayang him cum 2 times, 💧 sayang her cum 1 time."
+            },
+            {
+                id: 6,
+                year: "2026",
+                month: "October",
+                date: "30 Oct 2026",
+                title: "❤️ Dawn of a New Cycle",
+                preview: "The tender beginning of your 1st period, where I held you close with gentle care."
+            },
+            {
+                id: 7,
+                year: "2026",
+                month: "November",
+                date: "3 Nov 2026",
+                title: "❤️ Relief and Warmth",
+                preview: "The peaceful end of your period, welcoming back our cozy days together."
+            },
+            {
+                id: 8,
+                year: "2026",
+                month: "November",
+                date: "4 Nov 2026",
+                title: "😜 Playful Desires & Sweet Dreams",
+                preview: "😜 We enjoyed together: 💦 sayang him cum 1 time, sharing our first sweet pee scene, and 😴 sleeping together online."
+            },
+            {
+                id: 9,
+                year: "2026",
+                month: "November",
+                date: "5 Nov 2026",
+                title: "🎬 Cinematic Romance & Shared Waters",
+                preview: "Our first shower together, 🎬 watched our 1st movie side by side, and 😴 drifted into sweet dreams sleeping together online."
+            },
+            {
+                id: 10,
+                year: "2026",
+                month: "November",
+                date: "6 Nov 2026",
+                title: "🎉 Blooming Petals & Tender Nights",
+                preview: "🎉 First flower given with love, 💧 sayang her cum in pure bliss, and 😴 sleeping together online wrapped in warmth."
+            },
+            {
+                id: 11,
+                year: "2026",
+                month: "November",
+                date: "7 Nov 2026",
+                title: "🎉 Our 1st Monthlyversary",
+                preview: "Celebrating one whole beautiful month of deep love, growth, and endless devotion together."
+            }
+        ];
 
-        const firebaseConfig = typeof __firebase_config !== 'undefined' 
-            ? JSON.parse(__firebase_config) 
-            : {
-                apiKey: "AIzaSyDummyKeyForGitHubPagesSync12345",
-                authDomain: "buku-kita-couple.firebaseapp.com",
-                projectId: "buku-kita-couple",
-                storageBucket: "buku-kita-couple.appspot.com",
-                messagingSenderId: "1234567890",
-                appId: "1:1234567890:web:abcdef"
-              };
-
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'philippe-diva-shared-galaxy-app';
-
-        let db = null;
-        let auth = null;
-        let isFirebaseAvailable = false;
-
-        let calendarData = {};
         let readMessageIds = JSON.parse(localStorage.getItem('read_msg_ids') || '[]');
-        let selectedDateStr = null;
-        let periodRangeStartDate = null;
-        let tempDayState = { vc: false, enjoy: false, period: false, watch: false, sleep: false, special: false, note: "", cumHim: 0, cumHer: 0 };
-        
+
         let msgSound = new Audio('Messagesound.mp3');
         let clockSound = new Audio('Clocksound.mp3');
         clockSound.loop = true;
-
         let heartAnimInterval = null;
-        let specialNoteAnimationInterval = null;
-        let profileRotationInterval = null;
-
-        let wishesDataHim = JSON.parse(localStorage.getItem('wishes_him') || '["Take airplane", "???", "???", "???", "???", "???", "???", "???", "???", "???"]');
-        let wishesDataHer = JSON.parse(localStorage.getItem('wishes_her') || '["???", "???", "???", "???", "???", "???", "???", "???", "???", "???"]');
-
-        let colorHim = localStorage.getItem('color_him') || '#f43f5e';
-        let colorHer = localStorage.getItem('color_her') || '#ec4899';
-
-        const cardModes = ["Clock", "Birthday", "Couple Profil", "Wishes", "Color"];
-        let currentModeIndex = 0;
-        let profilePairIndex = 1;
 
         const screen1 = document.getElementById('screen-1');
         const screen2 = document.getElementById('screen-2');
         const screen3 = document.getElementById('screen-3');
         const tabBtns = [document.getElementById('tab-btn-1'), document.getElementById('tab-btn-2'), document.getElementById('tab-btn-3')];
-        const unreadBadge = document.getElementById('unread-badge');
+        
+        const unreadBadgeMsg = document.getElementById('unread-badge-msg');
 
-        // Owner Toggle Listener (Tap heart 5 times)
-        let heartTapCount = 0;
-        document.getElementById('owner-toggle-heart').addEventListener('click', () => {
-            heartTapCount++;
-            if (heartTapCount >= 5) {
-                isOwner = !isOwner;
-                localStorage.setItem('is_owner_mode', isOwner);
-                heartTapCount = 0;
-                applyOwnerModeUI();
-                alert(isOwner ? "✨ Owner Mode Enabled! You can now edit/add." : "🔒 Viewer Mode Enabled (Read-only).");
-            }
-            setTimeout(() => { heartTapCount = 0; }, 3000);
-        });
+        const cardModes = ["Clock", "Birthday", "Couple Profil"];
+        let currentModeIndex = 0;
+        let profilePairIndex = 1;
+        let profileRotationInterval = null;
 
-        function applyOwnerModeUI() {
-            const badge = document.getElementById('owner-badge');
-            const addMsgContainer = document.getElementById('owner-add-msg-container');
-            if (isOwner) {
-                badge.classList.remove('hidden');
-                addMsgContainer.classList.remove('hidden');
-            } else {
-                badge.classList.add('hidden');
-                addMsgContainer.classList.add('hidden');
-            }
-        }
-
-        // Theme Toggle Setup
         const themeToggleBtn = document.getElementById('theme-toggle-btn');
         const themeIcon = document.getElementById('theme-icon');
         const themeText = document.getElementById('theme-text');
@@ -661,137 +520,40 @@
             }
         });
 
-        window.addEventListener('load', async () => {
-            applyOwnerModeUI();
-            await initFirebase();
-            renderMessages();
-            renderCalendar();
-            renderMilestones();
-            startCountdownClock();
-            updateUnreadBadge();
-            startSpecialNoteAnimationLoop();
-            startCalendarHeaderStatsLoop();
-            initCardModes();
-            updateBirthdayCountdown();
-            renderWishesLists();
-            initColors();
+        // Secret Heart 5-tap listener to unlock Kalender
+        const secretHeart = document.getElementById('secret-heart');
+        let heartTapCount = 0;
+        let heartTapTimer = null;
+
+        secretHeart.addEventListener('click', () => {
+            heartTapCount++;
+            clearTimeout(heartTapTimer);
+            heartTapTimer = setTimeout(() => {
+                heartTapCount = 0;
+            }, 2000); // Reset count if pauses exceed 2 seconds
+
+            if (heartTapCount === 5) {
+                heartTapCount = 0;
+                unlockCalendarScreen();
+            }
         });
 
-        async function initFirebase() {
-            try {
-                const app = initializeApp(firebaseConfig);
-                auth = getAuth(app);
-                db = getFirestore(app);
-
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-                
-                isFirebaseAvailable = true;
-
-                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'calendar_records', 'couple_data');
-                onSnapshot(docRef, (snapshot) => {
-                    if (snapshot.exists()) {
-                        const data = snapshot.data();
-                        if (data.records) {
-                            calendarData = data.records;
-                            localStorage.setItem('couple_calendar_data', JSON.stringify(calendarData));
-                        }
-                        if (data.messages) {
-                            monthlyMessages = data.messages;
-                            localStorage.setItem('monthly_messages_list', JSON.stringify(monthlyMessages));
-                        }
-                        if (data.wishes_him) {
-                            wishesDataHim = data.wishes_him;
-                            localStorage.setItem('wishes_him', JSON.stringify(wishesDataHim));
-                        }
-                        if (data.wishes_her) {
-                            wishesDataHer = data.wishes_her;
-                            localStorage.setItem('wishes_her', JSON.stringify(wishesDataHer));
-                        }
-                        if (data.color_him) {
-                            colorHim = data.color_him;
-                            localStorage.setItem('color_him', colorHim);
-                        }
-                        if (data.color_her) {
-                            colorHer = data.color_her;
-                            localStorage.setItem('color_her', colorHer);
-                        }
-                        renderMessages();
-                        updateCalendarUI();
-                        renderWishesLists();
-                        applyColorsUI();
-                    }
-                }, (error) => {
-                    loadLocalData();
-                });
-
-            } catch (err) {
-                loadLocalData();
-            }
+        function unlockCalendarScreen() {
+            const tabBtn2 = document.getElementById('tab-btn-2');
+            tabBtn2.classList.remove('hidden');
+            switchTab(2); // Automatically switch to Kalender when unlocked
         }
 
-        function loadLocalData() {
-            calendarData = JSON.parse(localStorage.getItem('couple_calendar_data') || '{}');
-            updateCalendarUI();
-        }
-
-        async function saveSharedData() {
-            localStorage.setItem('couple_calendar_data', JSON.stringify(calendarData));
-            localStorage.setItem('monthly_messages_list', JSON.stringify(monthlyMessages));
-            localStorage.setItem('wishes_him', JSON.stringify(wishesDataHim));
-            localStorage.setItem('wishes_her', JSON.stringify(wishesDataHer));
-            localStorage.setItem('color_him', colorHim);
-            localStorage.setItem('color_her', colorHer);
-
-            if (isFirebaseAvailable && db) {
-                try {
-                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'calendar_records', 'couple_data');
-                    await setDoc(docRef, { 
-                        records: calendarData,
-                        messages: monthlyMessages,
-                        wishes_him: wishesDataHim,
-                        wishes_her: wishesDataHer,
-                        color_him: colorHim,
-                        color_her: colorHer
-                    }, { merge: true });
-                } catch (e) {}
-            }
-        }
-
-        // Add Message Submit (Owner Only)
-        document.getElementById('btn-submit-new-msg')?.addEventListener('click', () => {
-            if (!isOwner) return;
-            const title = document.getElementById('new-msg-title').value.trim();
-            const date = document.getElementById('new-msg-date').value.trim();
-            const preview = document.getElementById('new-msg-preview').value.trim();
-            const message = document.getElementById('new-msg-body').value.trim();
-
-            if (!title || !date || !message) {
-                alert("Please fill in title, date, and message!");
-                return;
-            }
-
-            const newMsg = {
-                id: Date.now(),
-                title,
-                date,
-                preview: preview || message.substring(0, 60) + '...',
-                message
-            };
-
-            monthlyMessages.unshift(newMsg);
-            saveSharedData();
+        // Date adjustment based on device current local time (7 November 2026)
+        window.addEventListener('load', () => {
             renderMessages();
-            updateUnreadBadge();
-
-            document.getElementById('new-msg-title').value = '';
-            document.getElementById('new-msg-date').value = '';
-            document.getElementById('new-msg-preview').value = '';
-            document.getElementById('new-msg-body').value = '';
-            alert("Message published successfully!");
+            renderCalendarList();
+            renderMilestones();
+            startCountdownClock();
+            updateUnreadBadges();
+            initCardModes();
+            updateBirthdayCountdown();
+            switchTab(1);
         });
 
         window.switchTab = function(tabIndex) {
@@ -810,58 +572,152 @@
                 }
             });
 
-            if (tabIndex === 3) {
+            if (tabIndex === 1) {
+                clockSound.pause();
+                screen1.scrollTop = 0;
+            } else if (tabIndex === 2) {
+                clockSound.pause();
+                screen2.scrollTop = 0;
+            } else if (tabIndex === 3) {
                 clockSound.currentTime = 0;
                 clockSound.play().catch(e => {});
-            } else {
-                clockSound.pause();
+                screen3.scrollTop = 0;
             }
-
-            if (tabIndex === 2) scrollToCurrentDay();
         };
 
         function renderMessages() {
             const container = document.getElementById('messages-list-container');
             container.innerHTML = '';
 
-            monthlyMessages.forEach(msg => {
+            MONTHLY_MESSAGES.forEach(msg => {
                 const isRead = readMessageIds.includes(msg.id);
                 const card = document.createElement('div');
-                card.className = `glass-panel p-4 rounded-2xl border transition-all cursor-pointer relative overflow-hidden ${
+                card.className = `glass-panel p-3 rounded-2xl border transition-all cursor-pointer relative overflow-hidden ${
                     isRead ? 'border-slate-700 bg-slate-800/40' : 'border-rose-500/40 bg-rose-950/20 shadow-md'
                 }`;
 
                 card.innerHTML = `
                     <div class="flex justify-between items-start">
-                        <h4 class="font-serif font-bold text-base ${isRead ? 'text-slate-200' : 'text-rose-400'}">${msg.title}</h4>
-                        ${!isRead ? '<span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping"></span>' : ''}
+                        <h4 class="font-serif font-bold text-xs ${isRead ? 'text-slate-200' : 'text-rose-400'}">${msg.title}</h4>
+                        ${!isRead ? '<span class="w-2 h-2 rounded-full bg-rose-500"></span>' : ''}
                     </div>
-                    <p class="text-xs text-slate-400 mt-2 line-clamp-2">${msg.preview}</p>
-                    <div class="text-right mt-3">
-                        <span class="text-[10px] text-slate-400 font-semibold bg-slate-800 px-2 py-0.5 rounded-md border border-slate-700">${msg.date}</span>
+                    <p class="text-[11px] text-slate-400 mt-1 line-clamp-2">${msg.preview}</p>
+                    <div class="text-right mt-1">
+                        <span class="text-[9px] text-slate-400 font-semibold bg-slate-800 px-2 py-0.5 rounded-md border border-slate-700">${msg.date}</span>
                     </div>
                 `;
 
-                card.addEventListener('click', () => openMessageModal(msg));
+                card.addEventListener('click', () => openMessageModal(msg, 'msg'));
                 container.appendChild(card);
             });
         }
 
-        function openMessageModal(msg) {
-            document.getElementById('msg-modal-date').innerText = msg.date;
-            document.getElementById('msg-modal-title').innerText = msg.title;
-            document.getElementById('msg-modal-body').innerText = msg.message;
+        function renderCalendarList() {
+            const container = document.getElementById('calendar-list-container');
+            container.innerHTML = '';
+
+            const grouped = {};
+            CALENDAR_LIST.forEach(item => {
+                if (!grouped[item.year]) grouped[item.year] = {};
+                if (!grouped[item.year][item.month]) grouped[item.year][item.month] = [];
+                grouped[item.year][item.month].push(item);
+            });
+
+            Object.keys(grouped).forEach(year => {
+                const yearWrapper = document.createElement('div');
+                yearWrapper.className = 'space-y-1.5';
+
+                const yearHeader = document.createElement('div');
+                yearHeader.className = 'font-serif text-sm font-bold text-rose-400 border-b border-rose-500/30 pb-1 mt-2 cursor-pointer flex justify-between items-center select-none hover:text-rose-300 transition-colors';
+                yearHeader.innerHTML = `<span>${year}</span> <i class="fa-solid fa-chevron-down text-xs text-rose-400"></i>`;
+                
+                const monthsContainer = document.createElement('div');
+                monthsContainer.className = 'space-y-2 pl-1';
+
+                let yearOpenState = true;
+                yearHeader.addEventListener('click', () => {
+                    yearOpenState = !yearOpenState;
+                    yearHeader.querySelector('i').className = yearOpenState 
+                        ? 'fa-solid fa-chevron-down text-xs text-rose-400' 
+                        : 'fa-solid fa-chevron-right text-xs text-rose-400';
+
+                    const monthEventLists = monthsContainer.querySelectorAll('.month-events-list');
+                    const monthChevrons = monthsContainer.querySelectorAll('.month-chevron');
+
+                    monthEventLists.forEach(el => {
+                        if (yearOpenState) el.classList.remove('hidden');
+                        else el.classList.add('hidden');
+                    });
+
+                    monthChevrons.forEach(ch => {
+                        ch.className = yearOpenState ? 'fa-solid fa-chevron-down text-[9px] month-chevron' : 'fa-solid fa-chevron-right text-[9px] month-chevron';
+                    });
+                });
+
+                Object.keys(grouped[year]).forEach(month => {
+                    const monthGroup = document.createElement('div');
+                    monthGroup.className = 'space-y-1 mt-1';
+
+                    const monthHeader = document.createElement('div');
+                    monthHeader.className = 'text-[10px] uppercase tracking-wider font-semibold text-slate-300 cursor-pointer flex justify-between items-center bg-slate-800/60 px-2 py-1 rounded-lg border border-slate-700/80 select-none hover:bg-slate-700/60 transition-colors';
+                    monthHeader.innerHTML = `<span>${month}</span> <i class="fa-solid fa-chevron-down text-[9px] month-chevron"></i>`;
+
+                    const eventsList = document.createElement('div');
+                    eventsList.className = 'space-y-1.5 pl-1.5 mt-1 month-events-list';
+
+                    monthHeader.addEventListener('click', () => {
+                        const isHidden = eventsList.classList.toggle('hidden');
+                        monthHeader.querySelector('.month-chevron').className = isHidden 
+                            ? 'fa-solid fa-chevron-right text-[9px] month-chevron' 
+                            : 'fa-solid fa-chevron-down text-[9px] month-chevron';
+                    });
+
+                    let lastDateShown = "";
+                    grouped[year][month].forEach(item => {
+                        const isSameDateAsBefore = (item.date === lastDateShown);
+                        lastDateShown = item.date;
+
+                        const card = document.createElement('div');
+                        card.id = `cal-item-${item.id}`;
+                        card.className = 'glass-panel p-2 rounded-lg border border-slate-700/70 bg-slate-800/40 relative overflow-hidden select-none';
+
+                        const dateBadgeHTML = isSameDateAsBefore ? '' : `<div class="mb-0.5"><span class="text-[8px] text-rose-300 font-bold bg-rose-950/60 px-1.5 py-0.5 rounded border border-rose-500/30">${item.date}</span></div>`;
+
+                        card.innerHTML = `
+                            ${dateBadgeHTML}
+                            <h4 class="font-serif font-bold text-[11px] text-rose-400 leading-tight">${item.title}</h4>
+                            <p class="text-[10px] text-slate-300 mt-0.5 leading-snug">${item.preview}</p>
+                        `;
+
+                        eventsList.appendChild(card);
+                    });
+
+                    monthGroup.appendChild(monthHeader);
+                    monthGroup.appendChild(eventsList);
+                    monthsContainer.appendChild(monthGroup);
+                });
+
+                yearWrapper.appendChild(yearHeader);
+                yearWrapper.appendChild(monthsContainer);
+                container.appendChild(yearWrapper);
+            });
+        }
+
+        function openMessageModal(item, type) {
+            document.getElementById('msg-modal-date').innerText = item.date;
+            document.getElementById('msg-modal-title').innerText = item.title;
+            document.getElementById('msg-modal-body').innerText = item.message;
             document.getElementById('message-modal').classList.remove('hidden');
 
             msgSound.currentTime = 0;
             msgSound.play().catch(e => {});
             startHeartAnimation();
 
-            if (!readMessageIds.includes(msg.id)) {
-                readMessageIds.push(msg.id);
+            if (type === 'msg' && !readMessageIds.includes(item.id)) {
+                readMessageIds.push(item.id);
                 localStorage.setItem('read_msg_ids', JSON.stringify(readMessageIds));
                 renderMessages();
-                updateUnreadBadge();
+                updateUnreadBadges();
             }
         }
 
@@ -872,23 +728,20 @@
         }
 
         document.getElementById('close-msg-modal').addEventListener('click', closeMessageModal);
-        document.getElementById('msg-back-btn').addEventListener('click', closeMessageModal);
 
         function startHeartAnimation() {
             stopHeartAnimation();
             const spawnHeart = () => {
                 const heart = document.createElement('div');
-                heart.className = 'fixed text-rose-500 text-2xl z-[99] pointer-events-none animate-bounce';
+                heart.className = 'floating-heart text-rose-500 text-xl';
                 heart.innerHTML = '<i class="fa-solid fa-heart"></i>';
                 heart.style.left = Math.random() * 80 + 10 + '%';
-                heart.style.top = Math.random() * 80 + 10 + '%';
+                heart.style.top = Math.random() * 60 + 20 + '%';
                 document.body.appendChild(heart);
                 setTimeout(() => { heart.remove(); }, 3000);
             };
             spawnHeart();
-            heartAnimInterval = setInterval(() => {
-                spawnHeart();
-            }, 5000);
+            heartAnimInterval = setInterval(spawnHeart, 3000);
         }
 
         function stopHeartAnimation() {
@@ -896,426 +749,18 @@
                 clearInterval(heartAnimInterval);
                 heartAnimInterval = null;
             }
-            document.querySelectorAll('.fixed.text-rose-500.z-\\[99\\]').forEach(el => el.remove());
+            document.querySelectorAll('.floating-heart').forEach(el => el.remove());
         }
 
-        function updateUnreadBadge() {
-            const unreadCount = monthlyMessages.filter(m => !readMessageIds.includes(m.id)).length;
-            if (unreadCount > 0) {
-                unreadBadge.innerText = unreadCount;
-                unreadBadge.classList.remove('hidden');
+        function updateUnreadBadges() {
+            const unreadMsg = MONTHLY_MESSAGES.filter(m => !readMessageIds.includes(m.id)).length;
+            if (unreadMsg > 0) {
+                unreadBadgeMsg.innerText = unreadMsg;
+                unreadBadgeMsg.classList.remove('hidden');
             } else {
-                unreadBadge.classList.add('hidden');
+                unreadBadgeMsg.classList.add('hidden');
             }
         }
-
-        function renderCalendar() {
-            const container = document.getElementById('calendar-months-container');
-            container.innerHTML = '';
-
-            const startDate = new Date(2026, 9, 1);
-            const endDate = new Date(2035, 1, 31);
-            let currentMonth = new Date(startDate);
-
-            while (currentMonth <= endDate) {
-                const year = currentMonth.getFullYear();
-                const month = currentMonth.getMonth();
-
-                const monthBlock = document.createElement('div');
-                monthBlock.className = 'glass-panel p-3 rounded-3xl border border-slate-700 relative';
-
-                const monthTitle = currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-                monthBlock.innerHTML = `<h3 class="font-serif text-center font-bold text-slate-200 text-sm mb-3">${monthTitle}</h3>`;
-
-                const grid = document.createElement('div');
-                grid.className = 'grid grid-cols-7 gap-1 text-center';
-
-                const firstDayIndex = new Date(year, month, 1).getDay();
-                for (let i = 0; i < firstDayIndex; i++) {
-                    grid.appendChild(document.createElement('div'));
-                }
-
-                const daysInMonth = new Date(year, month + 1, 0).getDate();
-                for (let day = 1; day <= daysInMonth; day++) {
-                    const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-                    const dayCell = document.createElement('div');
-                    dayCell.id = `day-cell-${dateStr}`;
-                    dayCell.className = 'min-h-[56px] h-14 rounded-xl p-1 relative flex flex-col items-center justify-between text-xs border border-slate-700 bg-slate-800/40 transition-all overflow-visible';
-                    dayCell.dataset.date = dateStr;
-
-                    const dayNum = document.createElement('span');
-                    dayNum.className = 'font-semibold text-slate-300 text-[11px] self-start leading-none';
-                    dayNum.innerText = day;
-                    dayCell.appendChild(dayNum);
-
-                    const emojisContainer = document.createElement('div');
-                    emojisContainer.id = `emojis-${dateStr}`;
-                    emojisContainer.className = 'grid grid-cols-2 gap-0.5 items-center justify-items-center w-full leading-none text-[10px] my-auto';
-                    dayCell.appendChild(emojisContainer);
-
-                    const todayStr = getTodayIndonesiaStr();
-                    if (dateStr > todayStr) {
-                        dayCell.classList.add('opacity-40', 'cursor-not-allowed');
-                    } else {
-                        dayCell.classList.add('cursor-pointer', 'active:scale-95');
-                        // Viewers cannot click to edit calendar days
-                        dayCell.addEventListener('click', () => {
-                            if (!isOwner) return; // Read-only for viewers
-                            handleDayClick(dateStr);
-                        });
-                    }
-
-                    grid.appendChild(dayCell);
-                }
-
-                monthBlock.appendChild(grid);
-                container.appendChild(monthBlock);
-                currentMonth.setMonth(currentMonth.getMonth() + 1);
-            }
-
-            updateCalendarUI();
-        }
-
-        function getTodayIndonesiaStr() {
-            const now = new Date();
-            const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-            const wibDate = new Date(utc + (3600000 * 7));
-            return wibDate.toISOString().split('T')[0];
-        }
-
-        function updateCalendarUI() {
-            const todayStr = getTodayIndonesiaStr();
-
-            document.querySelectorAll('[id^="day-cell-"]').forEach(cell => {
-                const dateStr = cell.dataset.date;
-                if (dateStr > todayStr) return;
-
-                const record = calendarData[dateStr] || {};
-                
-                let isVc = !!record.vc;
-                if (record.vc === undefined) {
-                    if (dateStr === todayStr) {
-                        isVc = true;
-                    } else {
-                        isVc = false;
-                    }
-                }
-
-                const isPeriod = !!record.period;
-                const isEnjoy = !!record.enjoy;
-                const isWatch = !!record.watch;
-                const isSleep = !!record.sleep;
-                const isSpecial = !!record.special;
-                const cumHim = record.cumHim || 0;
-                const cumHer = record.cumHer || 0;
-
-                let emojisHTML = '';
-                if (isWatch) emojisHTML += '<span>🎬</span>';
-                if (isSleep) emojisHTML += '<span>😴</span>';
-                if (isPeriod) emojisHTML += '<span>🩸</span>';
-                if (isSpecial) emojisHTML += '<span>🎉</span>';
-                if (isVc) emojisHTML += '<span>📲</span>';
-                if (isEnjoy && cumHim === 0 && cumHer === 0) emojisHTML += '<span>😜</span>';
-                if (cumHim > 0) emojisHTML += `<span>💦${toSuperscript(cumHim)}</span>`;
-                if (cumHer > 0) emojisHTML += `<span>💧${toSuperscript(cumHer)}</span>`;
-
-                const emojisEl = document.getElementById(`emojis-${dateStr}`);
-                if (emojisEl) emojisEl.innerHTML = emojisHTML;
-            });
-
-            calculateAndShowTotals();
-        }
-
-        function toSuperscript(num) {
-            const supers = ['⁰','¹','²','³','⁴','⁵','⁶','⁷','⁸','⁹','¹⁰'];
-            return supers[num] || num;
-        }
-
-        function calculateAndShowTotals() {
-            let totalPeriod = 0;
-            let totalEnjoy = 0;
-            let totalVc = 0;
-            let totalWatch = 0;
-            let totalSleep = 0;
-            let totalSpecial = 0;
-            let sumCumHim = 0;
-            let sumCumHer = 0;
-
-            const sortedDates = Object.keys(calendarData).sort();
-            let inPeriodStreak = false;
-
-            sortedDates.forEach((dateStr) => {
-                const rec = calendarData[dateStr];
-                if (!rec) return;
-
-                if (rec.period) {
-                    if (!inPeriodStreak) {
-                        totalPeriod++;
-                        inPeriodStreak = true;
-                    }
-                } else {
-                    inPeriodStreak = false;
-                }
-
-                if (rec.enjoy) totalEnjoy++;
-                if (rec.vc) totalVc++;
-                if (rec.watch) totalWatch++;
-                if (rec.sleep) totalSleep++;
-                if (rec.special) totalSpecial++;
-                if (rec.cumHim) sumCumHim += rec.cumHim;
-                if (rec.cumHer) sumCumHer += rec.cumHer;
-            });
-
-            document.getElementById('stat-period').innerText = totalPeriod;
-            document.getElementById('stat-enjoy').innerText = totalEnjoy;
-            document.getElementById('stat-vc').innerText = totalVc;
-            document.getElementById('stat-watch').innerText = totalWatch;
-            document.getElementById('stat-sleep').innerText = totalSleep;
-            document.getElementById('stat-special').innerText = totalSpecial;
-            document.getElementById('stat-cum').innerHTML = `💦${toSuperscript(sumCumHim)}💧${toSuperscript(sumCumHer)}`;
-        }
-
-        function startCalendarHeaderStatsLoop() {
-            const defaultLegend = document.getElementById('legend-default');
-            const statsLegend = document.getElementById('legend-stats');
-
-            setInterval(() => {
-                calculateAndShowTotals();
-                defaultLegend.classList.add('hidden');
-                statsLegend.classList.remove('hidden');
-
-                setTimeout(() => {
-                    statsLegend.classList.add('hidden');
-                    defaultLegend.classList.remove('hidden');
-                }, 3000);
-            }, 10000);
-        }
-
-        function startSpecialNoteAnimationLoop() {
-            if (specialNoteAnimationInterval) clearInterval(specialNoteAnimationInterval);
-
-            specialNoteAnimationInterval = setInterval(() => {
-                if (screen2.classList.contains('hidden')) return;
-
-                document.querySelectorAll('[id^="day-cell-"]').forEach(cell => {
-                    const dateStr = cell.dataset.date;
-                    const record = calendarData[dateStr];
-                    if (record && record.special && record.note) {
-                        let bubble = cell.querySelector('.special-bubble');
-                        if (!bubble) {
-                            bubble = document.createElement('div');
-                            bubble.className = 'special-bubble absolute -bottom-6 left-1/2 -translate-x-1/2 bg-slate-900/90 text-slate-200 text-[9px] px-2 py-0.5 rounded-md shadow-xl whitespace-nowrap z-40 pointer-events-none border border-rose-500/40 backdrop-blur-md transition-all duration-300 opacity-0 animate-bounce';
-                            bubble.innerText = record.note.substring(0, 14) + (record.note.length > 14 ? '...' : '');
-                            cell.appendChild(bubble);
-                        }
-                        
-                        setTimeout(() => {
-                            if (bubble) {
-                                bubble.classList.remove('opacity-0');
-                                bubble.classList.add('opacity-100');
-                            }
-                        }, 50);
-
-                        setTimeout(() => {
-                            if (bubble && bubble.parentNode) {
-                                bubble.classList.remove('opacity-100');
-                                bubble.classList.add('opacity-0');
-                                setTimeout(() => bubble.remove(), 300);
-                            }
-                        }, 3000);
-                    }
-                });
-            }, 5000);
-        }
-
-        function scrollToCurrentDay() {
-            const todayStr = getTodayIndonesiaStr();
-            const todayCell = document.getElementById(`day-cell-${todayStr}`);
-            if (todayCell) {
-                todayCell.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                todayCell.classList.add('ring-2', 'ring-rose-500');
-                setTimeout(() => todayCell.classList.remove('ring-2', 'ring-rose-500'), 2500);
-            }
-        }
-
-        function handleDayClick(dateStr) {
-            if (!isOwner) return; // Prevent viewers from opening modal
-
-            if (periodRangeStartDate) {
-                completePeriodRangeSelection(periodRangeStartDate, dateStr);
-                periodRangeStartDate = null;
-                document.getElementById('range-picker-bar').classList.add('hidden');
-                return;
-            }
-
-            selectedDateStr = dateStr;
-            const todayStr = getTodayIndonesiaStr();
-            const record = calendarData[dateStr] || {};
-            
-            tempDayState = {
-                vc: record.vc !== undefined ? record.vc : (dateStr === todayStr),
-                enjoy: !!record.enjoy,
-                watch: !!record.watch,
-                sleep: !!record.sleep,
-                period: !!record.period,
-                special: !!record.special,
-                note: record.note || "",
-                cumHim: record.cumHim || 0,
-                cumHer: record.cumHer || 0
-            };
-
-            updateModalUI();
-            document.getElementById('modal-date-title').innerText = formatDateNice(dateStr);
-            document.getElementById('calendar-modal').classList.remove('hidden');
-        }
-
-        function formatDateNice(dateStr) {
-            const [y, m, d] = dateStr.split('-');
-            const date = new Date(y, m - 1, d);
-            return date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
-        }
-
-        function updateModalUI() {
-            document.getElementById('vc-badge').innerText = tempDayState.vc ? 'YES' : 'OFF';
-            document.getElementById('vc-badge').className = `text-[10px] px-2 py-0.5 rounded-full ${tempDayState.vc ? 'bg-emerald-800 text-emerald-100' : 'bg-slate-700 text-slate-300'}`;
-
-            document.getElementById('enjoy-badge').innerText = tempDayState.enjoy ? 'ON' : 'OFF';
-            document.getElementById('enjoy-badge').className = `text-[10px] px-2 py-0.5 rounded-full ${tempDayState.enjoy ? 'bg-yellow-800 text-yellow-100' : 'bg-slate-700 text-slate-300'}`;
-
-            document.getElementById('watch-badge').innerText = tempDayState.watch ? 'ON' : 'OFF';
-            document.getElementById('watch-badge').className = `text-[10px] px-2 py-0.5 rounded-full ${tempDayState.watch ? 'bg-purple-800 text-purple-100' : 'bg-slate-700 text-slate-300'}`;
-
-            document.getElementById('sleep-badge').innerText = tempDayState.sleep ? 'ON' : 'OFF';
-            document.getElementById('sleep-badge').className = `text-[10px] px-2 py-0.5 rounded-full ${tempDayState.sleep ? 'bg-indigo-800 text-indigo-100' : 'bg-slate-700 text-slate-300'}`;
-
-            document.getElementById('period-badge').innerText = tempDayState.period ? 'ON' : 'OFF';
-            document.getElementById('period-badge').className = `text-[10px] px-2 py-0.5 rounded-full ${tempDayState.period ? 'bg-red-800 text-red-100' : 'bg-slate-700 text-slate-300'}`;
-
-            document.getElementById('special-badge').innerText = tempDayState.special ? 'ON' : 'OFF';
-            document.getElementById('special-badge').className = `text-[10px] px-2 py-0.5 rounded-full ${tempDayState.special ? 'bg-blue-800 text-blue-100' : 'bg-slate-700 text-slate-300'}`;
-
-            document.getElementById('cum-him-count').innerText = tempDayState.cumHim;
-            document.getElementById('cum-her-count').innerText = tempDayState.cumHer;
-            document.getElementById('special-note-input').value = tempDayState.note;
-
-            document.getElementById('cum-time-box').style.display = tempDayState.enjoy ? 'block' : 'none';
-            document.getElementById('special-note-box').style.display = tempDayState.special ? 'block' : 'none';
-        }
-
-        document.getElementById('btn-toggle-vc').addEventListener('click', () => {
-            if (!isOwner) return;
-            tempDayState.vc = !tempDayState.vc;
-            updateModalUI();
-        });
-
-        document.getElementById('btn-toggle-enjoy').addEventListener('click', () => {
-            if (!isOwner) return;
-            tempDayState.enjoy = !tempDayState.enjoy;
-            updateModalUI();
-        });
-
-        document.getElementById('btn-toggle-watch').addEventListener('click', () => {
-            if (!isOwner) return;
-            tempDayState.watch = !tempDayState.watch;
-            updateModalUI();
-        });
-
-        document.getElementById('btn-toggle-sleep').addEventListener('click', () => {
-            if (!isOwner) return;
-            tempDayState.sleep = !tempDayState.sleep;
-            updateModalUI();
-        });
-
-        document.getElementById('btn-toggle-special').addEventListener('click', () => {
-            if (!isOwner) return;
-            tempDayState.special = !tempDayState.special;
-            updateModalUI();
-        });
-
-        document.getElementById('btn-toggle-period').addEventListener('click', () => {
-            if (!isOwner) return;
-            document.getElementById('calendar-modal').classList.add('hidden');
-            periodRangeStartDate = selectedDateStr;
-            document.getElementById('range-picker-bar').classList.remove('hidden');
-        });
-
-        document.getElementById('cancel-range-btn').addEventListener('click', () => {
-            periodRangeStartDate = null;
-            document.getElementById('range-picker-bar').classList.add('hidden');
-        });
-
-        function completePeriodRangeSelection(startStr, endStr) {
-            let [d1, d2] = [startStr, endStr].sort();
-            let cur = new Date(d1 + 'T00:00:00');
-            let end = new Date(d2 + 'T00:00:00');
-
-            while (cur <= end) {
-                const dateKey = cur.toISOString().split('T')[0];
-                if (!calendarData[dateKey]) calendarData[dateKey] = {};
-                calendarData[dateKey].period = true;
-                cur.setDate(cur.getDate() + 1);
-            }
-            saveSharedData();
-            updateCalendarUI();
-        }
-
-        document.getElementById('cum-him-inc').addEventListener('click', () => {
-            if (!isOwner) return;
-            if (tempDayState.cumHim < 10) {
-                tempDayState.cumHim++;
-                tempDayState.vc = true;
-                tempDayState.enjoy = true;
-                updateModalUI();
-            }
-        });
-        document.getElementById('cum-him-dec').addEventListener('click', () => {
-            if (!isOwner) return;
-            if (tempDayState.cumHim > 0) {
-                tempDayState.cumHim--;
-                updateModalUI();
-            }
-        });
-
-        document.getElementById('cum-her-inc').addEventListener('click', () => {
-            if (!isOwner) return;
-            if (tempDayState.cumHer < 10) {
-                tempDayState.cumHer++;
-                tempDayState.vc = true;
-                tempDayState.enjoy = true;
-                updateModalUI();
-            }
-        });
-        document.getElementById('cum-her-dec').addEventListener('click', () => {
-            if (!isOwner) return;
-            if (tempDayState.cumHer > 0) {
-                tempDayState.cumHer--;
-                updateModalUI();
-            }
-        });
-
-        document.getElementById('btn-save-day-status').addEventListener('click', () => {
-            if (!isOwner || !selectedDateStr) return;
-            tempDayState.note = document.getElementById('special-note-input').value;
-            calendarData[selectedDateStr] = { ...tempDayState };
-            saveSharedData();
-            updateCalendarUI();
-            document.getElementById('calendar-modal').classList.add('hidden');
-        });
-
-        document.getElementById('btn-unnotify-all').addEventListener('click', () => {
-            if (!isOwner || !selectedDateStr) return;
-            delete calendarData[selectedDateStr];
-            saveSharedData();
-            updateCalendarUI();
-            document.getElementById('calendar-modal').classList.add('hidden');
-        });
-
-        function closeCalendarModal() {
-            document.getElementById('calendar-modal').classList.add('hidden');
-        }
-
-        document.getElementById('close-calendar-modal').addEventListener('click', closeCalendarModal);
-        document.getElementById('modal-back-btn').addEventListener('click', closeCalendarModal);
 
         function startCountdownClock() {
             const startDate = new Date(2026, 9, 7, 0, 0, 0);
@@ -1350,38 +795,37 @@
         function renderMilestones() {
             const container = document.getElementById('milestones-path-container');
             container.innerHTML = '';
-            
             const now = new Date();
 
             for (let i = 1; i <= 100; i++) {
-                const unlockDate = new Date(2026, 10 + (i - 2), 7);
+                const unlockDate = new Date(2026, 9 + (i - 1), 7);
                 const isUnlocked = now >= unlockDate;
 
                 const node = document.createElement('div');
-                node.className = 'relative z-10 flex items-center justify-center space-x-6 bg-slate-800 p-3 rounded-full border border-slate-700 shadow-lg';
+                node.className = 'relative z-10 flex items-center justify-center space-x-5 bg-slate-800 p-2.5 rounded-full border border-slate-700 shadow-lg';
 
                 const himPic = isUnlocked ? `philippe${i}.png` : `noyet.png`;
                 const herPic = isUnlocked ? `diva${i}.png` : `noyet.png`;
                 const usPic = isUnlocked ? `us${i}.png` : `noyet.png`;
 
                 node.innerHTML = `
-                    <div class="w-12 h-12 rounded-full overflow-hidden border-2 ${isUnlocked ? 'border-rose-500 animate-bounce-heart' : 'border-slate-700'} bg-slate-800">
+                    <div class="w-10 h-10 rounded-full overflow-hidden border-2 ${isUnlocked ? 'border-rose-500 animate-bounce-heart' : 'border-slate-700'} bg-slate-800">
                         <img src="${himPic}" alt="Him" class="w-full h-full object-cover" onerror="this.src='${isUnlocked ? 'https://placehold.co/100x100/1e293b/f43f5e?text=Philippe' : 'noyet.png'}'">
                     </div>
 
                     <div class="text-center px-2">
-                        <span class="text-[10px] uppercase tracking-wider text-slate-400 block">Period</span>
-                        <span class="text-sm font-bold text-rose-400">#${i}</span>
+                        <span class="text-[9px] uppercase tracking-wider text-slate-400 block">Period</span>
+                        <span class="text-xs font-bold text-rose-400">#${i}</span>
                     </div>
 
-                    <div class="w-12 h-12 rounded-full overflow-hidden border-2 ${isUnlocked ? 'border-pink-500 animate-bounce-heart' : 'border-slate-700'} bg-slate-800">
+                    <div class="w-10 h-10 rounded-full overflow-hidden border-2 ${isUnlocked ? 'border-pink-500 animate-bounce-heart' : 'border-slate-700'} bg-slate-800">
                         <img src="${herPic}" alt="Her" class="w-full h-full object-cover" onerror="this.src='${isUnlocked ? 'https://placehold.co/100x100/1e293b/ec4899?text=Diva' : 'noyet.png'}'">
                     </div>
                 `;
 
                 if (isUnlocked) {
                     node.classList.add('cursor-pointer', 'hover:scale-105', 'transition-transform');
-                    node.addEventListener('click', () => openPhotoModal(i, usPic));
+                    node.addEventListener('click', () => openPhotoModal(usPic));
                 } else {
                     node.classList.add('opacity-50');
                 }
@@ -1390,7 +834,7 @@
             }
         }
 
-        function openPhotoModal(index, usPic) {
+        function openPhotoModal(usPic) {
             document.getElementById('photo-modal-img').src = usPic;
             document.getElementById('photo-modal').classList.remove('hidden');
         }
@@ -1421,9 +865,7 @@
             const containers = {
                 "Clock": document.getElementById('mode-clock-container'),
                 "Birthday": document.getElementById('mode-birthday-container'),
-                "Couple Profil": document.getElementById('mode-profile-container'),
-                "Wishes": document.getElementById('mode-wishes-container'),
-                "Color": document.getElementById('mode-color-container')
+                "Couple Profil": document.getElementById('mode-profile-container')
             };
 
             Object.keys(containers).forEach(key => {
@@ -1522,95 +964,6 @@
 
             updateProfilePair();
             profileRotationInterval = setInterval(updateProfilePair, 3000);
-        }
-
-        function renderWishesLists() {
-            const listHim = document.getElementById('wishes-list-him');
-            const listHer = document.getElementById('wishes-list-her');
-
-            listHim.innerHTML = '';
-            listHer.innerHTML = '';
-
-            wishesDataHim.forEach((item, idx) => {
-                const li = document.createElement('li');
-                li.className = isOwner ? 'cursor-pointer hover:text-rose-400 truncate' : 'truncate';
-                li.innerText = `${idx + 1}. ${item}`;
-                if (isOwner) {
-                    li.addEventListener('click', () => {
-                        const val = prompt(`Edit Philippe Wish #${idx + 1}:`, item);
-                        if (val !== null && val.trim() !== '') {
-                            wishesDataHim[idx] = val.trim();
-                            saveSharedData();
-                            renderWishesLists();
-                        }
-                    });
-                }
-                listHim.appendChild(li);
-            });
-
-            wishesDataHer.forEach((item, idx) => {
-                const li = document.createElement('li');
-                li.className = isOwner ? 'cursor-pointer hover:text-pink-400 truncate' : 'truncate';
-                li.innerText = `${idx + 1}. ${item}`;
-                if (isOwner) {
-                    li.addEventListener('click', () => {
-                        const val = prompt(`Edit Diva Wish #${idx + 1}:`, item);
-                        if (val !== null && val.trim() !== '') {
-                            wishesDataHer[idx] = val.trim();
-                            saveSharedData();
-                            renderWishesLists();
-                        }
-                    });
-                }
-                listHer.appendChild(li);
-            });
-        }
-
-        function initColors() {
-            const circleHim = document.getElementById('color-circle-him');
-            const circleHer = document.getElementById('color-circle-her');
-            const pickerHim = document.getElementById('color-picker-him');
-            const pickerHer = document.getElementById('color-picker-her');
-
-            applyColorsUI();
-
-            if (isOwner) {
-                circleHim.style.cursor = 'pointer';
-                circleHer.style.cursor = 'pointer';
-                circleHim.addEventListener('click', () => pickerHim.click());
-                circleHer.addEventListener('click', () => pickerHer.click());
-
-                pickerHim.addEventListener('input', (e) => {
-                    colorHim = e.target.value;
-                    applyColorsUI();
-                    saveSharedData();
-                });
-
-                pickerHer.addEventListener('input', (e) => {
-                    colorHer = e.target.value;
-                    applyColorsUI();
-                    saveSharedData();
-                });
-            } else {
-                circleHim.style.cursor = 'default';
-                circleHer.style.cursor = 'default';
-            }
-        }
-
-        function applyColorsUI() {
-            const circleHim = document.getElementById('color-circle-him');
-            const circleHer = document.getElementById('color-circle-her');
-            const pickerHim = document.getElementById('color-picker-him');
-            const pickerHer = document.getElementById('color-picker-her');
-
-            if (circleHim && pickerHim) {
-                circleHim.style.backgroundColor = colorHim;
-                pickerHim.value = colorHim;
-            }
-            if (circleHer && pickerHer) {
-                circleHer.style.backgroundColor = colorHer;
-                pickerHer.value = colorHer;
-            }
         }
     </script>
 </body>
