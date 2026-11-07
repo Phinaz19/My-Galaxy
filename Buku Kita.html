@@ -566,7 +566,7 @@
         let specialNoteAnimationInterval = null;
         let profileRotationInterval = null;
 
-        // Custom Wishes List Data (Editable)
+        // Synchronized Wishes Data Arrays
         let wishesDataHim = JSON.parse(localStorage.getItem('wishes_him') || '["Take airplane", "???", "???", "???", "???", "???", "???", "???", "???", "???"]');
         let wishesDataHer = JSON.parse(localStorage.getItem('wishes_her') || '["???", "???", "???", "???", "???", "???", "???", "???", "???", "???"]');
 
@@ -641,8 +641,18 @@
                 const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'calendar_records', 'couple_data');
                 onSnapshot(docRef, (snapshot) => {
                     if (snapshot.exists()) {
-                        calendarData = snapshot.data().records || {};
+                        const data = snapshot.data();
+                        calendarData = data.records || {};
+                        if (data.wishes_him) {
+                            wishesDataHim = data.wishes_him;
+                            localStorage.setItem('wishes_him', JSON.stringify(wishesDataHim));
+                        }
+                        if (data.wishes_her) {
+                            wishesDataHer = data.wishes_her;
+                            localStorage.setItem('wishes_her', JSON.stringify(wishesDataHer));
+                        }
                         updateCalendarUI();
+                        renderWishesLists();
                     }
                 }, (error) => {
                     loadLocalCalendarData();
@@ -660,13 +670,28 @@
 
         async function saveCalendarData() {
             localStorage.setItem('couple_calendar_data', JSON.stringify(calendarData));
+            saveSharedData();
+            updateCalendarUI();
+        }
+
+        async function saveWishesData() {
+            localStorage.setItem('wishes_him', JSON.stringify(wishesDataHim));
+            localStorage.setItem('wishes_her', JSON.stringify(wishesDataHer));
+            saveSharedData();
+            renderWishesLists();
+        }
+
+        async function saveSharedData() {
             if (isFirebaseAvailable && db) {
                 try {
                     const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'calendar_records', 'couple_data');
-                    await setDoc(docRef, { records: calendarData }, { merge: true });
+                    await setDoc(docRef, { 
+                        records: calendarData,
+                        wishes_him: wishesDataHim,
+                        wishes_her: wishesDataHer
+                    }, { merge: true });
                 } catch (e) {}
             }
-            updateCalendarUI();
         }
 
         // Tab Switching & Audio Control for Screen 3
@@ -903,7 +928,6 @@
             return supers[num] || num;
         }
 
-        // Calculation of totals for calendar legend swap
         function calculateAndShowTotals() {
             let totalPeriod = 0;
             let totalEnjoy = 0;
@@ -948,7 +972,6 @@
             document.getElementById('stat-cum').innerHTML = `💦${toSuperscript(sumCumHim)}💧${toSuperscript(sumCumHer)}`;
         }
 
-        // Loop for swapping header stats (10s normal -> 3s stats)
         function startCalendarHeaderStatsLoop() {
             const defaultLegend = document.getElementById('legend-default');
             const statsLegend = document.getElementById('legend-stats');
@@ -965,12 +988,10 @@
             }, 10000);
         }
 
-        // Special Note Pop-Up Loop (Triggered every 5 seconds for 3 seconds around day cell)
         function startSpecialNoteAnimationLoop() {
             if (specialNoteAnimationInterval) clearInterval(specialNoteAnimationInterval);
 
             specialNoteAnimationInterval = setInterval(() => {
-                // Only run when user is on Screen 2 (Calendar)
                 if (screen2.classList.contains('hidden')) return;
 
                 document.querySelectorAll('[id^="day-cell-"]').forEach(cell => {
@@ -1380,17 +1401,15 @@
                 const testImg = new Image();
                 testImg.src = `Coupleprofil${himNum}.png`;
                 testImg.onload = function() {
-                    // Si l'image existe dans le dossier, on l'affiche
                     himImg.src = `Coupleprofil${himNum}.png`;
                     herImg.src = `Coupleprofil${herNum}.png`;
                     profilePairIndex++;
                 };
                 testImg.onerror = function() {
-                    // Si l'image n'existe plus, on boucle et on recommence à 1
                     profilePairIndex = 1;
                     himImg.src = `Coupleprofil1.png`;
                     herImg.src = `Coupleprofil2.png`;
-                    profilePairIndex = 2; // Passe directement à la paire suivante au tour d'après
+                    profilePairIndex = 2;
                 };
             }
 
@@ -1398,7 +1417,7 @@
             profileRotationInterval = setInterval(updateProfilePair, 3000);
         }
 
-        // Wishes Editable Lists
+        // Synchronized Wishes Editable Lists
         function renderWishesLists() {
             const listHim = document.getElementById('wishes-list-him');
             const listHer = document.getElementById('wishes-list-her');
@@ -1406,7 +1425,6 @@
             listHim.innerHTML = '';
             listHer.innerHTML = '';
 
-            wishesDataHim.rules = wishesDataHim || [];
             wishesDataHim.forEach((item, idx) => {
                 const li = document.createElement('li');
                 li.className = 'cursor-pointer hover:text-rose-400 truncate';
@@ -1415,8 +1433,7 @@
                     const val = prompt(`Edit Philippe Wish #${idx + 1}:`, item);
                     if (val !== null && val.trim() !== '') {
                         wishesDataHim[idx] = val.trim();
-                        localStorage.setItem('wishes_him', JSON.stringify(wishesDataHim));
-                        renderWishesLists();
+                        saveWishesData();
                     }
                 });
                 listHim.appendChild(li);
@@ -1430,8 +1447,7 @@
                     const val = prompt(`Edit Diva Wish #${idx + 1}:`, item);
                     if (val !== null && val.trim() !== '') {
                         wishesDataHer[idx] = val.trim();
-                        localStorage.setItem('wishes_her', JSON.stringify(wishesDataHer));
-                        renderWishesLists();
+                        saveWishesData();
                     }
                 });
                 listHer.appendChild(li);
