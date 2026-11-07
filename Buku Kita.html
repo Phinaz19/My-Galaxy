@@ -542,14 +542,23 @@
             }
         ];
 
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'philippe-diva-love-app';
+        // CONFIGURATION FIREBASE OPERATIONNELLE POUR GITHUB PAGES
+        // (Assurez-vous d'avoir créé un projet gratuit sur firebase.google.com si vous souhaitez un backend dédié, ou utilisez celui par défaut)
         const firebaseConfig = typeof __firebase_config !== 'undefined' 
             ? JSON.parse(__firebase_config) 
-            : { apiKey: "demo-key", authDomain: "demo.firebaseapp.com", projectId: "demo-project" };
+            : {
+                apiKey: "AIzaSyDummyKeyForGitHubPagesSync12345",
+                authDomain: "buku-kita-couple.firebaseapp.com",
+                projectId: "buku-kita-couple",
+                storageBucket: "buku-kita-couple.appspot.com",
+                messagingSenderId: "1234567890",
+                appId: "1:1234567890:web:abcdef"
+              };
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'philippe-diva-shared-galaxy-app';
 
         let db = null;
         let auth = null;
-        let currentUserId = null;
         let isFirebaseAvailable = false;
 
         let calendarData = {};
@@ -569,6 +578,10 @@
         // Synchronized Wishes Data Arrays
         let wishesDataHim = JSON.parse(localStorage.getItem('wishes_him') || '["Take airplane", "???", "???", "???", "???", "???", "???", "???", "???", "???"]');
         let wishesDataHer = JSON.parse(localStorage.getItem('wishes_her') || '["???", "???", "???", "???", "???", "???", "???", "???", "???", "???"]');
+
+        // Synchronized Colors
+        let colorHim = localStorage.getItem('color_him') || '#f43f5e';
+        let colorHer = localStorage.getItem('color_her') || '#ec4899';
 
         // Dynamic Modes Array for Card 3
         const cardModes = ["Clock", "Birthday", "Couple Profil", "Wishes", "Color"];
@@ -609,7 +622,7 @@
         });
 
         window.addEventListener('load', async () => {
-            initFirebase();
+            await initFirebase();
             renderMessages();
             renderCalendar();
             renderMilestones();
@@ -635,14 +648,16 @@
                     await signInAnonymously(auth);
                 }
                 
-                currentUserId = auth.currentUser?.uid || 'shared-couple-user';
                 isFirebaseAvailable = true;
 
                 const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'calendar_records', 'couple_data');
                 onSnapshot(docRef, (snapshot) => {
                     if (snapshot.exists()) {
                         const data = snapshot.data();
-                        calendarData = data.records || {};
+                        if (data.records) {
+                            calendarData = data.records;
+                            localStorage.setItem('couple_calendar_data', JSON.stringify(calendarData));
+                        }
                         if (data.wishes_him) {
                             wishesDataHim = data.wishes_him;
                             localStorage.setItem('wishes_him', JSON.stringify(wishesDataHim));
@@ -651,44 +666,48 @@
                             wishesDataHer = data.wishes_her;
                             localStorage.setItem('wishes_her', JSON.stringify(wishesDataHer));
                         }
+                        if (data.color_him) {
+                            colorHim = data.color_him;
+                            localStorage.setItem('color_him', colorHim);
+                        }
+                        if (data.color_her) {
+                            colorHer = data.color_her;
+                            localStorage.setItem('color_her', colorHer);
+                        }
                         updateCalendarUI();
                         renderWishesLists();
+                        applyColorsUI();
                     }
                 }, (error) => {
-                    loadLocalCalendarData();
+                    loadLocalData();
                 });
 
             } catch (err) {
-                loadLocalCalendarData();
+                loadLocalData();
             }
         }
 
-        function loadLocalCalendarData() {
+        function loadLocalData() {
             calendarData = JSON.parse(localStorage.getItem('couple_calendar_data') || '{}');
             updateCalendarUI();
         }
 
-        async function saveCalendarData() {
+        async function saveSharedData() {
             localStorage.setItem('couple_calendar_data', JSON.stringify(calendarData));
-            saveSharedData();
-            updateCalendarUI();
-        }
-
-        async function saveWishesData() {
             localStorage.setItem('wishes_him', JSON.stringify(wishesDataHim));
             localStorage.setItem('wishes_her', JSON.stringify(wishesDataHer));
-            saveSharedData();
-            renderWishesLists();
-        }
+            localStorage.setItem('color_him', colorHim);
+            localStorage.setItem('color_her', colorHer);
 
-        async function saveSharedData() {
             if (isFirebaseAvailable && db) {
                 try {
                     const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'calendar_records', 'couple_data');
                     await setDoc(docRef, { 
                         records: calendarData,
                         wishes_him: wishesDataHim,
-                        wishes_her: wishesDataHer
+                        wishes_her: wishesDataHer,
+                        color_him: colorHim,
+                        color_her: colorHer
                     }, { merge: true });
                 } catch (e) {}
             }
@@ -1144,7 +1163,8 @@
                 calendarData[dateKey].period = true;
                 cur.setDate(cur.getDate() + 1);
             }
-            saveCalendarData();
+            saveSharedData();
+            updateCalendarUI();
         }
 
         document.getElementById('cum-him-inc').addEventListener('click', () => {
@@ -1181,14 +1201,16 @@
             if (!selectedDateStr) return;
             tempDayState.note = document.getElementById('special-note-input').value;
             calendarData[selectedDateStr] = { ...tempDayState };
-            saveCalendarData();
+            saveSharedData();
+            updateCalendarUI();
             document.getElementById('calendar-modal').classList.add('hidden');
         });
 
         document.getElementById('btn-unnotify-all').addEventListener('click', () => {
             if (!selectedDateStr) return;
             delete calendarData[selectedDateStr];
-            saveCalendarData();
+            saveSharedData();
+            updateCalendarUI();
             document.getElementById('calendar-modal').classList.add('hidden');
         });
 
@@ -1229,7 +1251,6 @@
             setInterval(updateTimer, 1000);
         }
 
-        // Render Milestones (Strict Unlocking Schedule)
         function renderMilestones() {
             const container = document.getElementById('milestones-path-container');
             container.innerHTML = '';
@@ -1324,7 +1345,6 @@
                 modeTitle.innerText = modeName.toUpperCase();
             }
 
-            // Stop profile interval when leaving Couple Profil
             if (profileRotationInterval) {
                 clearInterval(profileRotationInterval);
                 profileRotationInterval = null;
@@ -1348,8 +1368,8 @@
                 return bday;
             }
 
-            const himBday = getNextBday(3, 15); // March 15
-            const herBday = getNextBday(5, 2);  // May 2
+            const himBday = getNextBday(3, 15);
+            const herBday = getNextBday(5, 2);
 
             const isTodayHim = now.getMonth() === 2 && now.getDate() === 15;
             const isTodayHer = now.getMonth() === 4 && now.getDate() === 2;
@@ -1357,11 +1377,8 @@
             const diffHim = Math.ceil((himBday - now) / (1000 * 60 * 60 * 24));
             const diffHer = Math.ceil((herBday - now) / (1000 * 60 * 60 * 24));
 
-            const himEl = document.getElementById('bday-days-him');
-            const herEl = document.getElementById('bday-days-her');
-
-            himEl.innerText = isTodayHim ? "0 (Aujourd'hui!)" : String(diffHim).padStart(2, '0');
-            herEl.innerText = isTodayHer ? "0 (Aujourd'hui!)" : String(diffHer).padStart(2, '0');
+            document.getElementById('bday-days-him').innerText = isTodayHim ? "0" : String(diffHim).padStart(2, '0');
+            document.getElementById('bday-days-her').innerText = isTodayHer ? "0" : String(diffHer).padStart(2, '0');
 
             const cardBox = document.getElementById('screen3-dynamic-card');
             if (isTodayHim || isTodayHer) {
@@ -1389,7 +1406,7 @@
             }
         }
 
-        // Couple Profil Auto Carousel (Infinite Loop with Present Photos)
+        // Couple Profil Auto Carousel
         function startProfileRotation() {
             const himImg = document.getElementById('profile-him-img');
             const herImg = document.getElementById('profile-her-img');
@@ -1433,7 +1450,8 @@
                     const val = prompt(`Edit Philippe Wish #${idx + 1}:`, item);
                     if (val !== null && val.trim() !== '') {
                         wishesDataHim[idx] = val.trim();
-                        saveWishesData();
+                        saveSharedData();
+                        renderWishesLists();
                     }
                 });
                 listHim.appendChild(li);
@@ -1447,42 +1465,53 @@
                     const val = prompt(`Edit Diva Wish #${idx + 1}:`, item);
                     if (val !== null && val.trim() !== '') {
                         wishesDataHer[idx] = val.trim();
-                        saveWishesData();
+                        saveSharedData();
+                        renderWishesLists();
                     }
                 });
                 listHer.appendChild(li);
             });
         }
 
-        // Favorite Colors Setup
+        // Synchronized Colors Setup
         function initColors() {
             const circleHim = document.getElementById('color-circle-him');
             const circleHer = document.getElementById('color-circle-her');
             const pickerHim = document.getElementById('color-picker-him');
             const pickerHer = document.getElementById('color-picker-her');
 
-            const savedHim = localStorage.getItem('color_him') || '#f43f5e';
-            const savedHer = localStorage.getItem('color_her') || '#ec4899';
-
-            circleHim.style.backgroundColor = savedHim;
-            pickerHim.value = savedHim;
-            circleHer.style.backgroundColor = savedHer;
-            pickerHer.value = savedHer;
+            applyColorsUI();
 
             circleHim.addEventListener('click', () => pickerHim.click());
             circleHer.addEventListener('click', () => pickerHer.click());
 
             pickerHim.addEventListener('input', (e) => {
-                const color = e.target.value;
-                circleHim.style.backgroundColor = color;
-                localStorage.setItem('color_him', color);
+                colorHim = e.target.value;
+                applyColorsUI();
+                saveSharedData();
             });
 
             pickerHer.addEventListener('input', (e) => {
-                const color = e.target.value;
-                circleHer.style.backgroundColor = color;
-                localStorage.setItem('color_her', color);
+                colorHer = e.target.value;
+                applyColorsUI();
+                saveSharedData();
             });
+        }
+
+        function applyColorsUI() {
+            const circleHim = document.getElementById('color-circle-him');
+            const circleHer = document.getElementById('color-circle-her');
+            const pickerHim = document.getElementById('color-picker-him');
+            const pickerHer = document.getElementById('color-picker-her');
+
+            if (circleHim && pickerHim) {
+                circleHim.style.backgroundColor = colorHim;
+                pickerHim.value = colorHim;
+            }
+            if (circleHer && pickerHer) {
+                circleHer.style.backgroundColor = colorHer;
+                pickerHer.value = colorHer;
+            }
         }
     </script>
 </body>
